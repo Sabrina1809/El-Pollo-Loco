@@ -24,10 +24,8 @@ class World {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
-        // this.addObjectsToMap(this.level.endboss);
         this.addToMap(this.character);
         this.addToMap(this.endboss);
-        // this.addEndbossToMap(this.level.endboss);
         this.addObjectsToMap(this.level.enemies);
         this.ctx.translate(-this.camera_x, 0);
 
@@ -55,10 +53,5 @@ class World {
             mo.x = mo.x * -1;
             this.ctx.restore();
         }
-    }
-
-    addEndbossToMap(endboss) {
-        this.ctx.drawImage(endboss.img, endboss.x, endboss.y, endboss.width, endboss.height);
-
     }
 }
