@@ -8,7 +8,7 @@ class MovableObject {
     speed;
     otherDirection = false;
     speedY = 0.4;
-    acceleration = 2.5;
+    acceleration = 2.4;
 
     applyGravity() {
         setInterval(() => {
@@ -20,7 +20,7 @@ class MovableObject {
     }
 
     isAboveGround() {
-        return this.y < 115;
+        return this.y < 70;
     }
 
     loadImage(path) {
@@ -37,7 +37,7 @@ class MovableObject {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = "orange";
-            ctx.rect(this.x +20, this.y + 120, this.width - 40, this.height - 135);
+            ctx.rect(this.x +30, this.y + 130, this.width - 70, this.height - 150);
             ctx.stroke();
         }
         if (this instanceof Chicken) {
@@ -51,10 +51,44 @@ class MovableObject {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = "orange";
-            ctx.rect(this.x + 20, this.y + 60, this.width -20, this.height - 80);
+            ctx.rect(this.x + 40, this.y + 80, this.width - 40, this.height - 120);
             ctx.stroke();
         }
     }
+
+    isColliding(mo) {
+        return this.x + 30 + this.width - 70 > mo.x &&
+            this.y + 130 + this.height - 150 > mo.y &&
+            this.x + 30 < mo.x &&
+            this.y + 130 < mo.y + mo.height;
+    }
+
+    isColliding(mo) {
+        if (mo instanceof Chicken) {
+            console.log();
+            return this.x + 30 + this.width - 70 > mo.x &&
+            this.y + 130 + this.height - 150 > mo.y &&
+            this.x + 30 < mo.x &&
+            this.y + 130 < mo.y + mo.height;
+        }
+        if (mo instanceof Endboss) {
+            return this.x + 30 + this.width - 70 > mo.x + 20 &&
+            this.y + 130 + this.height - 150 > mo.y + 60 &&
+            this.x + 30 < mo.x + 20 &&
+            this.y + 130 < mo.y + mo.height - 80;
+        }
+       return
+    }
+
+
+
+    // isColliding(mo) {
+    //     return this.x + this.width > mo.x &&
+    //         this.y + this.height > mo.y &&
+    //         this.x < mo.x &&
+    //         this.y < mo.y + mo.height;
+    // }
+
 
     loadImages(array) {
         array.forEach((path) => {
@@ -84,4 +118,5 @@ class MovableObject {
     jump() {
         this.speedY = 25;
     }
+
 }
