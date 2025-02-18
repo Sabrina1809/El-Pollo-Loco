@@ -33,11 +33,27 @@ class MovableObject {
     }
 
     drawFrame(ctx) {
-        ctx.beginPath();
-        ctx.lineWidth = '5';
-        ctx.strokeStyle = "orange";
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.stroke();
+        if (this instanceof Character) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = "orange";
+            ctx.rect(this.x +20, this.y + 120, this.width - 40, this.height - 135);
+            ctx.stroke();
+        }
+        if (this instanceof Chicken) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = "orange";
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+        if (this instanceof Endboss) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = "orange";
+            ctx.rect(this.x + 20, this.y + 60, this.width -20, this.height - 80);
+            ctx.stroke();
+        }
     }
 
     loadImages(array) {
