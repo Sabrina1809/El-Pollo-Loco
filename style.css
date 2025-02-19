@@ -1,10 +1,78 @@
+/* agu-display-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Agu Display';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/agu-display-v1-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+
+/* londrina-solid-300 - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Londrina Solid';
+    font-style: normal;
+    font-weight: 300;
+    src: url('../fonts/londrina-solid-v17-latin-300.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+  /* londrina-solid-regular - latin */
+  @font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Londrina Solid';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/londrina-solid-v17-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+
+/* kelly-slab-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Kelly Slab';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/kelly-slab-v17-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-image: url('img/5_background/backgroundGame.webp') ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    backdrop-filter: grayscale(0.5);
+    font-family: 'Kelly Slab', Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-size: 48px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    margin: 0 0 10px 0;
+}
+
+#agu {
+    font-family: 'Agu Display';
+}
+
+#londrina {
+    font-family: 'Londrina Solid';
+}
+
+#kelly {
+    font-family: 'Kelly Slab';
 }
 
 canvas {
     background-color: black;
+    border: 3px solid black;
+    border-radius: 20px;
+    box-shadow: 0 0 50px black;
 }
