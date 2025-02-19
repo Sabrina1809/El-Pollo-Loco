@@ -7,7 +7,7 @@ class World {
     camera_x = 0;
     statusBar = new StatusBar();
     throwableObjects = [
-        // new ThrowableObject(),
+        // new ThrowableObject()
     ]
 
     constructor(canvas, keyboard) {
@@ -40,13 +40,25 @@ class World {
 
     checkCollisions() {
         setInterval(() => {
+            this.checkCollisions();
+            this.checkThrowObjects();
+        }, 200)
+    }
+
+    checkThrowObjects() {
+        if (this.keyboard.D) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            this.throwableObjects.push(bottle);
+        }
+    }
+
+    checkCollisions() {
             this.level.enemies.forEach((enemy) => {
                 if(this.character.isColliding(enemy)) {
                     this.character.hit()
                     this.statusBar.setPercentage(this.character.energy);
                 }
             })
-        }, 100)
     }
 
     draw() {
