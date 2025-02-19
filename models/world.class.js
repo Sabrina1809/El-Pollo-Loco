@@ -25,6 +25,9 @@ class World {
             this.level.enemies.forEach((enemy) => {
                 if(this.character.isColliding(enemy)) {
                     console.log('Treffer! Collision with: ', enemy);
+                    this.character.hit()
+                    console.log('Treffer! egergy character: ', this.character.energy);
+
                 }
             })
         }, 100)

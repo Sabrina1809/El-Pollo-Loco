@@ -9,6 +9,7 @@ class MovableObject {
     otherDirection = false;
     speedY = 0.4;
     acceleration = 2.4;
+    energy = 100;
 
     applyGravity() {
         setInterval(() => {
@@ -57,13 +58,6 @@ class MovableObject {
     }
 
     isColliding(mo) {
-        return this.x + 30 + this.width - 70 > mo.x &&
-            this.y + 130 + this.height - 150 > mo.y &&
-            this.x + 30 < mo.x &&
-            this.y + 130 < mo.y + mo.height;
-    }
-
-    isColliding(mo) {
         if (mo instanceof Chicken) {
             console.log();
             return this.x + 30 + this.width - 70 > mo.x &&
@@ -80,15 +74,16 @@ class MovableObject {
        return
     }
 
+    hit() {
+        this.energy -= 5;
+        if (this.energy < 5) {
+            this.energy = 0;
+        }
+    }
 
-
-    // isColliding(mo) {
-    //     return this.x + this.width > mo.x &&
-    //         this.y + this.height > mo.y &&
-    //         this.x < mo.x &&
-    //         this.y < mo.y + mo.height;
-    // }
-
+    isDead() {
+        return this.energy == 0;
+    }
 
     loadImages(array) {
         array.forEach((path) => {
