@@ -1,6 +1,5 @@
 class World {
     character = new Character();
-    endboss = new Endboss();
     level = level1;
     canvas;
     ctx;
@@ -25,10 +24,9 @@ class World {
         setInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if(this.character.isColliding(enemy)) {
-                    console.log('Treffer! Collision with: ', enemy);
                     this.character.hit()
                     console.log('Treffer! egergy character: ', this.character.energy);
-
+                    this.statusBar.setPercentage(this.character.energy);
                 }
             })
         }, 100)
@@ -36,13 +34,18 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
+        
         this.addObjectsToMap(this.level.clouds);
         this.addToMap(this.character);
-        this.addToMap(this.statusBar);
-        this.addToMap(this.endboss);
         this.addObjectsToMap(this.level.enemies);
+
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.statusBar);
+        this.ctx.translate(this.camera_x, 0);
+        
         this.ctx.translate(-this.camera_x, 0);
 
         let self = this;
