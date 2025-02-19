@@ -1,10 +1,5 @@
-class MovableObject {
-    x = 50;
-    y = 50;
-    img;
-    height;
-    width;
-    imageCache = {};
+class MovableObject extends DrawableObject {
+    
     speed;
     otherDirection = false;
     speedY = 0.4;
@@ -25,14 +20,9 @@ class MovableObject {
         return this.y < 70;
     }
 
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
 
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
+
+
 
     drawFrame(ctx) {
         if (this instanceof Character) {
@@ -92,14 +82,6 @@ class MovableObject {
 
     isDead() {
         return this.energy == 0;
-    }
-
-    loadImages(array) {
-        array.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        })
     }
 
     playAnimation(images) {
