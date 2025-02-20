@@ -24,29 +24,6 @@ class MovableObject extends DrawableObject {
         }
     }
 
-
-
-
-
-
-
-    isColliding(mo) {
-        if (mo instanceof Chicken) {
-            console.log();
-            return this.x + 30 + this.width - 70 > mo.x &&
-            this.y + 130 + this.height - 150 > mo.y &&
-            this.x + 30 < mo.x &&
-            this.y + 130 < mo.y + mo.height;
-        }
-        if (mo instanceof Endboss) {
-            return this.x + 30 + this.width - 70 > mo.x + 20 &&
-            this.y + 130 + this.height - 150 > mo.y + 60 &&
-            this.x + 30 < mo.x + 20 &&
-            this.y + 130 < mo.y + mo.height - 80;
-        }
-       return
-    }
-
     hit() {
         this.energy -= 5;
         if (this.energy < 5) {

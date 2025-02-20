@@ -7,7 +7,6 @@ class World {
     camera_x = 0;
     statusBar = new StatusBar();
     throwableObjects = [
-        // new ThrowableObject()
     ]
 
     constructor(canvas, keyboard) {
@@ -28,14 +27,6 @@ class World {
             this.checkCollisions();
             this.checkThrowObjects();
         }, 200)
-    }
-
-    checkThrowObjects() {
-        if(this.keyboard.D) {
-           let bottle = new ThrowableObject(this.character.x, this.character.y);
-           this.throwableObjects.push(bottle);
-
-        }
     }
 
     checkCollisions() {
@@ -59,6 +50,12 @@ class World {
                     this.statusBar.setPercentage(this.character.energy);
                 }
             })
+            this.level.collectableObjects.forEach((collectableObject) => {
+                if(this.character.isColliding(collectableObject)) {
+                    console.log('Flasche getroffen');
+                    
+                }
+            })
     }
 
     draw() {
@@ -71,6 +68,7 @@ class World {
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.level.collectableObjects);
 
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBar);

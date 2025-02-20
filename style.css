@@ -39,6 +39,7 @@
 }
 
 body {
+    width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -55,7 +56,7 @@ body {
 h1 {
     font-size: 48px;
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    margin: 0 0 10px 0;
+    /* margin: 0 0 10px 0; */
 }
 
 #agu {
@@ -75,4 +76,23 @@ canvas {
     border: 3px solid black;
     border-radius: 20px;
     box-shadow: 0 0 50px black;
+    display: block;
+}
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 600px) {
+    h1 {
+        display: none;
+    }
+}
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
 }

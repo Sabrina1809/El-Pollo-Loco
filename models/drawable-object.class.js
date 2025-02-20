@@ -11,7 +11,14 @@ class DrawableObject {
         this.img.src = path;
     }
     draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        try {
+            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        } catch(e) {
+            console.warn('Error Loading img', e);
+            console.log(this.img);
+            
+        }
+       
     }
     drawFrame(ctx) {
         if (this instanceof Character) {
@@ -32,7 +39,21 @@ class DrawableObject {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = "orange";
-            ctx.rect(this.x + 40, this.y + 80, this.width - 40, this.height - 120);
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+        if (this instanceof ThrowableObject) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = "brown";
+            ctx.rect(this.x + 30, this.y + 10, this.width - 60, this.height - 20);
+            ctx.stroke();
+        }
+        if (this instanceof CollectableObject) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = "brown";
+            ctx.rect(this.x + 40, this.y + 10, this.width - 60, this.height - 20);
             ctx.stroke();
         }
     }
@@ -42,5 +63,27 @@ class DrawableObject {
             img.src = path;
             this.imageCache[path] = img;
         })
+    }
+    isColliding(mo) {
+        if (mo instanceof Chicken) {
+            console.log();
+            return this.x + 30 + this.width - 70 > mo.x &&
+            this.y + 130 + this.height - 150 > mo.y &&
+            this.x + 30 < mo.x &&
+            this.y + 130 < mo.y + mo.height;
+        }
+        if (mo instanceof Endboss) {
+            return this.x + 30 + this.width - 70 > mo.x + 20 &&
+            this.y + 130 + this.height - 150 > mo.y + 60 &&
+            this.x + 30 < mo.x + 20 &&
+            this.y + 130 < mo.y + mo.height - 80;
+        }
+        if (mo instanceof CollectableBottle) {
+            return this.x + 40 + this.width - 60 > mo.x + 20 &&
+            this.y + 10 + this.height - 20 > mo.y + 60 &&
+            this.x + 40 < mo.x + 20 &&
+            this.y + 10 < mo.y + mo.height - 80;
+        }
+       return
     }
 }
