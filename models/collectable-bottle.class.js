@@ -15,9 +15,7 @@ class CollectableBottle extends CollectableObject {
     }
 
     loadRandomBottleImg() {
-        for (let i = 0; i < 8; i++) {
             let bottleImgIndex = Math.random().toFixed(0);
-            this.loadImage(this.IMAGES_BOTTLES_GROUND[bottleImgIndex])
-        }
+            this.loadImage(this.IMAGES_BOTTLES_GROUND[bottleImgIndex]);
     } 
 }
