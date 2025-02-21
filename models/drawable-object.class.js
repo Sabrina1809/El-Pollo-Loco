@@ -5,6 +5,7 @@ class DrawableObject {
     y;
     width;
     height;
+    id;
 
     loadImage(path) {
         this.img = new Image();
@@ -49,7 +50,7 @@ class DrawableObject {
             ctx.rect(this.x + 30, this.y + 10, this.width - 60, this.height - 20);
             ctx.stroke();
         }
-        if (this instanceof CollectableObject) {
+        if (this instanceof CollectableBottle) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = "brown";
