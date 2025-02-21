@@ -57,21 +57,23 @@ class World {
         this.level.collectableObjects.forEach((collectableObject) => {
             if(this.character.isColliding(collectableObject)) {
                 if (collectableObject instanceof CollectableBottle) {
-                    console.log('Flasche getroffen', collectableObject);
+                    // console.log('Flasche getroffen', collectableObject);
                     if (this.collectedBottles <= 10) {
                         this.collectedBottles++;
-                        console.log('gesammelte Flaschen: ', this.collectedBottles);
-                        this.collectObject(collectableObject)
-                        // return this.collectedBottles
+                        // console.log('gesammelte Flaschen: ', this.collectedBottles);
+                        this.collectObject(collectableObject);
                     } 
                 } 
                 if (collectableObject instanceof CollectableCoin) {
-                    console.log('Coin getroffen', collectableObject);
-                    if (this.collectedCoins < 10) {
+                    // console.log('Coin getroffen', collectableObject);
+                    if (this.collectedCoins < 9) {
                         this.collectedCoins++;
-                        console.log('gesammelte Coins: ', this.collectedCoins);
-                        this.collectObject(collectableObject)
-                        // return this.collectedCoins
+                        // console.log('gesammelte Coins: ', this.collectedCoins);
+                        this.collectObject(collectableObject);
+                    } else if (this.collectedCoins >= 9) {
+                        this.collectedCoins = 0;
+                        this.collectObject(collectableObject);
+                        this.character.energy = 100;
                     }
                 }
                 

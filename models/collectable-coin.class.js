@@ -1,7 +1,6 @@
 class CollectableCoin extends DrawableObject {
-    x =  this.x = 0 + Math.random() * 1800;
-    // y = 350;
-    y = this.y = 100+ Math.random() * 200;
+    x =  this.x = 300 + Math.random() * 1800;
+    y = this.y = 70+ Math.random() * 100;
     width = 100;
     height = 100;
 
