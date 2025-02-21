@@ -7,6 +7,7 @@ class DrawableObject {
     height;
     id;
 
+
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
@@ -29,7 +30,7 @@ class DrawableObject {
         }
     }
 
-    resolveImageIndex(percentage) {
+    checkHealtImgIndex(percentage) {
         if (percentage == 100) {
             return 5;   
         } else if (percentage >= 80) {
@@ -42,6 +43,22 @@ class DrawableObject {
             return 1
         } else {
             return 0
+        }
+    }
+
+    checkCollectedImgIndex(count) {
+        if (count == 0) {
+            return 0;
+        } else if (count <= 2) {
+            return 1
+        } else if (count <= 4) {
+            return 2
+        } else if (count <= 6) {
+            return 3
+        } else if (count <= 8) {
+            return 4
+        } else if (count <= 10) {
+            return 5
         }
     }
 

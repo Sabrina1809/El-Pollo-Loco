@@ -10,6 +10,7 @@ class World {
     statusBarCoin = new StatusBarCoin();
     throwableObjects = [
     ]
+    collectedBottles = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -45,7 +46,7 @@ class World {
         }
     }
 
-    checkCollisions() {
+    checkCollisions(collectedBottles) {
         this.level.enemies.forEach((enemy) => {
             if(this.character.isColliding(enemy)) {
                 this.character.hit()
@@ -56,7 +57,12 @@ class World {
             if(this.character.isColliding(collectableObject)) {
                 if (collectableObject instanceof CollectableBottle) {
                     console.log('Flasche getroffen', collectableObject);
-                    this.collectObject(collectableObject)
+                    if (this.collectedBottles <= 10) {
+                        this.collectedBottles++;
+                        console.log('gesammelte Flaschen: ', this.collectedBottles);
+                        this.collectObject(collectableObject)
+                        return collectedBottles
+                    }
                 } else if (collectableObject instanceof CollectableCoin) {
                     console.log('Coin getroffen');
                 }
@@ -71,11 +77,11 @@ class World {
     }
 
     deleteFromCanvas(collectableObject) {
-        console.log(collectableObject.x);
+        // console.log(collectableObject.x);
         for (let i = 0; i < this.level.collectableObjects.length; i++) {
             if (this.level.collectableObjects[i].x == collectableObject.x && this.level.collectableObjects[i].y == collectableObject.y) {
-                console.log('LÖSCHEN Index', i);
-                console.log(this.level.collectableObjects[i]);
+                // console.log('LÖSCHEN Index', i);
+                // console.log(this.level.collectableObjects[i]);
                 this.level.collectableObjects.splice(i, 1);
             }
         }

@@ -16,6 +16,17 @@ class StatusBarBottle extends DrawableObject {
         this.y = 110;
         this.width = 200;
         this.height = 60;
-        // this.setPercentage('0', this.IMAGES_STATUS_BOTTLES);
+        let intervalBottleBar = setInterval(() => {
+            this.updateBottleBar()
+        },200)
+    }
+
+    updateBottleBar() {
+        console.log('collectedBottles:', world.collectedBottles);
+        let bottleBarIndex = this.checkCollectedImgIndex(world.collectedBottles);
+        console.log(bottleBarIndex);
+        
+        this.loadImage(this.IMAGES_STATUS_BOTTLES[bottleBarIndex]);
+        
     }
 }

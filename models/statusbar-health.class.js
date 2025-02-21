@@ -1,6 +1,6 @@
 class StatusBarHealth extends DrawableObject {
 
-    energy;
+    // energy;
     IMAGES_HEALTH_CHARACTER = [
         'img/7_statusbars/1_statusbar/2_statusbar_health/orange/0.png',
         'img/7_statusbars/1_statusbar/2_statusbar_health/orange/20.png',
@@ -24,7 +24,7 @@ class StatusBarHealth extends DrawableObject {
     }
 
     updateHealthBar() {
-        let healthBarIndex = this.resolveImageIndex(world.character.energy);
+        let healthBarIndex = this.checkHealtImgIndex(world.character.energy);
         this.loadImage(this.IMAGES_HEALTH_CHARACTER[healthBarIndex]);
     }
 }

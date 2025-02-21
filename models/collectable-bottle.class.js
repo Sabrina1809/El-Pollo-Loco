@@ -1,8 +1,9 @@
-class CollectableBottle extends CollectableObject {
+class CollectableBottle extends DrawableObject {
     x =  this.x = 0 + Math.random() * 1800;
     y = 350;
     width = 80;
     height = 80;
+    
 
     IMAGES_BOTTLES_GROUND = [
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
