@@ -11,6 +11,7 @@ class World {
     throwableObjects = [
     ]
     collectedBottles = 0;
+    collectedCoins = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -39,13 +40,20 @@ class World {
         }, 200)
     }
 
+    // checkThrowObjects() {
+    //     if (this.keyboard.D) {
+    //         let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+    //         this.throwableObjects.push(bottle);
+    //     }
+    // }
+    
     checkThrowObjects() {
-        if (this.keyboard.D) {
+        if (this.keyboard.D && this.collectedBottles != 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
+            this.collectedBottles--;
         }
     }
-
     checkCollisions(collectedBottles) {
         this.level.enemies.forEach((enemy) => {
             if(this.character.isColliding(enemy)) {
