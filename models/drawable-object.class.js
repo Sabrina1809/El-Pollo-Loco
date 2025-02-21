@@ -17,26 +17,16 @@ class DrawableObject {
         } catch(e) {
             console.warn('Error Loading img', e);
             console.log(this.img);
-            
         }
-       
     }
-
 
     hit() {
         this.energy -= 5;
-
         if (this.energy < 5) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
         }
-    }
-
-    setPercentage(percentage, images) {
-        console.log(percentage);
-        let path = images[this.resolveImageIndex(percentage)];
-        this.img = this.imageCache[path];
     }
 
     resolveImageIndex(percentage) {
@@ -54,7 +44,6 @@ class DrawableObject {
             return 0
         }
     }
-
 
     drawFrame(ctx) {
         if (this instanceof Character) {
