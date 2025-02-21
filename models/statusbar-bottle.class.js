@@ -22,11 +22,8 @@ class StatusBarBottle extends DrawableObject {
     }
 
     updateBottleBar() {
-        console.log('collectedBottles:', world.collectedBottles);
+        // console.log('collectedBottles:', world.collectedBottles);
         let bottleBarIndex = this.checkCollectedImgIndex(world.collectedBottles);
-        console.log(bottleBarIndex);
-        
         this.loadImage(this.IMAGES_STATUS_BOTTLES[bottleBarIndex]);
-        
     }
 }

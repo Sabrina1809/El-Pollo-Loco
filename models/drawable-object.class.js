@@ -95,7 +95,14 @@ class DrawableObject {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = "brown";
-            ctx.rect(this.x + 40, this.y + 10, this.width - 60, this.height - 20);
+            ctx.rect(this.x + 35, this.y + 10, this.width - 60, this.height - 20);
+            ctx.stroke();
+        }
+        if (this instanceof CollectableCoin) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = "brown";
+            ctx.rect(this.x + 35, this.y + 35, this.width - 70, this.height - 70);
             ctx.stroke();
         }
     }
@@ -121,6 +128,12 @@ class DrawableObject {
             this.y + 130 < mo.y + mo.height - 80;
         }
         if (mo instanceof CollectableBottle) {
+            return this.x + 40 + this.width - 60 > mo.x + 20 &&
+            this.y + 10 + this.height - 20 > mo.y + 60 &&
+            this.x + 40 < mo.x + 20 &&
+            this.y + 10 < mo.y + mo.height - 80;
+        }
+        if (mo instanceof CollectableCoin) {
             return this.x + 40 + this.width - 60 > mo.x + 20 &&
             this.y + 10 + this.height - 20 > mo.y + 60 &&
             this.x + 40 < mo.x + 20 &&

@@ -42,5 +42,17 @@ const level1 = new Level(
         new CollectableBottle(),
         new CollectableBottle(),
         new CollectableBottle(),
+        new CollectableCoin(),
+        new CollectableCoin(),
+        new CollectableCoin(),
+        new CollectableCoin(),
+        new CollectableCoin(),
+        new CollectableCoin(),
+        new CollectableCoin(),
+        new CollectableCoin(),
+        new CollectableCoin(),
+        new CollectableCoin(),
+        new CollectableCoin(),
+        new CollectableCoin(),
     ]
 );

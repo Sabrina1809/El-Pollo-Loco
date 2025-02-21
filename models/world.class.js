@@ -40,13 +40,6 @@ class World {
         }, 200)
     }
 
-    // checkThrowObjects() {
-    //     if (this.keyboard.D) {
-    //         let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-    //         this.throwableObjects.push(bottle);
-    //     }
-    // }
-    
     checkThrowObjects() {
         if (this.keyboard.D && this.collectedBottles != 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
@@ -54,11 +47,11 @@ class World {
             this.collectedBottles--;
         }
     }
-    checkCollisions(collectedBottles) {
+
+    checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if(this.character.isColliding(enemy)) {
                 this.character.hit()
-                // this.statusBarHealth.setPercentage();
             }
         })
         this.level.collectableObjects.forEach((collectableObject) => {
@@ -69,18 +62,25 @@ class World {
                         this.collectedBottles++;
                         console.log('gesammelte Flaschen: ', this.collectedBottles);
                         this.collectObject(collectableObject)
-                        return collectedBottles
+                        // return this.collectedBottles
+                    } 
+                } 
+                if (collectableObject instanceof CollectableCoin) {
+                    console.log('Coin getroffen', collectableObject);
+                    if (this.collectedCoins < 10) {
+                        this.collectedCoins++;
+                        console.log('gesammelte Coins: ', this.collectedCoins);
+                        this.collectObject(collectableObject)
+                        // return this.collectedCoins
                     }
-                } else if (collectableObject instanceof CollectableCoin) {
-                    console.log('Coin getroffen');
                 }
+                
             }
         })
     }
 
     collectObject(collectableObject) {
         collectableObject = collectableObject;
-        // addToStatusBar();
         this.deleteFromCanvas(collectableObject);
     }
 
