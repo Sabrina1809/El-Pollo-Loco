@@ -1,4 +1,6 @@
-class StatusBarHealth extends StatusBar {
+class StatusBarHealth extends DrawableObject {
+
+    energy;
     IMAGES_HEALTH_CHARACTER = [
         'img/7_statusbars/1_statusbar/2_statusbar_health/orange/0.png',
         'img/7_statusbars/1_statusbar/2_statusbar_health/orange/20.png',
@@ -17,8 +19,19 @@ class StatusBarHealth extends StatusBar {
         this.y = 10;
         this.width = 200;
         this.height = 60;
-        // this.percentage = 100;
-        // this.setPercentage(this.percentage, this.IMAGES_HEALTH_CHARACTER);
+        console.log('thisEnergy: ', this.energy);
+        this.setPercentage(this.energy, this.IMAGES_HEALTH_CHARACTER);
+        let intervalHealthBar = setInterval(() => {
+            this.updateHealthBar()
+        },2000)
+    }
+
+    updateHealthBar() {
+        let healthBarIndex = this.resolveImageIndex(world.character.energy)
+        console.log(world.character.energy);
+        console.log(healthBarIndex);
+        this.loadImage(this.IMAGES_HEALTH_CHARACTER[healthBarIndex]);
         
     }
+
 }

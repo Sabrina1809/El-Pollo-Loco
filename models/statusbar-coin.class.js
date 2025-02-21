@@ -1,4 +1,4 @@
-class StatusBarCoin extends StatusBar {
+class StatusBarCoin extends DrawableObject {
     IMAGES_STATUS_COINS = [
         'img/7_statusbars/1_statusbar/1_statusbar_coin/orange/0.png',
         'img/7_statusbars/1_statusbar/1_statusbar_coin/orange/20.png',

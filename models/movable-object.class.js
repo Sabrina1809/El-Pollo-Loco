@@ -24,48 +24,48 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    hit() {
-        this.energy -= 5;
+    // hit() {
+    //     this.energy -= 5;
 
-        if (this.energy < 5) {
-            this.energy = 0;
-        } else {
-            this.lastHit = new Date().getTime();
-        }
-        this.updateStatusHealth()
-    }
+    //     if (this.energy < 5) {
+    //         this.energy = 0;
+    //     } else {
+    //         this.lastHit = new Date().getTime();
+    //     }
+    //     this.updateStatusHealth()
+    // }
 
-    updateStatusHealth() {
-        let characterEnergy = this.energy;
-        this.setPercentage(characterEnergy, IMAGES_HEALTH_CHARACTER);
-    }
+    // updateStatusHealth() {
+    //     let characterEnergy = this.energy;
+    //     this.setPercentage(characterEnergy, this.IMAGES_HEALTH_CHARACTER);
+    // }
 
-    setPercentage(percentage, images) {
-        console.log(percentage);
+    // setPercentage(percentage, images) {
+    //     console.log(percentage);
         
-        let pathIndex = this.resolveImageIndex(Number(percentage));
-        console.log(pathIndex);
-        let imgPath = images[pathIndex]
-        // let path = images[this.resolveImageIndex(Number(percentage))];
-        this.img = this.imageCache[imgPath];
+    //     let pathIndex = this.resolveImageIndex(Number(percentage));
+    //     console.log(pathIndex);
+    //     let imgPath = images[pathIndex]
+    //     // let path = images[this.resolveImageIndex(Number(percentage))];
+    //     this.img = this.imageCache[imgPath];
 
-    }
+    // }
 
-    resolveImageIndex(percentage) {
-        if (percentage == 100) {
-            return 5;   
-        } else if (percentage >= 80) {
-            return 4;
-        } else if (percentage >= 60) {
-            return 3;
-        } else if (percentage >= 40) {
-            return 2
-        } else if (percentage >= 20) {
-            return 1
-        } else {
-            return 0
-        }
-    }
+    // resolveImageIndex(percentage) {
+    //     if (percentage == 100) {
+    //         return 5;   
+    //     } else if (percentage >= 80) {
+    //         return 4;
+    //     } else if (percentage >= 60) {
+    //         return 3;
+    //     } else if (percentage >= 40) {
+    //         return 2
+    //     } else if (percentage >= 20) {
+    //         return 1
+    //     } else {
+    //         return 0
+    //     }
+    // }
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;

@@ -21,6 +21,41 @@ class DrawableObject {
         }
        
     }
+
+
+    hit() {
+        this.energy -= 5;
+
+        if (this.energy < 5) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    setPercentage(percentage, images) {
+        console.log(percentage);
+        let path = images[this.resolveImageIndex(percentage)];
+        this.img = this.imageCache[path];
+    }
+
+    resolveImageIndex(percentage) {
+        if (percentage == 100) {
+            return 5;   
+        } else if (percentage >= 80) {
+            return 4;
+        } else if (percentage >= 60) {
+            return 3;
+        } else if (percentage >= 40) {
+            return 2
+        } else if (percentage >= 20) {
+            return 1
+        } else {
+            return 0
+        }
+    }
+
+
     drawFrame(ctx) {
         if (this instanceof Character) {
             ctx.beginPath();
