@@ -8,12 +8,10 @@ class StatusBar extends DrawableObject {
     //     'img/7_statusbars/1_statusbar/2_statusbar_health/orange/100.png',
     // ];
 
-    percentage;
-    test;
+    // percentage;
 
-    constructor(test) {
+    constructor() {
         super();
-        return this.test = test
         // this.loadImage('img/7_statusbars/1_statusbar/2_statusbar_health/orange/0.png');
         // this.x = 20;
         // this.y = 10;
@@ -22,29 +20,21 @@ class StatusBar extends DrawableObject {
         // this.setPercentage(100);
     }
 
-    setPercentage(percentage, images, test) {
-        console.log(test);
-        
-        this.percentage = percentage;
-        let path = images[this.resolveImageIndex(percentage)];
-        this.img = this.imageCache[path];
-        console.log(test);
 
-    }
     
-    resolveImageIndex(percentage) {
-        if (percentage == 100) {
-            return 5;   
-        } else if (percentage >= 80) {
-            return 4;
-        } else if (percentage >= 60) {
-            return 3;
-        } else if (percentage >= 40) {
-            return 2
-        } else if (percentage >= 20) {
-            return 1
-        } else {
-            return 0
-        }
-    }
+    // resolveImageIndex(percentage) {
+    //     if (percentage == 100) {
+    //         return 5;   
+    //     } else if (percentage >= 80) {
+    //         return 4;
+    //     } else if (percentage >= 60) {
+    //         return 3;
+    //     } else if (percentage >= 40) {
+    //         return 2
+    //     } else if (percentage >= 20) {
+    //         return 1
+    //     } else {
+    //         return 0
+    //     }
+    // }
 }

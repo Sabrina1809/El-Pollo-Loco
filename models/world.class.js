@@ -49,7 +49,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if(this.character.isColliding(enemy)) {
                 this.character.hit()
-                // this.statusBarHealth.setPercentage(this.character.energy);
+                // this.statusBarHealth.setPercentage();
             }
         })
         this.level.collectableObjects.forEach((collectableObject) => {

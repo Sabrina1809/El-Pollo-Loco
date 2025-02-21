@@ -12,12 +12,13 @@ class StatusBarHealth extends StatusBar {
     constructor() {
         super();
         this.loadImages(this.IMAGES_HEALTH_CHARACTER);
+        this.loadImage(this.IMAGES_HEALTH_CHARACTER[5]);
         this.x = 20;
         this.y = 10;
         this.width = 200;
         this.height = 60;
-        
-        this.setPercentage('50', this.IMAGES_HEALTH_CHARACTER);
+        // this.percentage = 100;
+        // this.setPercentage(this.percentage, this.IMAGES_HEALTH_CHARACTER);
         
     }
 }
