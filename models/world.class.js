@@ -5,7 +5,9 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    statusBar = new StatusBar();
+    statusBarHealth = new StatusBarHealth();
+    statusBarBottle = new StatusBarBottle();
+    statusBarCoin = new StatusBarCoin();
     throwableObjects = [
     ]
 
@@ -47,7 +49,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if(this.character.isColliding(enemy)) {
                 this.character.hit()
-                this.statusBar.setPercentage(this.character.energy);
+                // this.statusBarHealth.setPercentage(this.character.energy);
             }
         })
         this.level.collectableObjects.forEach((collectableObject) => {
@@ -71,7 +73,6 @@ class World {
     deleteFromCanvas(collectableObject) {
         console.log(collectableObject.x);
         for (let i = 0; i < this.level.collectableObjects.length; i++) {
-            // console.log(level1.collectableObjects[i]);
             if (this.level.collectableObjects[i].x == collectableObject.x && this.level.collectableObjects[i].y == collectableObject.y) {
                 console.log('LÖSCHEN Index', i);
                 console.log(this.level.collectableObjects[i]);
@@ -91,9 +92,12 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.collectableObjects);
+        // this.addObjectsToMap(this.level.statusBars);
 
         this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.statusBar);
+        this.addToMap(this.statusBarHealth);
+        this.addToMap(this.statusBarBottle);
+        this.addToMap(this.statusBarCoin);
         this.ctx.translate(this.camera_x, 0);
         
         this.ctx.translate(-this.camera_x, 0);
