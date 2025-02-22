@@ -128,16 +128,43 @@ class DrawableObject {
             this.y + 130 < mo.y + mo.height - 80;
         }
         if (mo instanceof CollectableBottle) {
-            return this.x + 40 + this.width - 60 > mo.x + 20 &&
-            this.y + 10 + this.height - 20 > mo.y + 60 &&
-            this.x + 40 < mo.x + 20 &&
-            this.y + 10 < mo.y + mo.height - 80;
+            // return this.x + 30 + this.width - 70 > mo.x + 35 &&
+            // this.y + 10 + this.height - 20 > mo.y + 60 &&
+            // this.x + 30 < mo.x + 35 &&
+            // this.y + 10 < mo.y + mo.height - 80;
+
+            //mo.x + 35
+            //mo.width - 60
+            //mo.y + 10
+            //mo.height -20
+
+            //this.x + 30
+            //this.width -70
+            //this.y + 130
+            //this.height - 150
+
+            if (this.x + 30 < mo.x + 35 && this.x + 30 + this.width - 70> mo.x + 30 &&
+                this.y + 130 < mo.y + 130 && this.y + 130 + this.height - 150 > mo.y + 10
+            ) {
+                console.log('character from left to bottle');
+                return true
+            } else if (this.x + 30 > mo.x + 35 && this.x + 30 < mo.x + 35 + mo.width - 70 &&
+                this.y + 130 < mo.y + 10 && this.y + 130 + this.height -150 > mo.y + 10
+            ) {
+                console.log('character from right to bottle');
+                return true
+            } else if (this.x + 30 < mo.x + 35 && this.x + 30 + this.width - 70 > mo.x + 35 + mo.width -60 &&
+                this.y + 130 < mo.y + 10 && this.y + 130 + this.height -150 > mo.y + 10
+            ) {
+                console.log('character from top to bottle');
+                return true
+            }
         }
         if (mo instanceof CollectableCoin) {
-            return this.x + 40 + this.width - 60 > mo.x + 20 &&
-            this.y + 10 + this.height - 20 > mo.y + 60 &&
-            this.x + 40 < mo.x + 20 &&
-            this.y + 10 < mo.y + mo.height - 80;
+            return this.x + 40 + this.width - 60 > mo.x + 35 &&
+            this.y + 10 + this.height - 20 > mo.y + 60 + mo.height - 70 &&
+            this.x + 40 < mo.x + 35 &&
+            this.y + 10 < mo.y + 60 + mo.height - 80;
         }
        return
     }

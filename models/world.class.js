@@ -51,13 +51,21 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if(this.character.isColliding(enemy)) {
-                this.character.hit()
+                console.log('Gegner getroffen', enemy);
+                this.character.hit();
             }
         })
         this.level.collectableObjects.forEach((collectableObject) => {
             if(this.character.isColliding(collectableObject)) {
                 if (collectableObject instanceof CollectableBottle) {
                     // console.log('Flasche getroffen', collectableObject);
+                    // console.log(this.character);
+                    console.log('bottle collected');
+                    // console.log('character:' );
+                    console.log('CHARACTER x:', this.character.x + 30, 'w:', this.character.width - 70, 'end=', this.character.x + 30 + this.character.width - 70);
+                    // console.log('bottle:' );
+                    console.log('BOTTLE x:', collectableObject.x + 35, 'w:', collectableObject.width - 70, 'end=', collectableObject.x + 35 + collectableObject.width - 70);
+                    
                     if (this.collectedBottles <= 10) {
                         this.collectedBottles++;
                         // console.log('gesammelte Flaschen: ', this.collectedBottles);
