@@ -116,10 +116,32 @@ class DrawableObject {
     isColliding(mo) {
         if (mo instanceof Chicken) {
             console.log();
-            return this.x + 30 + this.width - 70 > mo.x &&
-            this.y + 130 + this.height - 150 > mo.y &&
-            this.x + 30 < mo.x &&
-            this.y + 130 < mo.y + mo.height;
+            // return this.x + 30 + this.width - 70 > mo.x &&
+            // this.y + 130 + this.height - 150 > mo.y &&
+            // this.x + 30 < mo.x &&
+            // this.y + 130 < mo.y + mo.height;
+
+             //mo.x 
+            //mo.width 
+            //mo.y 
+            //mo.height 
+
+            //this.x + 30
+            //this.width -70
+            //this.y + 130
+            //this.height - 150
+
+            if (this.x + 30 < mo.x && this.x + 30 + this.width - 70> mo.x  &&
+                this.y + 130 < mo.y && this.y + 130 + this.height - 150 > mo.y
+            ) {
+                console.log('character from left to chicken');
+                return true
+            } else if (this.x + 30 > mo.x && this.x + 30 < mo.x + mo.width &&
+                this.y + 130 < mo.y && this.y + 130 + this.height -150 > mo.y
+            ) {
+                console.log('character from right to chicken');
+                return true
+            }
         }
         if (mo instanceof Endboss) {
             return this.x + 30 + this.width - 70 > mo.x + 20 &&
@@ -156,11 +178,6 @@ class DrawableObject {
             }
         }
         if (mo instanceof CollectableCoin) {
-            // return this.x + 40 + this.width - 60 > mo.x + 35 &&
-            // this.y + 10 + this.height - 20 > mo.y + 60 + mo.height - 70 &&
-            // this.x + 40 < mo.x + 35 &&
-            // this.y + 10 < mo.y + 60 + mo.height - 80;
-
             //mo.x + 35
             //mo.width - 70
             //mo.y + 35
