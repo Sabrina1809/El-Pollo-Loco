@@ -1,5 +1,5 @@
 class CollectableBottle extends DrawableObject {
-    x =  this.x = 0 + Math.random() * 1800;
+    x =  this.x = -200 + Math.random() * 1800;
     y = 350;
     width = 80;
     height = 80;
