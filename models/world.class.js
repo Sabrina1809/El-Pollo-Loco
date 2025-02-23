@@ -55,7 +55,8 @@ class World {
                 // this.character.hit();
                 this.deleteFromCanvas(enemy, this.level.enemies);
                 return
-            } else if(this.character.isColliding(enemy)) {
+            } else 
+            if(this.character.isColliding(enemy)) {
                 console.log('Ins Hühnchen gerannt!', enemy);
                 this.character.hit();
             }
