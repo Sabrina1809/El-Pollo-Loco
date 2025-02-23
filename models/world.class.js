@@ -50,37 +50,37 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if(this.character.isColliding(enemy)) {
-                console.log('Gegner getroffen', enemy);
+            if(this.character.jumpOnObject(enemy)) {
+                console.log('Aufs Hühnchen gesprungen!', enemy);
+                // this.character.hit();
+                this.deleteFromCanvas(enemy, this.level.enemies);
+                return
+            } else if(this.character.isColliding(enemy)) {
+                console.log('Ins Hühnchen gerannt!', enemy);
                 this.character.hit();
             }
         })
         this.level.collectableObjects.forEach((collectableObject) => {
             if(this.character.isColliding(collectableObject)) {
                 if (collectableObject instanceof CollectableBottle) {
-                    // console.log('Flasche getroffen', collectableObject);
-                    // console.log(this.character);
-                    console.log('bottle collected');
-                    // console.log('character:' );
-                    console.log('CHARACTER x:', this.character.x + 30, 'w:', this.character.width - 70, 'end=', this.character.x + 30 + this.character.width - 70);
-                    // console.log('bottle:' );
-                    console.log('BOTTLE x:', collectableObject.x + 35, 'w:', collectableObject.width - 70, 'end=', collectableObject.x + 35 + collectableObject.width - 70);
-                    
+                    // console.log('bottle collected');
+                    // console.log('CHARACTER x:', this.character.x + 30, 'w:', this.character.width - 70, 'end=', this.character.x + 30 + this.character.width - 70);
+                    // console.log('BOTTLE x:', collectableObject.x + 35, 'w:', collectableObject.width - 70, 'end=', collectableObject.x + 35 + collectableObject.width - 70);
                     if (this.collectedBottles <= 10) {
                         this.collectedBottles++;
-                        // console.log('gesammelte Flaschen: ', this.collectedBottles);
-                        this.collectObject(collectableObject);
+                        // this.collectObject(collectableObject);
+                        this.deleteFromCanvas(collectableObject, this.level.collectableObjects)
                     } 
                 } 
                 if (collectableObject instanceof CollectableCoin) {
-                    // console.log('Coin getroffen', collectableObject);
                     if (this.collectedCoins < 9) {
                         this.collectedCoins++;
-                        // console.log('gesammelte Coins: ', this.collectedCoins);
-                        this.collectObject(collectableObject);
+                        // this.collectObject(collectableObject);
+                        this.deleteFromCanvas(collectableObject, this.level.collectableObjects)
                     } else if (this.collectedCoins >= 9) {
                         this.collectedCoins = 0;
-                        this.collectObject(collectableObject);
+                        // this.collectObject(collectableObject);
+                        this.deleteFromCanvas(collectableObject, this.level.collectableObjects)
                         this.character.energy = 100;
                     }
                 }
@@ -90,17 +90,17 @@ class World {
     }
 
     collectObject(collectableObject) {
-        collectableObject = collectableObject;
+        // collectableObject = collectableObject;
         this.deleteFromCanvas(collectableObject);
     }
 
-    deleteFromCanvas(collectableObject) {
+    deleteFromCanvas(object, objects) {
         // console.log(collectableObject.x);
-        for (let i = 0; i < this.level.collectableObjects.length; i++) {
-            if (this.level.collectableObjects[i].x == collectableObject.x && this.level.collectableObjects[i].y == collectableObject.y) {
+        for (let i = 0; i < objects.length; i++) {
+            if (objects[i].x == object.x && objects[i].y == object.y) {
                 // console.log('LÖSCHEN Index', i);
                 // console.log(this.level.collectableObjects[i]);
-                this.level.collectableObjects.splice(i, 1);
+                objects.splice(i, 1);
             }
         }
     }

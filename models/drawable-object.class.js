@@ -81,7 +81,7 @@ class DrawableObject {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = "orange";
-            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.rect(this.x + 20 , this.y + 100, this.width - 40, this.height - 140);
             ctx.stroke();
         }
         if (this instanceof ThrowableObject) {
@@ -115,13 +115,7 @@ class DrawableObject {
     }
     isColliding(mo) {
         if (mo instanceof Chicken) {
-            console.log();
-            // return this.x + 30 + this.width - 70 > mo.x &&
-            // this.y + 130 + this.height - 150 > mo.y &&
-            // this.x + 30 < mo.x &&
-            // this.y + 130 < mo.y + mo.height;
-
-             //mo.x 
+            //mo.x 
             //mo.width 
             //mo.y 
             //mo.height 
@@ -131,15 +125,15 @@ class DrawableObject {
             //this.y + 130
             //this.height - 150
 
-            if (this.x + 30 < mo.x && this.x + 30 + this.width - 70> mo.x  &&
-                this.y + 130 < mo.y && this.y + 130 + this.height - 150 > mo.y
+            if (this.x + 30 < mo.x && this.x + 30 + this.width - 70 > mo.x  &&
+                this.y + 130 < mo.y && this.y + 130 + this.height - 150 > mo.y 
             ) {
-                console.log('character from left to chicken');
+                // console.log('character from left to chicken');
                 return true
             } else if (this.x + 30 > mo.x && this.x + 30 < mo.x + mo.width &&
                 this.y + 130 < mo.y && this.y + 130 + this.height -150 > mo.y
             ) {
-                console.log('character from right to chicken');
+                // console.log('character from right to chicken');
                 return true
             }
         }
@@ -147,7 +141,7 @@ class DrawableObject {
             return this.x + 30 + this.width - 70 > mo.x + 20 &&
             this.y + 130 + this.height - 150 > mo.y + 60 &&
             this.x + 30 < mo.x + 20 &&
-            this.y + 130 < mo.y + mo.height - 80;
+            this.y + 130 < mo.y + 100 + mo.height - 140;
         }
         if (mo instanceof CollectableBottle) {
             //mo.x + 35
@@ -163,17 +157,17 @@ class DrawableObject {
             if (this.x + 30 < mo.x + 35 && this.x + 30 + this.width - 70> mo.x + 30 &&
                 this.y + 130 < mo.y + 130 && this.y + 130 + this.height - 150 > mo.y + 10
             ) {
-                console.log('character from left to bottle');
+                // console.log('character from left to bottle');
                 return true
             } else if (this.x + 30 > mo.x + 35 && this.x + 30 < mo.x + 35 + mo.width - 70 &&
                 this.y + 130 < mo.y + 10 && this.y + 130 + this.height -150 > mo.y + 10
             ) {
-                console.log('character from right to bottle');
+                // console.log('character from right to bottle');
                 return true
             } else if (this.x + 30 < mo.x + 35 && this.x + 30 + this.width - 70 > mo.x + 35 + mo.width -60 &&
                 this.y + 130 < mo.y + 10 && this.y + 130 + this.height -150 > mo.y + 10
             ) {
-                console.log('character from top to bottle');
+                // console.log('character from top to bottle');
                 return true
             }
         }
@@ -207,5 +201,40 @@ class DrawableObject {
             }
         }
        return
+    }
+    jumpOnObject(mo) {
+        if (mo instanceof Chicken) {
+              //mo.x 
+            //mo.width 
+            //mo.y 
+            //mo.height 
+
+            //this.x + 30
+            //this.width -70
+            //this.y + 130
+            //this.height - 150
+            if (this.x + 30 <= mo.x && this.x + 30 + this.width - 70 >= mo.x + mo.width &&
+                this.y + 130 < mo.y && this.y + 130 + this.height - 150 > mo.y && this.y + this.height - 150 < mo.y * 1.4
+            ) {
+                console.log('von mittig oben');
+                return true
+            } 
+            
+            
+            else if (this.x + 30 < mo.x && this.x + 30 + this.width - 70 >= mo.x + (mo.width/2) && 
+                this.y + 130 < mo.y && this.y + 130 + this.height - 150 > mo.y && this.y + 130 + this.height - 150 < mo.y * 1.4
+            ) {
+                console.log('von links oben');
+                return true
+            } 
+            
+            
+            else if (this.x + 30 >= mo.x && this.x + 30 < mo.x * 1.3 && this.x + 30 + this.width - 70 >= mo.x + mo.width &&
+                this.y + 130 < mo.y && this.y + 130 + this.height -150 > mo.y && this.y + 130 + this.height - 150 < mo.y * 1.4
+            ) {
+                console.log('von rechts oben');
+                return true
+            }
+        }
     }
 }
