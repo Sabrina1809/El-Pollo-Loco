@@ -125,19 +125,24 @@ class DrawableObject {
             //this.y + 130
             //this.height - 150
 
-            if (this.x + 30 < mo.x && this.x + 30 + this.width - 70 >= mo.x   
-
-                && this.y + 130 + this.height - 150 > mo.y &&
-                this.y + 130 + this.height - 150 <= mo.y * 1.5 
+            if (this.y + 130 < mo.y && (
+                this.y + 130 + this.height - 150 > mo.y + (mo.height/2) 
+                || 
+                !this.isAboveGround()
+                )
+                && this.x + 30 < mo.x && this.x + 30 + this.width - 70 >= mo.x
             ) {
                 console.log('character from left to chicken');
-                return true
-            } else if (mo.x < this.x + 30 && mo.x + mo.width >= this.x + 30
-                && this.y + 130 + this.height - 150 > mo.y &&
-                this.y + 130 + this.height - 150 <= mo.y * 1.5 
+                this.hit()
+                // return true
+            } 
+            else if (
+                this.y + 130 < mo.y && (this.y + 130 + this.height - 150 > mo.y + (mo.height/2) || !this.isAboveGround())
+                && this.x + 30 <= mo.x + mo.width && this.x + 30 + this.width - 70 > mo.x + mo.width
             ) {
                 console.log('character from right to chicken');
-                return true
+                this.hit()
+                // return true
             }
         }
         if (mo instanceof Endboss) {
@@ -216,9 +221,8 @@ class DrawableObject {
             //this.width -70
             //this.y + 130
             //this.height - 150
-            if (this.x + 30 < mo.x && this.x + 30 + this.width - 70 >= mo.x + (mo.width/2) &&
-                this.y + 130 + this.height - 150 >= mo.y 
-                // && this.y + 130 + this.height - 150 < (mo.y + (mo.height/2))
+            if (((this.y + 130 + this.height - 150 > mo.y + (mo.height/2))) && this.y + 130 < mo.y && this.isAboveGround()
+                && this.x + 30 < mo.x && this.x + 30 + this.width -70 > (mo.x + mo.width/2) && this.x + 30 + this.width - 70 <= mo.x + mo.width
             ) {
                 console.log('von links oben');
                 return true
@@ -227,7 +231,7 @@ class DrawableObject {
             
             else if (this.x + 30 >= mo.x && this.x + 30 < mo.x + (mo.width/2) && this.x + 30 + this.width - 70 > mo.x + mo.width
              &&
-                this.y + 130 + this.height - 150 > mo.y 
+                this.y + 130 + this.height - 150 > mo.y  + (mo.height/2) && this.y + 130 < mo.y 
                 // && this.y + 130 + this.height - 150 < (mo.y + (mo.height/2))
             ) {
                 console.log('von rechts oben');
@@ -236,7 +240,7 @@ class DrawableObject {
             
             
             else if (this.x + 30 <= mo.x && this.x + 30 + this.width - 70 >= mo.x + mo.width &&
-                this.y + 130 + this.height - 150 >= mo.y 
+                this.y + 130 + this.height - 150 >= mo.y  && this.isAboveGround()
                 // && this.y + 130 + this.height - 150 < (mo.y + (mo.height/2))
             ) {
                 console.log('von mittig oben');

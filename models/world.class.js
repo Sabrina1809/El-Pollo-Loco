@@ -37,7 +37,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
-        }, 200)
+        }, 1000/60)
     }
 
     checkThrowObjects() {
@@ -50,16 +50,7 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if(this.character.jumpOnObject(enemy)) {
-                console.log('Aufs Hühnchen gesprungen!', enemy);
-                // this.character.hit();
-                this.deleteFromCanvas(enemy, this.level.enemies);
-                return
-            } else 
-            if(this.character.isColliding(enemy)) {
-                console.log('Ins Hühnchen gerannt!', enemy);
-                this.character.hit();
-            }
+            this.checkPosXAndY(this.character, enemy)
         })
         this.level.collectableObjects.forEach((collectableObject) => {
             if(this.character.isColliding(collectableObject)) {
@@ -88,6 +79,86 @@ class World {
                 
             }
         })
+    }
+
+    // checkPosXAndY(char, mo) {
+    //       //mo.x 
+    //         //mo.width 
+    //         //mo.y 
+    //         //mo.height 
+
+    //         //this.x + 30
+    //         //this.width -70
+    //         //this.y + 130
+    //         //this.height - 150
+
+    //         if (
+    //             char.y + 130 + char.height - 150 >= mo.y && // Unterkante von char berührt mo
+    //             char.y + 130 + char.height - 150 - 10 < mo.y + (mo.height / 2) && // char kommt von oben
+    //             ((char.x + 30 <= mo.x + mo.width) &&
+    //             (char.x + 30 + char.width - 70 >= mo.x) || 
+    //             (char.x + 30  >= mo.x) && (char.x + 30 + char.width - 70 > mo.x + mo.width)
+    //         )
+    //         ) {
+    //             console.log('Aufs Hühnchen gesprungen!', mo);
+    //             this.character.jump();
+    //             this.deleteFromCanvas(mo, this.level.enemies);
+    //         } else if (
+    //             char.x + 30 + char.width - 70 > mo.x && // X-Überlappung
+    //             char.x + 30 < mo.x + mo.width &&
+    //             char.y + 130 + char.height - 150 >= mo.y + (mo.height / 2) // char ist NICHT von oben gekommen
+    //         ) {
+    //             console.log('Ins Hühnchen gerannt!', mo);
+    //             this.character.hit();
+    //         }
+    //     //   {
+    //     //     if (this.character.isAboveGround() ) {
+    //     //         console.log('Aufs Hühnchen gesprungen!', mo);
+    //     //         console.log('von links',char.x + 30 < mo.x && char.x + 30 + char.width - 70 >= mo.x);
+    //     //         console.log('mittig', char.x + 30 <= mo.x && char.x + 30 + char.width - 70>= mo.x + mo.width);
+    //     //         console.log('von rechts', char.x + 30 >= mo.x && char.x + 30 + char.width - 70 > mo.x + mo.width);
+    //     //         console.log('obere Hälfte', char.y + 130 + char.height - 150 > mo.y && char.y + 130 + char.height - 150 < mo.y + (mo.height/2));
+    //     //         this.character.jump();
+
+    //     //         this.deleteFromCanvas(mo, this.level.enemies);
+    //     //         return
+    //     //     } else if (!this.character.isAboveGround()) {
+    //     //         console.log('Ins Hühnchen gerannt!', mo);
+    //     //         console.log('von links',char.x + 30 < mo.x && char.x + 30 + char.width - 70 >= mo.x);
+    //     //         console.log('von rechts', char.x + 30 >= mo.x && char.x + 30 + char.width - 70 > mo.x + mo.width);
+    //     //         console.log('untere Hälfte', char.y + 130 + char.height - 150 > mo.y + (mo.height/2));
+    //     //         this.character.hit();
+    //     //     }
+    //     // }
+    // }
+
+    checkPosXAndY(char, mo) {
+        const tolerance = 20; // Spielraum für X-Überlappung
+    
+        // Prüfen, ob der Charakter gerade tatsächlich von oben kommt (Fall-Bewegung)
+        const fallingDown = char.speedY < 0; // Angenommen, `velocityY` ist die vertikale Geschwindigkeit
+    
+        // Prüfen, ob der Charakter mit dem Gegner kollidiert UND sich dabei von oben nähert
+        if (
+            fallingDown && // Charakter darf nicht einfach hochspringen
+            char.y + 130 + char.height - 150 >= mo.y && // Unterkante von char berührt mo
+            char.y + 130 + char.height - 150 - tolerance < mo.y + (mo.height / 2) && // char kommt von oben
+            char.x + 30 + char.width - 70 > mo.x && // X-Überlappung
+            char.x + 30 < mo.x + mo.width
+        ) {
+            console.log('Aufs Hühnchen gesprungen!', mo, char);
+            this.character.jump();
+            this.deleteFromCanvas(mo, this.level.enemies);
+        } 
+        // Prüfen, ob der Charakter von der Seite dagegen läuft
+        else if (
+            char.x + 30 + char.width - 70 > mo.x && // X-Überlappung
+            char.x + 30 < mo.x + mo.width &&
+            char.y + 130 + char.height - 150 >= mo.y + (mo.height / 2) // char ist NICHT von oben gekommen
+        ) {
+            console.log('Ins Hühnchen gerannt!', mo, char);
+            this.character.hit();
+        }
     }
 
     collectObject(collectableObject) {
