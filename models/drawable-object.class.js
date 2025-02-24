@@ -125,16 +125,20 @@ class DrawableObject {
             //this.y + 130
             //this.height - 150
 
-            if (this.x + 30 < mo.x && this.x + 30 + this.width - 70 >= mo.x   
+            if (
+                !this.isAboveGround() && this.y + 130 + this.height - 150 > mo.y &&
+                this.x + 30 < mo.x && this.x + 30 + this.width - 70 >= mo.x   
 
-                && this.y + 130 + this.height - 150 > mo.y &&
-                this.y + 130 + this.height - 150 <= mo.y * 1.5 
+                // && this.y + 130 + this.height - 150 > mo.y &&
+                // this.y + 130 + this.height - 150 <= mo.y * 1.5 
             ) {
                 console.log('character from left to chicken');
                 return true
-            } else if (mo.x < this.x + 30 && mo.x + mo.width >= this.x + 30
-                && this.y + 130 + this.height - 150 > mo.y &&
-                this.y + 130 + this.height - 150 <= mo.y * 1.5 
+            } else if (
+                !this.isAboveGround() && this.y + 130 + this.height - 150 > mo.y &&
+                mo.x < this.x + 30 && mo.x + mo.width >= this.x + 30
+                // && this.y + 130 + this.height - 150 > mo.y &&
+                // this.y + 130 + this.height - 150 <= mo.y * 1.5 
             ) {
                 console.log('character from right to chicken');
                 return true
@@ -207,7 +211,7 @@ class DrawableObject {
     }
     jumpOnObject(mo) {
         if (mo instanceof Chicken) {
-              //mo.x 
+            //mo.x 
             //mo.width 
             //mo.y 
             //mo.height 
@@ -216,29 +220,29 @@ class DrawableObject {
             //this.width -70
             //this.y + 130
             //this.height - 150
-            if (this.x + 30 < mo.x && this.x + 30 + this.width - 70 >= mo.x + (mo.width/2) &&
-                this.y + 130 + this.height - 150 >= mo.y 
+            if (
+                this.isAboveGround() && this.y + 130 + this.height - 150 >= mo.y &&                this.x + 30 < mo.x && this.x + 30 + this.width - 70 >= mo.x + (mo.width/2) 
+                // && this.y + 130 + this.height - 150 >= mo.y 
                 // && this.y + 130 + this.height - 150 < (mo.y + (mo.height/2))
             ) {
+                this.jump()
                 console.log('von links oben');
                 return true
-            } 
-            
-            
-            else if (this.x + 30 >= mo.x && this.x + 30 < mo.x + (mo.width/2) && this.x + 30 + this.width - 70 > mo.x + mo.width
-             &&
-                this.y + 130 + this.height - 150 > mo.y 
+            } else if (
+                this.isAboveGround() && this.y + 130 + this.height - 150 >= mo.y &&                this.x + 30 >= mo.x && this.x + 30 < mo.x + (mo.width/2) && this.x + 30 + this.width - 70 > mo.x + mo.width
+                // && this.y + 130 + this.height - 150 > mo.y 
                 // && this.y + 130 + this.height - 150 < (mo.y + (mo.height/2))
             ) {
+                this.jump()
                 console.log('von rechts oben');
                 return true
-            } 
-            
-            
-            else if (this.x + 30 <= mo.x && this.x + 30 + this.width - 70 >= mo.x + mo.width &&
-                this.y + 130 + this.height - 150 >= mo.y 
+            } else if (
+                this.isAboveGround() && this.y + 130 + this.height - 150 >= mo.y &&
+                this.x + 30 <= mo.x && this.x + 30 + this.width - 70 >= mo.x + mo.width 
+                // && this.y + 130 + this.height - 150 >= mo.y 
                 // && this.y + 130 + this.height - 150 < (mo.y + (mo.height/2))
             ) {
+                this.jump()
                 console.log('von mittig oben');
                 return true
             }
