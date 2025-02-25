@@ -84,12 +84,16 @@ class World {
                 char.y + 130 + char.height - 150 < halfYOfMo && 
                 this.character.speedY < 0
             ) {
-               if ((char.x + 30 >= mo.x - tolerance && char.x + 30 < mo.x + mo.width - tolerance) ||
+               if ((char.x + 30 > mo.x - tolerance && char.x + 30 < mo.x + mo.width - tolerance) ||
                     (char.x + 30 + char.width - 70 < mo.x + mo.width + tolerance && char.x + 30 + char.width - 70 >= mo.x + mo.width - tolerance) ||
                     (char.x + 30 < mo.x && char.x + 30 + char.width > mo.x + mo.width)
                ) {
                 this.character.jump();
-                this.deleteFromCanvas(mo, this.level.enemies);
+                mo.loadImage(mo.IMAGE_DEAD);
+                setTimeout(() => {
+                    this.deleteFromCanvas(mo, this.level.enemies);
+                }, 150)
+             
                }
             } else if (char.y + 130 + char.height - 150 >= halfYOfMo) {
                 if (char.x + 30 < mo.x && char.x + 30 + char.width - 70 >= mo.x ||
@@ -99,7 +103,14 @@ class World {
             }
         }
         if (mo instanceof Endboss) {
+            if (
+                char.y + 130 + char.height - 150 > mo.y + 10 &&
+                char.x + 30 + char.width - 70 > mo.x + 30
+            ) {
             console.log('Endboss');
+            this.character.hit();
+
+            }
             
         }
       
