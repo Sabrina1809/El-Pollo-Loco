@@ -114,37 +114,37 @@ class DrawableObject {
         })
     }
     isColliding(mo) {
-        if (mo instanceof Chicken) {
-            //mo.x 
-            //mo.width 
-            //mo.y 
-            //mo.height 
+        // if (mo instanceof Chicken) {
+        //     //mo.x 
+        //     //mo.width 
+        //     //mo.y 
+        //     //mo.height 
 
-            //this.x + 30
-            //this.width -70
-            //this.y + 130
-            //this.height - 150
+        //     //this.x + 30
+        //     //this.width -70
+        //     //this.y + 130
+        //     //this.height - 150
 
-            if (this.y + 130 < mo.y && (
-                this.y + 130 + this.height - 150 > mo.y + (mo.height/2) 
-                || 
-                !this.isAboveGround()
-                )
-                && this.x + 30 < mo.x && this.x + 30 + this.width - 70 >= mo.x
-            ) {
-                console.log('character from left to chicken');
-                this.hit()
-                // return true
-            } 
-            else if (
-                this.y + 130 < mo.y && (this.y + 130 + this.height - 150 > mo.y + (mo.height/2) || !this.isAboveGround())
-                && this.x + 30 <= mo.x + mo.width && this.x + 30 + this.width - 70 > mo.x + mo.width
-            ) {
-                console.log('character from right to chicken');
-                this.hit()
-                // return true
-            }
-        }
+        //     if (this.y + 130 < mo.y && (
+        //         this.y + 130 + this.height - 150 > mo.y + (mo.height/2) 
+        //         || 
+        //         !this.isAboveGround()
+        //         )
+        //         && this.x + 30 < mo.x && this.x + 30 + this.width - 70 >= mo.x
+        //     ) {
+        //         console.log('character from left to chicken');
+        //         this.hit()
+        //         // return true
+        //     } 
+        //     else if (
+        //         this.y + 130 < mo.y && (this.y + 130 + this.height - 150 > mo.y + (mo.height/2) || !this.isAboveGround())
+        //         && this.x + 30 <= mo.x + mo.width && this.x + 30 + this.width - 70 > mo.x + mo.width
+        //     ) {
+        //         console.log('character from right to chicken');
+        //         this.hit()
+        //         // return true
+        //     }
+        // }
         if (mo instanceof Endboss) {
             return this.x + 30 + this.width - 70 > mo.x + 20 &&
             this.y + 130 + this.height - 150 > mo.y + 60 &&
@@ -193,59 +193,18 @@ class DrawableObject {
             if (this.x + 30 < mo.x + 35 && this.x + 30 + this.width - 70 > mo.x + 35 &&
                 this.y + 130 < mo.y + 35 + mo.height - 70 && this.y + 130 + this.height - 150 > mo.y + 35+ mo.height - 70
             ) {
-                console.log('character from left/bottom to coin');
                 return true
             } else if (
                 this.x + 30 > mo.x + 35 && this.x + 30 < mo.x + 35 + this.width - 70 &&
                 this.y + 130 < mo.y + 35 + mo.height - 70 && this.y + 130 + this.height - 150 > mo.y + 35 + mo.height - 70
             ) {
-                console.log('character from right/bottom to coin');
                 return true
             } else if (this.x + 30 < mo.x + 35 && this.x + 30 + this.width - 70 > mo.x + 35 + mo.width - 70 &&
                 this.y + 130 < mo.y + 35 + mo.height - 70 && this.y + 130 + this.height - 150 > mo.y + 35 + mo.height - 70
             ) {
-                console.log('character from bottom to coin');
                 return true
             }
         }
        return
-    }
-    jumpOnObject(mo) {
-        if (mo instanceof Chicken) {
-              //mo.x 
-            //mo.width 
-            //mo.y 
-            //mo.height 
-
-            //this.x + 30
-            //this.width -70
-            //this.y + 130
-            //this.height - 150
-            if (((this.y + 130 + this.height - 150 > mo.y + (mo.height/2))) && this.y + 130 < mo.y && this.isAboveGround()
-                && this.x + 30 < mo.x && this.x + 30 + this.width -70 > (mo.x + mo.width/2) && this.x + 30 + this.width - 70 <= mo.x + mo.width
-            ) {
-                console.log('von links oben');
-                return true
-            } 
-            
-            
-            else if (this.x + 30 >= mo.x && this.x + 30 < mo.x + (mo.width/2) && this.x + 30 + this.width - 70 > mo.x + mo.width
-             &&
-                this.y + 130 + this.height - 150 > mo.y  + (mo.height/2) && this.y + 130 < mo.y 
-                // && this.y + 130 + this.height - 150 < (mo.y + (mo.height/2))
-            ) {
-                console.log('von rechts oben');
-                return true
-            } 
-            
-            
-            else if (this.x + 30 <= mo.x && this.x + 30 + this.width - 70 >= mo.x + mo.width &&
-                this.y + 130 + this.height - 150 >= mo.y  && this.isAboveGround()
-                // && this.y + 130 + this.height - 150 < (mo.y + (mo.height/2))
-            ) {
-                console.log('von mittig oben');
-                return true
-            }
-        }
     }
 }

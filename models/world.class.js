@@ -55,23 +55,17 @@ class World {
         this.level.collectableObjects.forEach((collectableObject) => {
             if(this.character.isColliding(collectableObject)) {
                 if (collectableObject instanceof CollectableBottle) {
-                    // console.log('bottle collected');
-                    // console.log('CHARACTER x:', this.character.x + 30, 'w:', this.character.width - 70, 'end=', this.character.x + 30 + this.character.width - 70);
-                    // console.log('BOTTLE x:', collectableObject.x + 35, 'w:', collectableObject.width - 70, 'end=', collectableObject.x + 35 + collectableObject.width - 70);
                     if (this.collectedBottles <= 10) {
                         this.collectedBottles++;
-                        // this.collectObject(collectableObject);
                         this.deleteFromCanvas(collectableObject, this.level.collectableObjects)
                     } 
                 } 
                 if (collectableObject instanceof CollectableCoin) {
                     if (this.collectedCoins < 9) {
                         this.collectedCoins++;
-                        // this.collectObject(collectableObject);
                         this.deleteFromCanvas(collectableObject, this.level.collectableObjects)
                     } else if (this.collectedCoins >= 9) {
                         this.collectedCoins = 0;
-                        // this.collectObject(collectableObject);
                         this.deleteFromCanvas(collectableObject, this.level.collectableObjects)
                         this.character.energy = 100;
                     }
@@ -81,126 +75,39 @@ class World {
         })
     }
 
-    // checkPosXAndY(char, mo) {
-    //       //mo.x 
-    //         //mo.width 
-    //         //mo.y 
-    //         //mo.height 
-
-    //         //this.x + 30
-    //         //this.width -70
-    //         //this.y + 130
-    //         //this.height - 150
-
-    //         if (
-    //             char.y + 130 + char.height - 150 >= mo.y && // Unterkante von char berührt mo
-    //             char.y + 130 + char.height - 150 - 10 < mo.y + (mo.height / 2) && // char kommt von oben
-    //             ((char.x + 30 <= mo.x + mo.width) &&
-    //             (char.x + 30 + char.width - 70 >= mo.x) || 
-    //             (char.x + 30  >= mo.x) && (char.x + 30 + char.width - 70 > mo.x + mo.width)
-    //         )
-    //         ) {
-    //             console.log('Aufs Hühnchen gesprungen!', mo);
-    //             this.character.jump();
-    //             this.deleteFromCanvas(mo, this.level.enemies);
-    //         } else if (
-    //             char.x + 30 + char.width - 70 > mo.x && // X-Überlappung
-    //             char.x + 30 < mo.x + mo.width &&
-    //             char.y + 130 + char.height - 150 >= mo.y + (mo.height / 2) // char ist NICHT von oben gekommen
-    //         ) {
-    //             console.log('Ins Hühnchen gerannt!', mo);
-    //             this.character.hit();
-    //         }
-    //     //   {
-    //     //     if (this.character.isAboveGround() ) {
-    //     //         console.log('Aufs Hühnchen gesprungen!', mo);
-    //     //         console.log('von links',char.x + 30 < mo.x && char.x + 30 + char.width - 70 >= mo.x);
-    //     //         console.log('mittig', char.x + 30 <= mo.x && char.x + 30 + char.width - 70>= mo.x + mo.width);
-    //     //         console.log('von rechts', char.x + 30 >= mo.x && char.x + 30 + char.width - 70 > mo.x + mo.width);
-    //     //         console.log('obere Hälfte', char.y + 130 + char.height - 150 > mo.y && char.y + 130 + char.height - 150 < mo.y + (mo.height/2));
-    //     //         this.character.jump();
-
-    //     //         this.deleteFromCanvas(mo, this.level.enemies);
-    //     //         return
-    //     //     } else if (!this.character.isAboveGround()) {
-    //     //         console.log('Ins Hühnchen gerannt!', mo);
-    //     //         console.log('von links',char.x + 30 < mo.x && char.x + 30 + char.width - 70 >= mo.x);
-    //     //         console.log('von rechts', char.x + 30 >= mo.x && char.x + 30 + char.width - 70 > mo.x + mo.width);
-    //     //         console.log('untere Hälfte', char.y + 130 + char.height - 150 > mo.y + (mo.height/2));
-    //     //         this.character.hit();
-    //     //     }
-    //     // }
-    // }
-
-    // checkPosXAndY(char, mo) {
-    //     const tolerance = 20; // Spielraum für X-Überlappung
-    
-    //     // Prüfen, ob der Charakter gerade tatsächlich von oben kommt (Fall-Bewegung)
-    //     const fallingDown = char.speedY < 0; // Angenommen, `velocityY` ist die vertikale Geschwindigkeit
-    
-    //     // Prüfen, ob der Charakter mit dem Gegner kollidiert UND sich dabei von oben nähert
-    //     if (
-    //         fallingDown && // Charakter darf nicht einfach hochspringen
-    //         char.y + 130 + char.height - 150 >= mo.y && // Unterkante von char berührt mo
-    //         char.y + 130 + char.height - 150 - tolerance < mo.y + (mo.height / 2) && // char kommt von oben
-    //         char.x + 30 + char.width - 70 > mo.x && // X-Überlappung
-    //         char.x + 30 < mo.x + mo.width
-    //     ) {
-    //         console.log('Aufs Hühnchen gesprungen!', mo, char);
-    //         this.character.jump();
-    //         this.deleteFromCanvas(mo, this.level.enemies);
-    //     } 
-    //     // Prüfen, ob der Charakter von der Seite dagegen läuft
-    //     else if (
-    //         char.x + 30 + char.width - 70 > mo.x && // X-Überlappung
-    //         char.x + 30 < mo.x + mo.width &&
-    //         char.y + 130 + char.height - 150 >= mo.y + (mo.height / 2) // char ist NICHT von oben gekommen
-    //     ) {
-    //         console.log('Ins Hühnchen gerannt!', mo, char);
-    //         this.character.hit();
-    //     }
-    // }
-
     checkPosXAndY(char, mo) {
-        let tolerance = mo.width/2;
-        let halfYOfMo = mo.y + (mo.height/2);
-
-        if (
-                char.y + 130 + char.height - 150 >= mo.y - tolerance
-            &&  char.y + 130 + char.height - 150 < halfYOfMo 
-            && this.character.speedY < 0
-        ) {
-           if (
-            (char.x + 30 >= mo.x - tolerance && char.x + 30 < mo.x + mo.width - tolerance) ||
-            (char.x + 30 + char.width - 70 < mo.x + mo.width + tolerance && char.x + 30 + char.width - 70 >= mo.x + mo.width - tolerance) ||
-            (char.x + 30 < mo.x && char.x + 30 + char.width > mo.x + mo.width)
-           ) {
-            console.log('Character jumping on chicken');
-            this.character.jump();
-            this.deleteFromCanvas(mo, this.level.enemies);
-           }
-            
-        } else if (char.y + 130 + char.height - 150 >= halfYOfMo) {
-            if (char.x + 30 < mo.x && char.x + 30 + char.width - 70 >= mo.x ||
-                char.x + 30 + char.width - 70 > mo.x + mo.width && char.x + 30 <= mo.x + mo.width) {
-                    console.log('character walking into chicken');
-                    this.character.hit();
+        if (mo instanceof Chicken) {
+            let tolerance = mo.width/2;
+            let halfYOfMo = mo.y + (mo.height/2);
+    
+            if (char.y + 130 + char.height - 150 >= mo.y - tolerance &&  
+                char.y + 130 + char.height - 150 < halfYOfMo && 
+                this.character.speedY < 0
+            ) {
+               if ((char.x + 30 >= mo.x - tolerance && char.x + 30 < mo.x + mo.width - tolerance) ||
+                    (char.x + 30 + char.width - 70 < mo.x + mo.width + tolerance && char.x + 30 + char.width - 70 >= mo.x + mo.width - tolerance) ||
+                    (char.x + 30 < mo.x && char.x + 30 + char.width > mo.x + mo.width)
+               ) {
+                this.character.jump();
+                this.deleteFromCanvas(mo, this.level.enemies);
+               }
+            } else if (char.y + 130 + char.height - 150 >= halfYOfMo) {
+                if (char.x + 30 < mo.x && char.x + 30 + char.width - 70 >= mo.x ||
+                    char.x + 30 + char.width - 70 > mo.x + mo.width && char.x + 30 <= mo.x + mo.width) {
+                        this.character.hit();
+                }
             }
         }
-        
-    }
-
-    collectObject(collectableObject) {
-        // collectableObject = collectableObject;
-        this.deleteFromCanvas(collectableObject);
+        if (mo instanceof Endboss) {
+            console.log('Endboss');
+            
+        }
+      
     }
 
     deleteFromCanvas(object, objects) {
-        // console.log(collectableObject.x);
         for (let i = 0; i < objects.length; i++) {
             if (objects[i].x == object.x && objects[i].y == object.y) {
-                // console.log('LÖSCHEN Index', i);
-                // console.log(this.level.collectableObjects[i]);
                 objects.splice(i, 1);
             }
         }
