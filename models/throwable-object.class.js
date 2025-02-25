@@ -32,7 +32,7 @@ class ThrowableObject extends MovableObject {
         this.speedY = 24;
         this.applyGravity();
         setInterval(() => {
-            this.x += 10
+            this.x += 8
         }, 1000/60)
         setInterval(() => {
             this.playAnimation(this.IMAGES_THROWING);
