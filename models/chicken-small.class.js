@@ -19,39 +19,22 @@ class ChickenSmall extends Chicken {
 
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png')
-        this.x = 300 + Math.random() * 500;
+        this.x = 800 + Math.random() * 1000;
         this.loadImages(this.IMAGES_WALKING);
         this.animate();
         this.acceleration = 0.8;
-        // this.fallingChicken();
-        let jumpingChicken = this.fallingChicken()
-           
-        
-        
-      
-        
+        let interval = this.fallingChicken();
     }
 
     fallingChicken() {
-       
         setTimeout(() => {
-            this.y = 350;
-            // this.y = 370;
-            // this.y = 50;
-            // this.loadImages(this.IMAGES_WALKING);
+            this.y = 355;
             let fallingChicken =  setInterval(() => {
                 if (this.y < 370) {
                     this.y -= this.speedY;
-                    this.speedY -= this.acceleration;
-                    console.log('fallingChicken erreicht');
-                    
+                    this.speedY -= this.acceleration; 
                 }
-              
-            }, 1000/25)
-           
-        
-        }, 2000)
+            }, 1000/25)       
+        }, (Math.random()*10000).toFixed(0))
     }
-
-
 }
