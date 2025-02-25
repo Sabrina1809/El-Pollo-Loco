@@ -132,33 +132,62 @@ class World {
     //     // }
     // }
 
+    // checkPosXAndY(char, mo) {
+    //     const tolerance = 20; // Spielraum für X-Überlappung
+    
+    //     // Prüfen, ob der Charakter gerade tatsächlich von oben kommt (Fall-Bewegung)
+    //     const fallingDown = char.speedY < 0; // Angenommen, `velocityY` ist die vertikale Geschwindigkeit
+    
+    //     // Prüfen, ob der Charakter mit dem Gegner kollidiert UND sich dabei von oben nähert
+    //     if (
+    //         fallingDown && // Charakter darf nicht einfach hochspringen
+    //         char.y + 130 + char.height - 150 >= mo.y && // Unterkante von char berührt mo
+    //         char.y + 130 + char.height - 150 - tolerance < mo.y + (mo.height / 2) && // char kommt von oben
+    //         char.x + 30 + char.width - 70 > mo.x && // X-Überlappung
+    //         char.x + 30 < mo.x + mo.width
+    //     ) {
+    //         console.log('Aufs Hühnchen gesprungen!', mo, char);
+    //         this.character.jump();
+    //         this.deleteFromCanvas(mo, this.level.enemies);
+    //     } 
+    //     // Prüfen, ob der Charakter von der Seite dagegen läuft
+    //     else if (
+    //         char.x + 30 + char.width - 70 > mo.x && // X-Überlappung
+    //         char.x + 30 < mo.x + mo.width &&
+    //         char.y + 130 + char.height - 150 >= mo.y + (mo.height / 2) // char ist NICHT von oben gekommen
+    //     ) {
+    //         console.log('Ins Hühnchen gerannt!', mo, char);
+    //         this.character.hit();
+    //     }
+    // }
+
     checkPosXAndY(char, mo) {
-        const tolerance = 20; // Spielraum für X-Überlappung
-    
-        // Prüfen, ob der Charakter gerade tatsächlich von oben kommt (Fall-Bewegung)
-        const fallingDown = char.speedY < 0; // Angenommen, `velocityY` ist die vertikale Geschwindigkeit
-    
-        // Prüfen, ob der Charakter mit dem Gegner kollidiert UND sich dabei von oben nähert
+        let tolerance = mo.width/2;
+        let halfYOfMo = mo.y + (mo.height/2);
+
         if (
-            fallingDown && // Charakter darf nicht einfach hochspringen
-            char.y + 130 + char.height - 150 >= mo.y && // Unterkante von char berührt mo
-            char.y + 130 + char.height - 150 - tolerance < mo.y + (mo.height / 2) && // char kommt von oben
-            char.x + 30 + char.width - 70 > mo.x && // X-Überlappung
-            char.x + 30 < mo.x + mo.width
+                char.y + 130 + char.height - 150 >= mo.y - tolerance
+            &&  char.y + 130 + char.height - 150 < halfYOfMo 
+            && this.character.speedY < 0
         ) {
-            console.log('Aufs Hühnchen gesprungen!', mo, char);
+           if (
+            (char.x + 30 >= mo.x - tolerance && char.x + 30 < mo.x + mo.width - tolerance) ||
+            (char.x + 30 + char.width - 70 < mo.x + mo.width + tolerance && char.x + 30 + char.width - 70 >= mo.x + mo.width - tolerance) ||
+            (char.x + 30 < mo.x && char.x + 30 + char.width > mo.x + mo.width)
+           ) {
+            console.log('Character jumping on chicken');
             this.character.jump();
             this.deleteFromCanvas(mo, this.level.enemies);
-        } 
-        // Prüfen, ob der Charakter von der Seite dagegen läuft
-        else if (
-            char.x + 30 + char.width - 70 > mo.x && // X-Überlappung
-            char.x + 30 < mo.x + mo.width &&
-            char.y + 130 + char.height - 150 >= mo.y + (mo.height / 2) // char ist NICHT von oben gekommen
-        ) {
-            console.log('Ins Hühnchen gerannt!', mo, char);
-            this.character.hit();
+           }
+            
+        } else if (char.y + 130 + char.height - 150 >= halfYOfMo) {
+            if (char.x + 30 < mo.x && char.x + 30 + char.width - 70 >= mo.x ||
+                char.x + 30 + char.width - 70 > mo.x + mo.width && char.x + 30 <= mo.x + mo.width) {
+                    console.log('character walking into chicken');
+                    this.character.hit();
+            }
         }
+        
     }
 
     collectObject(collectableObject) {
