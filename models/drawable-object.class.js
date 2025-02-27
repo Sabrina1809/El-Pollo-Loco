@@ -81,7 +81,7 @@ class DrawableObject {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = "orange";
-            ctx.rect(this.x + 30 , this.y + 100, this.width - 50, this.height - 140);
+            ctx.rect(this.x + 40 , this.y + 110, this.width - 60, this.height - 160);
             ctx.stroke();
         }
         if (this instanceof ThrowableObject) {

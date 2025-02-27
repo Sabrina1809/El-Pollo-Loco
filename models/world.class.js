@@ -45,6 +45,51 @@ class World {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.collectedBottles--;
+            let endbossHit = false;
+            let hitEndbossIntervall = setInterval(() => {
+                this.collBottleEndboss(bottle, this.level.enemies[this.level.enemies.length - 1], hitEndbossIntervall);
+            },200)
+            setInterval(() => {
+                if (endbossHit == true) {
+                    this.deleteFromCanvas(bottle);
+                }
+                return endbossHit = false;
+            }, 200)
+        }
+    }
+
+    collBottleEndboss(bottle, enemy, hitEndbossIntervall) {
+        if ((bottle.y > enemy.y && bottle.x + bottle.width/2) > enemy.x) {
+            console.log((bottle.x + bottle.width/2), this.level.enemies[this.level.enemies.length - 1]);
+            console.log(this.level.enemies[this.level.enemies.length - 1].IMAGES_HURT);
+            
+            enemy.playAnimation(this.level.enemies[this.level.enemies.length - 1].IMAGES_HURT);
+            setTimeout(()=>{
+                clearInterval(hitEndbossIntervall);
+            },1500)
+            
+            let endbossWalkInterval = setInterval(() => {
+                enemy.playAnimation(this.level.enemies[this.level.enemies.length - 1].IMAGES_WALK);
+                enemy.x -= 1;
+            }, 200);
+        
+            setTimeout(()=>{
+                clearInterval(endbossWalkInterval);
+            },2000);
+
+            let endbossAttackInterval = setInterval(() => {
+                enemy.playAnimation(this.level.enemies[this.level.enemies.length - 1].IMAGES_ATTACK);
+                enemy.x -= 1;
+            }, 100);
+
+            setTimeout(()=>{
+                clearInterval(endbossAttackInterval);
+            },2500)
+       
+            if (this.level.enemies[this.level.enemies.length - 1].hit == 4) {
+                enemy.playAnimation(this.level.enemies[this.level.enemies.length - 1].IMAGES_DEAD);
+            } 
+          
         }
     }
 
@@ -182,7 +227,7 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);   
-        // mo.drawFrame(this.ctx);
+        mo.drawFrame(this.ctx);
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
