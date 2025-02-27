@@ -75,75 +75,127 @@ class World {
         })
     }
 // Funktion aufräumen / aufteilen nach Chicken und ChickenSmall und Maße Koll einzeln anpassen. 
+
     checkPosXAndY(char, mo) {
+        let tolerance = mo.width/2;
+        let halfYOfMo = mo.y + (mo.height/2);
         if (mo instanceof Chicken) {
-            let tolerance = mo.width/2;
-            let halfYOfMo = mo.y + (mo.height/2);
-    
             if (char.y + 130 + char.height - 150 >= mo.y - tolerance &&  
                 char.y + 130 + char.height - 150 < halfYOfMo && 
-                this.character.speedY < 0
-            ) {
-                if (mo instanceof ChickenSmall) {
-                    if ((char.x + 30 + 60 >= mo.x - mo.width && char.x + 30 + 60 <= mo.x + mo.width + mo.width) ||
-                    (char.x + 30 + char.width - 70 - 60 <= mo.x + mo.width + mo.width && char.x + 30 + char.width - 70 - 60 > mo.x - mo.width) ||
-                    (char.x + 30 + 60 < mo.x && char.x + 30 + char.width - 70 - 60 > mo.x + mo.width)
-                    ) {
+                this.character.speedY < 0) { 
+                    if (char.x + (char.width/2) > mo.x - tolerance*2 && char.x + (char.width/2) < mo.x + mo.width + tolerance*2) {
                         this.character.jump();
                         mo.loadImage(mo.IMAGE_DEAD);
                         setTimeout(() => {
                             this.deleteFromCanvas(mo, this.level.enemies);
                         }, 150)
                     }
-                } else {
-                    if ((char.x + 30 >= mo.x && char.x + 30 <= mo.x + mo.width) ||
-                    (char.x + 30 + char.width - 70 <= mo.x + mo.width && char.x + 30 + char.width - 70 > mo.x) ||
-                    (char.x + 30 < mo.x && char.x + 30 + char.width - 70 > mo.x + mo.width)
-               ) {
-                this.character.jump();
-                mo.loadImage(mo.IMAGE_DEAD);
-                setTimeout(() => {
-                    this.deleteFromCanvas(mo, this.level.enemies);
-                }, 150)
-             
-               }
+            } else if (char.y + 130 + char.height - 150 >= halfYOfMo && this.character.speed > -20) {
+                if (char.x + 30 < mo.x && char.x + 30 + char.width - 70 >= mo.x ||
+                    char.x + 30 + char.width - 70 > mo.x + mo.width && char.x + 30 <= mo.x + mo.width) {
+                        this.character.hit();
                 }
-            
-            } else {
-                if (mo instanceof ChickenSmall) {
-                    if ( char.y + 130 + char.height - 150 >= halfYOfMo && 
-                        this.character.speed > -20) {
+            }
+        }
+        if (mo instanceof ChickenSmall) {
+            if (char.y + 130 + char.height - 150 >= mo.y - tolerance &&  
+                char.y + 130 + char.height - 150 < halfYOfMo && 
+                this.character.speedY < 0) { 
+                    if (char.x + (char.width/2) > mo.x - tolerance*2 && char.x + (char.width/2) < mo.x + mo.width + tolerance*2) {
+                        this.character.jump();
+                        mo.loadImage(mo.IMAGE_DEAD);
+                        setTimeout(() => {
+                            this.deleteFromCanvas(mo, this.level.enemies);
+                        }, 150)
+                    }
+                    else if (char.y + 130 + char.height - 150 >= halfYOfMo && this.character.speed > -20) {
                         if (char.x + 30 + char.width - 70 - 80 > mo.x - mo.width && char.x + 30 + char.width - 70 - 80 <= mo.x + mo.width + mo.width ||
-                            char.x + 30 + 80 > mo.x - mo.width && char.x + 30 + 80 <= mo.x + mo.width + mo.width) {
-                                this.character.hit();
-                                console.log(this.character.speedY);
-                            }
+                        char.x + 30 + 80 > mo.x - mo.width && char.x + 30 + 80 <= mo.x + mo.width + mo.width) {
+                            this.character.hit();
+                            console.log(this.character.speedY);
                         }
-                } else {
-                    if (char.y + 130 + char.height - 150 >= halfYOfMo && 
-                        this.character.speed > -20) {
-                        if (char.x + 30 < mo.x && char.x + 30 + char.width - 70 >= mo.x ||
-                            char.x + 30 + char.width - 70 > mo.x + mo.width && char.x + 30 <= mo.x + mo.width) {
-                                this.character.hit();
-                            }
-                        }
+                    }
                 }
-            } 
-               
         }
         if (mo instanceof Endboss) {
-            if (
-                char.y + 130 + char.height - 150 > mo.y + 10 &&
+            if (char.y + 130 + char.height - 150 > mo.y + 10 &&
                 char.x + 30 + char.width - 70 > mo.x + 30
             ) {
-            console.log('Endboss');
-            this.character.hit();
-
+                console.log('Endboss');
+                this.character.hit();
             }
-            
         }
-      
     }
+
+    // checkPosXAndY(char, mo) {
+    //     if (mo instanceof Chicken) {
+    //         let tolerance = mo.width/2;
+    //         let halfYOfMo = mo.y + (mo.height/2);
+    
+    //         if (char.y + 130 + char.height - 150 >= mo.y - tolerance &&  
+    //             char.y + 130 + char.height - 150 < halfYOfMo && 
+    //             this.character.speedY < 0
+    //         ) {
+    //             if (mo instanceof ChickenSmall) {
+    //                 if ((char.x + 30 + 60 >= mo.x - mo.width && char.x + 30 + 60 <= mo.x + mo.width + mo.width) ||
+    //                 (char.x + 30 + char.width - 70 - 60 <= mo.x + mo.width + mo.width && char.x + 30 + char.width - 70 - 60 > mo.x - mo.width) ||
+    //                 (char.x + 30 + 60 < mo.x && char.x + 30 + char.width - 70 - 60 > mo.x + mo.width)
+    //                 ) {
+    //                     this.character.jump();
+    //                     mo.loadImage(mo.IMAGE_DEAD);
+    //                     setTimeout(() => {
+    //                         this.deleteFromCanvas(mo, this.level.enemies);
+    //                     }, 150)
+    //                 }
+    //             } else {
+    //                 if ((char.x + 30 >= mo.x && char.x + 30 <= mo.x + mo.width) ||
+    //                 (char.x + 30 + char.width - 70 <= mo.x + mo.width && char.x + 30 + char.width - 70 > mo.x) ||
+    //                 (char.x + 30 < mo.x && char.x + 30 + char.width - 70 > mo.x + mo.width)
+    //            ) {
+    //             this.character.jump();
+    //             mo.loadImage(mo.IMAGE_DEAD);
+    //             setTimeout(() => {
+    //                 this.deleteFromCanvas(mo, this.level.enemies);
+    //             }, 150)
+             
+    //            }
+    //             }
+            
+    //         } else {
+    //             if (mo instanceof ChickenSmall) {
+    //                 if ( char.y + 130 + char.height - 150 >= halfYOfMo && 
+    //                     this.character.speed > -20) {
+    //                     if (char.x + 30 + char.width - 70 - 80 > mo.x - mo.width && char.x + 30 + char.width - 70 - 80 <= mo.x + mo.width + mo.width ||
+    //                         char.x + 30 + 80 > mo.x - mo.width && char.x + 30 + 80 <= mo.x + mo.width + mo.width) {
+    //                             this.character.hit();
+    //                             console.log(this.character.speedY);
+    //                         }
+    //                     }
+    //             } else {
+    //                 if (char.y + 130 + char.height - 150 >= halfYOfMo && 
+    //                     this.character.speed > -20) {
+    //                     if (char.x + 30 < mo.x && char.x + 30 + char.width - 70 >= mo.x ||
+    //                         char.x + 30 + char.width - 70 > mo.x + mo.width && char.x + 30 <= mo.x + mo.width) {
+    //                             this.character.hit();
+    //                         }
+    //                     }
+    //             }
+    //         } 
+               
+    //     }
+    //     if (mo instanceof Endboss) {
+    //         if (
+    //             char.y + 130 + char.height - 150 > mo.y + 10 &&
+    //             char.x + 30 + char.width - 70 > mo.x + 30
+    //         ) {
+    //         console.log('Endboss');
+    //         this.character.hit();
+
+    //         }
+            
+    //     }
+      
+    // }
 
     deleteFromCanvas(object, objects) {
         for (let i = 0; i < objects.length; i++) {
