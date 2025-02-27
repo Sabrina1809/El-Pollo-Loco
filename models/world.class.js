@@ -84,9 +84,9 @@ class World {
                 char.y + 130 + char.height - 150 < halfYOfMo && 
                 this.character.speedY < 0
             ) {
-               if ((char.x + 30 > mo.x - tolerance && char.x + 30 < mo.x + mo.width - tolerance) ||
-                    (char.x + 30 + char.width - 70 < mo.x + mo.width + tolerance && char.x + 30 + char.width - 70 >= mo.x + mo.width - tolerance) ||
-                    (char.x + 30 < mo.x && char.x + 30 + char.width > mo.x + mo.width)
+               if ((char.x + 30 > mo.x - char.width/2 && char.x + 30 < mo.x + mo.width - tolerance) ||
+                    (char.x + 30 + char.width - 70 < mo.x + mo.width + char.width/2 && char.x + 30 + char.width - 70 > mo.x) ||
+                    (char.x + 30 < mo.x && char.x + 30 + char.width - 70 > mo.x + mo.width)
                ) {
                 this.character.jump();
                 mo.loadImage(mo.IMAGE_DEAD);
@@ -95,10 +95,14 @@ class World {
                 }, 150)
              
                }
-            } else if (char.y + 130 + char.height - 150 >= halfYOfMo) {
+            } else if (
+                char.y + 130 + char.height - 150 >= halfYOfMo && 
+                this.character.speed > -20) {
                 if (char.x + 30 < mo.x && char.x + 30 + char.width - 70 >= mo.x ||
                     char.x + 30 + char.width - 70 > mo.x + mo.width && char.x + 30 <= mo.x + mo.width) {
                         this.character.hit();
+                        console.log(this.character.speedY);
+                        
                 }
             }
         }
