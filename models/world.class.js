@@ -49,19 +49,20 @@ class World {
             let hitEndbossIntervall = setInterval(() => {
                 this.collBottleEndboss(bottle, this.level.enemies[this.level.enemies.length - 1], hitEndbossIntervall);
             },200)
-            setInterval(() => {
-                if (endbossHit == true) {
-                    this.deleteFromCanvas(bottle);
-                }
-                return endbossHit = false;
-            }, 200)
+            return hitEndbossIntervall
+            // setInterval(() => {
+            //     if (endbossHit == true) {
+            //         this.deleteFromCanvas(bottle);
+            //     }
+            //     return endbossHit = false;
+            // }, 200)
         }
     }
 
     collBottleEndboss(bottle, enemy, hitEndbossIntervall) {
         if ((bottle.y > enemy.y && bottle.x + bottle.width/2) > enemy.x) {
-            console.log((bottle.x + bottle.width/2), this.level.enemies[this.level.enemies.length - 1]);
-            console.log(this.level.enemies[this.level.enemies.length - 1].IMAGES_HURT);
+            // console.log((bottle.x + bottle.width/2), this.level.enemies[this.level.enemies.length - 1]);
+            // console.log(this.level.enemies[this.level.enemies.length - 1].IMAGES_HURT);
             
             enemy.playAnimation(this.level.enemies[this.level.enemies.length - 1].IMAGES_HURT);
             setTimeout(()=>{

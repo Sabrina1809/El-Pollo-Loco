@@ -6,7 +6,7 @@ class Endboss extends MovableObject {
     width = 400;
     currentImage = 0;
     hit = false;
-    energy = 100;
+    energy = 100;     
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -57,6 +57,25 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_WALK);
         this.animate();
+        let interval = setInterval(() => {
+            console.log(this.energy);
+            if (this.energy == 0) {
+             
+                this.x -= 0;
+                this.playAnimation(this.IMAGES_DEAD);
+                setTimeout(() => {
+                    
+                    clearInterval(interval)
+                    clearInterval(world.hitEndbossInterval)
+
+                }, 2000)
+               
+            }
+        }, 200) 
+    }
+
+    checkEnergy() {
+      
     }
 
     animate() {
