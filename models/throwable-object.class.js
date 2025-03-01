@@ -46,51 +46,31 @@ class ThrowableObject extends MovableObject {
 
     checkCollWithEnemy(collInterval) {
         for (let i = 0; i < world.level.enemies.length; i++) {
-            // console.log(world.level.enemies);
             if (this.y > world.level.enemies[i].y && 
                 this.x + 30 + (this.width - 60) /2 < world.level.enemies[i].x + world.level.enemies[i].width &&
                 this.x + 30 + (this.width - 60) /2 > world.level.enemies[i].x
             ) {
-
-                console.log('Flasche auf Gegner');
-                console.log(world.level.enemies[i]);
-                this.speedY = 0;
-                this.speedX = 0;
-                this.x += 0;
-                this.playAnimation(this.IMAGES_SPLASH);
-                console.log(world.level.enemies[i].energy);
-
-     
-
-             
+                let splashInterrval = setInterval(() => {
+                    this.playAnimation(this.IMAGES_SPLASH);
+                    this.speedY = 0;
+                    this.speedX = 0;
+                    this.x += 0;
+                }, 60);
                 setTimeout(() => {
-                    console.log('timeout erreicht');
-                    
-                    world.throwableObjects.shift();
                     clearInterval(collInterval);
-                   
+                    setTimeout(() => {
+                        world.throwableObjects.shift();
+                        clearInterval(splashInterrval);
+                    }, 200)
                     if (world.level.enemies[i] instanceof Endboss) {
                         if (world.level.enemies[i].energy >= 0) {
                             return world.level.enemies[i].energy -= 20
                         } 
-                        // else {
-                        //     console.log('chicken dead');
-                        //     setTimeout(()=>{
-                        //         clearInterval(this.hitEndbossIntervall);
-                        //         world.level.enemies[i].playAnimation(world.level.enemies[i].IMAGES_DEAD)
-
-                        //     }, 500)
-                        // }
                     }
-               
-                   
                     return
-                }, 60)
-                // world.throwableObjects.shift();
-                // clearInterval(collInterval)
+                }, 60);
                 return
             }
-           
         }
     }
 
