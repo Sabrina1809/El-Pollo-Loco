@@ -57,27 +57,6 @@ class World {
         ) {
             clearInterval(hitEndbossIntervall)
             return this.level.enemies[this.level.enemies.length - 1].hit = true;
-            enemy.playAnimation(this.level.enemies[this.level.enemies.length - 1].IMAGES_HURT);
-            setTimeout(()=>{
-                clearInterval(hitEndbossIntervall);
-                let endbossWalkInterval = setInterval(() => {
-                    enemy.playAnimation(this.level.enemies[this.level.enemies.length - 1].IMAGES_WALK);
-                    enemy.x -= 6;
-                }, 150);
-            
-                setTimeout(()=>{
-                    clearInterval(endbossWalkInterval);
-                    let endbossAttackInterval = setInterval(() => {
-                        enemy.playAnimation(this.level.enemies[this.level.enemies.length - 1].IMAGES_ATTACK);
-                    }, 500);
-                    setTimeout(()=>{
-                        clearInterval(endbossAttackInterval);
-                    },1000)
-                },1250);    
-            },1000)
-            if (this.level.enemies[this.level.enemies.length - 1].hit == 4) {
-                enemy.playAnimation(this.level.enemies[this.level.enemies.length - 1].IMAGES_DEAD);
-            } 
         }
     }
 

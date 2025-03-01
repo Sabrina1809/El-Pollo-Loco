@@ -50,6 +50,7 @@ class ThrowableObject extends MovableObject {
                 this.x + 30 + (this.width - 60) /2 < world.level.enemies[i].x + world.level.enemies[i].width &&
                 this.x + 30 + (this.width - 60) /2 > world.level.enemies[i].x
             ) {
+              
                 let splashInterrval = setInterval(() => {
                     this.playAnimation(this.IMAGES_SPLASH);
                     this.speedY = 0;
@@ -59,17 +60,20 @@ class ThrowableObject extends MovableObject {
                 setTimeout(() => {
                     clearInterval(collInterval);
                     setTimeout(() => {
+                    //     if (world.level.enemies[i] instanceof Endboss) {
+                    //         return world.level.enemies[i].energy = world.level.enemies[i].energy - 20
+                    //  }
                         world.throwableObjects.shift();
                         clearInterval(splashInterrval);
                     }, 200)
-                    if (world.level.enemies[i] instanceof Endboss) {
-                        if (world.level.enemies[i].energy >= 0) {
-                            return world.level.enemies[i].energy -= 20
-                        } 
-                    }
+                    // if (world.level.enemies[i] instanceof Endboss) {
+                    //     if (world.level.enemies[i].energy >= 0) {
+                    //         return world.level.enemies[i].energy -= 20
+                    //     } 
+                    // }
                     return
                 }, 60);
-                return
+                return 
             }
         }
     }
