@@ -32,13 +32,17 @@ class ThrowableObject extends MovableObject {
                 this.speedY -= this.acceleration;
             }
         }, 1000/25)
-        let throwInterval = this.throw(gravityInterval);
+        this.throw(gravityInterval);
         let collInterval = setInterval(() => {
             this.checkCollWithEnemy()
         }, 100) 
         setTimeout(() => {
+            console.log(world.throwableObjects);
+                        
             world.throwableObjects.shift();
-        }, 1800);
+            console.log(world.throwableObjects);
+            clearInterval(collInterval);
+        }, 1500);
     }
 
     throw(gravityInterval) {
@@ -51,22 +55,29 @@ class ThrowableObject extends MovableObject {
             this.playAnimation(this.IMAGES_THROWING);
         }, 100)
         let collInterval = setInterval(() => {
-            this.checkCollWithEnemy(collInterval, xInterval, gravityInterval, throwInterval);
-        }, 20)
+            this.checkCollWithEnemy(collInterval, xInterval, gravityInterval, );
+        }, 100)
     }
 
-    checkCollWithEnemy(collInterval, xInterval, gravityInterval, throwInterval) {
+    checkCollWithEnemy(collInterval, xInterval, gravityInterval, ) {
         for (let i = 0; i < world.level.enemies.length; i++) {
             if (this.y > world.level.enemies[i].y && this.y < world.level.enemies[i].y + world.level.enemies[i].height &&
                 this.x + 30 + (this.width/2 - 60) < world.level.enemies[i].x + world.level.enemies[i].width &&
                 this.x + 30 + (this.width/2 - 60) > world.level.enemies[i].x
             ) {
-                clearInterval(throwInterval);
+                // clearInterval(throwInterval);
+                clearInterval(collInterval);
+
                 let splashInterrval = setInterval(() => {
                     this.playAnimation(this.IMAGES_SPLASH);
-                    
+                    // setTimeout(()=> {
+                    //     console.log(world.throwableObjects);
+                        
+                    //     world.throwableObjects.shift();
+                    //     console.log(world.throwableObjects);
+
+                    // },900)
                 }, 150);
-                clearInterval(collInterval);
                 clearInterval(gravityInterval);
                 clearInterval(xInterval);
                 this.speedY = 0;
