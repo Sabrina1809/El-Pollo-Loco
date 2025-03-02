@@ -26,55 +26,58 @@ class ThrowableObject extends MovableObject {
         this.y = y; 
         this.height = 80;
         this.width = 80;
-        let throwInterval = this.throw();
-        let collInterval = this.checkCollWithEnemy()
+        let gravityInterval =   setInterval(() => {
+            if(this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
+        }, 1000/25)
+        let throwInterval = this.throw(gravityInterval);
+        let collInterval = setInterval(() => {
+            this.checkCollWithEnemy()
+        }, 100) 
+        setTimeout(() => {
+            world.throwableObjects.shift();
+        }, 2000);
     }
 
-    throw() {
+    throw(gravityInterval) {
         this.speedY = 24;
-        this.applyGravity();
+        // this.applyGravity();
         let xInterval = setInterval(() => {
             this.x += 8
         }, 1000/60)
-        setInterval(() => {
+        let throwInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_THROWING);
         }, 100)
         let collInterval = setInterval(() => {
-            this.checkCollWithEnemy(collInterval);
-        }, 100)
+            this.checkCollWithEnemy(collInterval, xInterval, gravityInterval, throwInterval);
+        }, 20)
     }
 
-    checkCollWithEnemy(collInterval) {
+    checkCollWithEnemy(collInterval, xInterval, gravityInterval, throwInterval) {
         for (let i = 0; i < world.level.enemies.length; i++) {
-            if (this.y > world.level.enemies[i].y && 
-                this.x + 30 + (this.width - 60) /2 < world.level.enemies[i].x + world.level.enemies[i].width &&
-                this.x + 30 + (this.width - 60) /2 > world.level.enemies[i].x
+            if (this.y > world.level.enemies[i].y && this.y < world.level.enemies[i].y + world.level.enemies[i].height &&
+                this.x + 30 + (this.width/2 - 60) < world.level.enemies[i].x + world.level.enemies[i].width &&
+                this.x + 30 + (this.width/2 - 60) > world.level.enemies[i].x
             ) {
-                world.level.enemies[i].dead = true;
                 let splashInterrval = setInterval(() => {
-                    this.speedY = 0;
-                    this.speedX = 0;
-                    this.x += 0;
-
                     this.playAnimation(this.IMAGES_SPLASH);
-                  
-                }, 60);
-                setTimeout(() => {
-                    clearInterval(collInterval);
-                    setTimeout(() => {
-                    //     if (world.level.enemies[i] instanceof Endboss) {
-                    //         return world.level.enemies[i].energy = world.level.enemies[i].energy - 20
-                    //  }
-                        world.throwableObjects.shift();
-                        clearInterval(splashInterrval);
-                    }, 200)
-                    // if (world.level.enemies[i] instanceof Endboss) {
-                    //     if (world.level.enemies[i].energy >= 0) {
-                    //         return world.level.enemies[i].energy -= 20
-                    //     } 
-                    // }
-                    return
-                }, 2000);
+                }, 200);
+                this.speedY = 0;
+                this.speedX = 0;
+                this.x += 0;
+                this.y += 0;
+                clearInterval(collInterval);
+                clearInterval(gravityInterval);
+                clearInterval(xInterval);
+                clearInterval(throwInterval);
+              
+              
+                if (world.level.enemies[i] instanceof Chicken) {
+                    console.log('chicken dead');
+                    world.level.enemies[i].dead = true;
+                }
                 return 
             }
         }
