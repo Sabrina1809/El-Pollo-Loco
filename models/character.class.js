@@ -145,7 +145,7 @@ class Character extends MovableObject {
                          
                         // },2000);
                         setTimeout(() => {
-                            world.ctx.clearRect(this.x, this.y, this.width, this.height)
+                            // world.ctx.clearRect(this.x, this.y, this.width, this.height)
                             clearInterval(deadInterval)
                         }, 2000)
                     }, 250);
