@@ -9,6 +9,25 @@ function init() {
     
 }
 
+document.getElementById('button-openmenu').addEventListener('click', openMenu)
+
+function openMenu() {
+    console.log('openMenu erreicht');
+    if (document.getElementById('button-openmenu').classList.contains('closed')) {
+        document.getElementById('button-openmenu').classList.remove('closed');
+        document.getElementById('info-line').style.width = 'fit-content';
+        document.getElementById('more-buttons').style.width = 'fit-content';
+        document.getElementById('info-line').style.visibility = 'visible';
+        document.getElementById('more-buttons').style.visibility = 'visible';
+    } else {
+        document.getElementById('button-openmenu').classList.add('closed');
+        document.getElementById('info-line').style.width = '0px';
+        document.getElementById('more-buttons').style.width = '0px';
+        document.getElementById('info-line').style.visibility = 'hidden';
+        document.getElementById('more-buttons').style.visibility = 'hidden';
+    }
+}
+
 window.addEventListener('keydown', () => {
     // console.log(event);
     if(event.keyCode == 39) {

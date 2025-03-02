@@ -163,15 +163,22 @@ canvas {
         width: 70%;
         margin: 0 auto;
         & .opened-menu {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: end;
+            gap: 10px;
             & .info-line {
-                display: flex;
-                justify-content: end;
+                font-size: 20px;
                 margin-bottom: 10px;
+                width: fit-content;
                 max-width: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
+                background-color: rgba(0, 0, 0, 0.75);
                 border-radius: 5px;
                 padding: 10px;
                 text-align: center;
+                visibility: hidden;
             }
             & .menu-buttons {
                 display: flex;
@@ -181,6 +188,7 @@ canvas {
                     display: flex;
                     gap: 20px;
                     justify-content: end;
+                    visibility: hidden;
                 }
             }
         }
