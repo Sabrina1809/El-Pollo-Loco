@@ -52,8 +52,43 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
         this.applyGravity();
-        this.animate();
+        let checkMoveInterval = setInterval(()=> {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+                        this.otherDirection = false;
+                        this.moveRight();
+                    } 
+                    if (this.world.keyboard.LEFT && this.x >= -500) {
+                        this.otherDirection = true;
+                        this.moveLeft(this.speed);
+                    }
+                    if (!this.isAboveGround() && this.world.keyboard.UP || !this.isAboveGround() && this.world.keyboard.SPACE) {
+                        this.jump();
+                    }
+                    this.world.camera_x = -this.x + 60;
+        }, 1000/60)
+        let checkAnimationInterval = setInterval(() => {
+            if (this.isDead()) {
+                clearInterval(checkMoveInterval);
+                this.playAnimation(this.IMAGES_DEAD);
+                setTimeout(()=> {
+                    this.y += 20;
+                }, 1200)
+               
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
+            } else if (this.isAboveGround()) {
+                this.playAnimation(this.IMAGES_JUMPING);
+            } else {
+                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                    this.playAnimation(this.IMAGES_WALKING);
+                } else {
+                    this.loadImage('img/2_character_pepe/2_walk/W-21.png');
+                }
+            }
+        }, 100)
     }
+
+    
 
     animate() {
         setInterval(() => {
