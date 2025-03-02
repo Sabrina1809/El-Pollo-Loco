@@ -4,7 +4,7 @@
     font-family: 'Agu Display';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/agu-display-v1-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    src: url('./fonts/agu-display-v1-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   }
 
 /* londrina-solid-300 - latin */
@@ -13,7 +13,7 @@
     font-family: 'Londrina Solid';
     font-style: normal;
     font-weight: 300;
-    src: url('../fonts/londrina-solid-v17-latin-300.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    src: url('./fonts/londrina-solid-v17-latin-300.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   }
   /* londrina-solid-regular - latin */
   @font-face {
@@ -21,7 +21,7 @@
     font-family: 'Londrina Solid';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/londrina-solid-v17-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    src: url('./fonts/londrina-solid-v17-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   }
 
 /* kelly-slab-regular - latin */
@@ -30,7 +30,7 @@
     font-family: 'Kelly Slab';
     font-style: normal;
     font-weight: 400;
-    src: url('../fonts/kelly-slab-v17-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    src: url('./fonts/kelly-slab-v17-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   }
 
 * {
@@ -51,6 +51,7 @@ body {
     background-size: cover;
     backdrop-filter: grayscale(0.5);
     font-family: 'Kelly Slab', Arial, Helvetica, sans-serif;
+    position: relative;
 }
 
 h1 {
@@ -79,20 +80,145 @@ canvas {
     display: block;
 }
 
-@media only screen and (max-width: 720px) {
-    canvas {
-        width: 100%;
+.overlay-game {
+    width: 720px;
+    height: 200px;
+    /* border: 2px solid white; */
+    position: absolute;
+    top: calc(50% + 40px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    font-size: 28px;
+    color: white;
+    padding-bottom: 30px;
+    & .button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgba(256,256,256, 0.8);
+        text-shadow: 0 0 2px black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 0 5px black;
+        & img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 2px black);
+        }
+        #button-jump-img {
+            rotate: 270deg;
+        }
+        #button-left-img {
+            rotate: 180deg;
+        }
+        .button-openmenu {
+            margin-bottom: 10px;
+        }
+        &:hover {
+            box-shadow: 0 0 5px black inset;
+            cursor: pointer;
+        }
+        &:active {
+            scale: 0.95;
+        }
+    }
+    & .buttons-game {
+        position: absolute;
+        left: 0;
+        right: 0;
+        /* border: 1px solid orange; */
+        display: flex;
+        flex-direction: column;
+        align-items:center;
+        justify-content: space-between;
+        gap: 20px;
+        & .buttons-row-top, 
+        .buttons-row-bottom {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            margin: 0 auto;
+            /* border: 1px solid green; */
+
+           
+        }
+      
+        /* & .buttons-row-bottom {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            margin: 0 auto;
+            border: 1px solid green;
+        } */
+    }
+    & .menu-more {
+        /* border: 1px solid orangered; */
+        display: flex;
+        flex-direction: column;
+        width: 70%;
+        margin: 0 auto;
+        & .opened-menu {
+            & .info-line {
+                display: flex;
+                justify-content: end;
+                margin-bottom: 10px;
+                max-width: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                border-radius: 5px;
+                padding: 10px;
+                text-align: center;
+            }
+            & .menu-buttons {
+                display: flex;
+                justify-content: end;
+                gap: 20px;
+                & .more-buttons {
+                    display: flex;
+                    gap: 20px;
+                    justify-content: end;
+                }
+            }
+        }
     }
 }
+
+@media only screen and (max-width: 720px) {
+    canvas, .overlay-game {
+        width: 100%;
+    }
+  
+}
+
+
 
 @media only screen and (max-height: 600px) {
     h1 {
         display: none;
     }
+    .overlay-game {
+        height: 200px;
+        top: 50%;
+
+    }
+   
+}
+
+@media  (max-height: 600px) {
+    
+    /* .overlay-game {
+        height: 50vh;
+    } */
+   
 }
 
 @media only screen and (max-height: 480px) {
     canvas {
         height: 100vh;
     }
+   
 }
