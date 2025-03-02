@@ -36,6 +36,7 @@
 * {
     margin: 0;
     padding: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -174,7 +175,7 @@ canvas {
                 margin-bottom: 10px;
                 width: fit-content;
                 max-width: 100%;
-                background-color: rgba(0, 0, 0, 0.75);
+                background-color: rgba(0, 0, 0, 0.6);
                 border-radius: 5px;
                 padding: 10px;
                 text-align: center;

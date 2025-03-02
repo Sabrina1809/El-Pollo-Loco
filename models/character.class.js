@@ -61,7 +61,7 @@ class Character extends MovableObject {
                         this.otherDirection = true;
                         this.moveLeft(this.speed);
                     }
-                    if (!this.isAboveGround() && this.world.keyboard.UP || !this.isAboveGround() && this.world.keyboard.SPACE) {
+                    if (!this.isAboveGround() && this.world.keyboard.UP) {
                         this.jump();
                     }
                     this.world.camera_x = -this.x + 60;
@@ -100,7 +100,7 @@ class Character extends MovableObject {
                 this.otherDirection = true;
                 this.moveLeft(this.speed);
             }
-            if (!this.isAboveGround() && this.world.keyboard.UP || !this.isAboveGround() && this.world.keyboard.SPACE) {
+            if (!this.isAboveGround() && this.world.keyboard.UP) {
                 this.jump();
             }
             this.world.camera_x = -this.x + 60;

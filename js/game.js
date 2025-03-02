@@ -29,7 +29,6 @@ function openMenu() {
 }
 
 window.addEventListener('keydown', () => {
-    // console.log(event);
     if(event.keyCode == 39) {
         keyboard.RIGHT = true;
     }
@@ -45,9 +44,9 @@ window.addEventListener('keydown', () => {
     if(event.keyCode == 32) {
         keyboard.SPACE = true;
     }
-    if(event.keyCode == 68) {
-        keyboard.D = true;
-    }
+    // if(event.keyCode == 68) {
+    //     keyboard.D = true;
+    // }
 }) 
 
 window.addEventListener('keyup', () => {
@@ -67,7 +66,65 @@ window.addEventListener('keyup', () => {
     if(event.keyCode == 32) {
         keyboard.SPACE = false;
     }
-    if(event.keyCode == 68) {
-        keyboard.D = false;
-    }
+    // if(event.keyCode == 68) {
+    //     keyboard.D = false;
+    // }
 }) 
+
+document.getElementById('button-throw').addEventListener('touchstart', () => {
+    // console.log('throw');
+    keyboard.SPACE = true;
+});
+document.getElementById('button-throw').addEventListener('touchend', () => {
+    // console.log('throw end');
+    keyboard.SPACE = false;
+});
+
+document.getElementById('button-jump').addEventListener('touchstart', () => {
+    // console.log('jump');
+    keyboard.UP = true;
+});
+document.getElementById('button-jump').addEventListener('touchend', () => {
+    // console.log('jump end');
+    keyboard.UP = false;
+});
+
+document.getElementById('button-left').addEventListener('touchstart', () => {
+    // console.log('left');
+    keyboard.LEFT = true;
+
+});
+document.getElementById('button-left').addEventListener('touchend', () => {
+    // console.log('left end');
+    keyboard.LEFT = false;
+});
+
+document.getElementById('button-right').addEventListener('touchstart', () => {
+    // console.log('right');
+    keyboard.RIGHT = true;
+});
+document.getElementById('button-right').addEventListener('touchend', () => {
+    // console.log('right end');
+    keyboard.RIGHT = false;
+});
+
+document.getElementById('button-home').addEventListener('touchstart', () => {
+    console.log('home');
+});
+document.getElementById('button-home').addEventListener('touchend', () => {
+    console.log('home end');
+});
+
+document.getElementById('button-screen').addEventListener('touchstart', () => {
+    console.log('screen');
+});
+document.getElementById('button-screen').addEventListener('touchend', () => {
+    console.log('screen end');
+});
+
+document.getElementById('button-sound').addEventListener('touchstart', () => {
+    console.log('sound');
+});
+document.getElementById('button-sound').addEventListener('touchend', () => {
+    console.log('sound end');
+});
