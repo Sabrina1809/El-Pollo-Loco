@@ -52,11 +52,13 @@ class World {
     }
 
     collBottleEndboss(bottle, enemy, hitEndbossIntervall) {
-        if (bottle.y + bottle.y/2 > enemy.y && bottle.y + bottle.y/2 < enemy.y + enemy.width &&
-            bottle.x + bottle.width/2 > enemy.x && bottle.x + bottle.width/2 < enemy.x + enemy.width
-        ) {
-            clearInterval(hitEndbossIntervall)
-            return this.level.enemies[this.level.enemies.length - 1].hit = true;
+        if (this.level.enemies[this.level.enemies.length - 1] instanceof Endboss) {
+            if (bottle.y + bottle.y/2 > enemy.y && bottle.y + bottle.y/2 < enemy.y + enemy.width &&
+                bottle.x + bottle.width/2 > enemy.x && bottle.x + bottle.width/2 < enemy.x + enemy.width
+            ) {
+                clearInterval(hitEndbossIntervall)
+                return this.level.enemies[this.level.enemies.length - 1].hit = true;
+            }
         }
     }
 

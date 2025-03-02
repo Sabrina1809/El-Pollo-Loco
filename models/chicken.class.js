@@ -35,11 +35,11 @@ class Chicken extends MovableObject {
 
     checkHit(animateInterval, image) {
         if (this.dead == true) {
-            clearInterval(animateInterval);
+            // clearInterval(animateInterval);
             this.loadImage(image);
             setTimeout(() => {
                 world.deleteFromCanvas(this, world.level.enemies);
-            }, 150)
+            }, 600)
         }
     }
 
