@@ -50,12 +50,14 @@ class ThrowableObject extends MovableObject {
                 this.x + 30 + (this.width - 60) /2 < world.level.enemies[i].x + world.level.enemies[i].width &&
                 this.x + 30 + (this.width - 60) /2 > world.level.enemies[i].x
             ) {
-              
+                world.level.enemies[i].dead = true;
                 let splashInterrval = setInterval(() => {
-                    this.playAnimation(this.IMAGES_SPLASH);
                     this.speedY = 0;
                     this.speedX = 0;
                     this.x += 0;
+
+                    this.playAnimation(this.IMAGES_SPLASH);
+                  
                 }, 60);
                 setTimeout(() => {
                     clearInterval(collInterval);
@@ -72,7 +74,7 @@ class ThrowableObject extends MovableObject {
                     //     } 
                     // }
                     return
-                }, 60);
+                }, 2000);
                 return 
             }
         }

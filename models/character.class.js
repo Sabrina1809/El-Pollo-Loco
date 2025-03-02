@@ -73,7 +73,7 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
+                // this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
@@ -85,6 +85,39 @@ class Character extends MovableObject {
                     this.loadImage('img/2_character_pepe/2_walk/W-21.png');
                 }
             }
-        }, 100);
+           
+        }, 200);
+        
+        setInterval(() => {
+            if (this.world.character.energy <= 0) {
+                // console.log('tot');
+                let hurtInterval = setInterval(() => {
+                    this.playAnimation(this.IMAGES_HURT);
+                }, 200);
+                setTimeout(() => {
+                    clearInterval(hurtInterval)
+                }, 1000);
+                setTimeout(() => {
+                    let deadInterval = setInterval(() => {
+                        this.playAnimation(this.IMAGES_DEAD);
+                       
+                        // setTimeout(()=> {
+                        //     setInterval(() => {
+                        //         this.width -= 15;
+                        //         this.y -= 15;
+                        //         this.height -= 20;
+                        //     },250)
+                         
+                        // },2000);
+                        setTimeout(() => {
+                            world.ctx.clearRect(this.x, this.y, this.width, this.height)
+                            clearInterval(deadInterval)
+                        }, 2000)
+                    }, 250);
+                  
+                }, 1000)
+            }
+        }, 200)
+     
     }
 }
