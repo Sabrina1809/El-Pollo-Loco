@@ -20,22 +20,21 @@ class Chicken extends MovableObject {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.x = 300 + Math.random() * 1500;
         this.loadImages(this.IMAGES_WALKING);
-        // this.applyGravity();
-        // this.animate();
-        let animateInterval =  setInterval(() => {
+        this.applyGravity();
+        this.animate();
+        // setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
-        }, 200);
+        // }, 200);
         setInterval(() => {
-            // this.moveLeft(this.speed)
+            this.moveLeft(this.speed)
         }, 1000 / 60);
         let hitInterval = setInterval(() => {
-            this.checkHit(animateInterval, 'img/3_enemies_chicken/chicken_normal/2_dead/dead.png')
+            this.checkHit('img/3_enemies_chicken/chicken_normal/2_dead/dead.png')
         }, 100)
     }
 
-    checkHit(animateInterval, image) {
+    checkHit(image) {
         if (this.dead == true) {
-            // clearInterval(animateInterval);
             this.loadImage(image);
             setTimeout(() => {
                 world.deleteFromCanvas(this, world.level.enemies);
@@ -52,7 +51,7 @@ class Chicken extends MovableObject {
             this.playAnimation(this.IMAGES_WALKING);
         }, 200);
         setInterval(() => {
-            // this.moveLeft(this.speed)
+            this.moveLeft(this.speed)
         }, 1000 / 60)
        
     }

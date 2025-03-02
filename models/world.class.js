@@ -8,6 +8,7 @@ class World {
     statusBarHealth = new StatusBarHealth();
     statusBarBottle = new StatusBarBottle();
     statusBarCoin = new StatusBarCoin();
+    statusBarEndboss = new StatusBarEndboss();
     throwableObjects = [
     ]
     collectedBottles = 0;
@@ -175,6 +176,7 @@ class World {
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarCoin);
+        this.addToMap(this.statusBarEndboss);
         this.ctx.translate(this.camera_x, 0);
         
         this.ctx.translate(-this.camera_x, 0);

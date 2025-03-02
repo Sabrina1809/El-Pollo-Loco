@@ -21,13 +21,13 @@ class ChickenSmall extends Chicken {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png')
         this.x = 800 + Math.random() * 1000;
         this.loadImages(this.IMAGES_WALKING);
-        let animateInterval =  setInterval(() => {
+        // setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
-        }, 200);
+        // }, 200);
         this.acceleration = 0.8;
         let interval = this.fallingChicken();
         let hitInterval = setInterval(() => {
-            this.checkHit(animateInterval, 'img/3_enemies_chicken/chicken_small/2_dead/dead.png')
+            this.checkHit('img/3_enemies_chicken/chicken_small/2_dead/dead.png')
         }, 100)
     }
 
