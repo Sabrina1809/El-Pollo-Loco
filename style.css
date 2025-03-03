@@ -53,6 +53,7 @@ body {
     backdrop-filter: grayscale(0.5); */
     font-family: 'Kelly Slab', Arial, Helvetica, sans-serif;
     position: relative;
+    overflow: hidden;
 }
 
 h1 {
@@ -224,25 +225,76 @@ canvas {
     top: calc(50% - 212px);
     height: calc(480px);
     width: 720px;
-    border: 2px solid white;
     display: none;
     border-radius: 18px;
+    overflow: hidden;
     & img {
         position: absolute;
         border-radius: 18px;
-        top: calc(50%);
-        transform: translateY(-50%);
+        top: calc(0%);
     }
     #img-msg-win {
+        right: 50%;
         width: 500px;
         height: auto;
         display: none;
-        right: calc(50% - 250px);
+        animation: winningMessage 5s ease-in-out;
     }
     #img-msg-loose {
         width: 720px;
         height: 480px;
         display: none;
+        animation: loosingMessage 5s linear;
+    }
+}
+
+@keyframes loosingMessage {
+    0% {
+        transform: translateY(0%);
+        height: 0%;
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(0%);
+        height: 100%;
+        opacity: 1;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0%);
+        height: 100%;
+        opacity: 0; 
+    }
+}
+
+@keyframes winningMessage {
+    0% {
+        transform: translateX(100%) rotate(360deg) translateY(-50%);
+        scale: 0.0;
+        opacity: 0;
+    }
+    25% {
+        transform: translateX(50%) rotate(0deg);
+        opacity: 0.75;
+    }
+    30% {
+        opacity: 1;
+        scale: 1.1;
+    }
+    32% {
+        scale: 1.0;
+    }
+    70% {
+        transform: translateX(50%) rotate(0deg);
+        opacity: 1;
+        scale: 1.0;
+    }
+    100% {
+        scale: 0.0;
+        transform: translateX(-100%) rotate(0deg);
+        opacity: 0;
     }
 }
 

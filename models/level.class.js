@@ -16,7 +16,6 @@ class Level {
     }
 
     checkWinOrLoose() {
-        // this.win;
         let interval = setInterval(() => {
             if (this.win == true) {
                 setTimeout(() => {
@@ -25,6 +24,10 @@ class Level {
                     document.getElementById('img-msg-win').style.display = 'block';
                 },2000)
                 clearInterval(interval)
+                setTimeout(() => {
+                    document.getElementById('overlay-messages').style.display = 'none';
+                    document.getElementById('img-msg-win').style.display = 'none';
+                }, 7000);
                 return
             } else if (this.win == false) {
                 setTimeout(() => {
@@ -33,6 +36,10 @@ class Level {
                     document.getElementById('img-msg-loose').style.display = 'block';
                 },2000)
                 clearInterval(interval)
+                setTimeout(() => {
+                    document.getElementById('overlay-messages').style.display = 'none';
+                    document.getElementById('img-msg-loose').style.display = 'none';
+                }, 7000);
                 return
             }
         },200)

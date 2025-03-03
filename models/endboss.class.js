@@ -68,7 +68,10 @@ class Endboss extends MovableObject {
            this.endbossHurt();
         } else if (this.hit == true && this.energy <= 20) {
             this.endbossDead();  
-            world.level.win = true; 
+            setTimeout(() => {
+                world.level.win = true; 
+            },1000)
+          
         }
         return this.hit = false;
     }
