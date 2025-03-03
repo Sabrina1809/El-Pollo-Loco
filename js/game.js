@@ -195,6 +195,26 @@ document.getElementById('button-right').addEventListener('touchcancel', () => {
 //     console.log('sound');
 // });
 
+
+
+function openInfoDescription(descriptionID, arrowID) {
+    let descrElement = document.getElementById(descriptionID);
+    let arrowElement = document.getElementById(arrowID);
+
+    if (descrElement.classList.contains('descr-visible')) {
+        descrElement.classList.remove('descr-visible');
+        descrElement.style.display = 'none';
+        arrowElement.style.transform = 'rotate(0deg)';
+
+     
+    } else {
+   
+        descrElement.classList.add('descr-visible');
+        descrElement.style.display = 'flex';
+        arrowElement.style.transform = 'rotate(180deg)';
+    }
+}
+
 document.getElementById("button-screen").addEventListener("click", toggleFullscreen);
 document.getElementById("button-screen").addEventListener("touchstart", toggleFullscreen);
 

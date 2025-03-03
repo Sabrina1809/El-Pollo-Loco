@@ -148,6 +148,12 @@ canvas {
     }
 }
 
+.descr-visible {
+    height: 100%;
+    opacity: 1;
+    display: flex;
+}
+
 .overlay-ctn {
     display: block;
     flex-direction: column;
@@ -192,19 +198,29 @@ canvas {
             overflow-y: scroll;
             overflow-x: hidden;
             display: none;
+            color: white;
             & .info-ctn {
                 background-color: rgba(0, 0, 0, 0.75);
                 border-radius: 5px;
                 padding: 5px;
                 margin: 10px;
-                & h2 {
-                    color: white;
+                & .info-headline {
+                    display: flex;
+                    padding: 5px 10px;
+                    align-items: center;
+                    gap: 20px;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                    & img {
+                        width: 16px;
+                        height: 16px;
+                    }
                 }
                 & .info-line {
-                
-                    padding: 5px;
-                    color: white;
-                    margin: 0 auto;
+                    height: 100%;
+                    display: none;
+                    padding: 5px 10px;
                 }
             }
         }

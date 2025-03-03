@@ -16,60 +16,51 @@
         <h1>El Pollo Loco</h1>
         <canvas id="canvas" width="720" height="480"></canvas>
         <div class="overlay-ctn">
-            <!-- <div id="overlay-start" class="overlay-start">
-                <div id="level1" class="level">
-                    <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
-                </div>
-                <div id="level2" class="level">
-                    <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
-                    <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
-                </div>
-                <div id="level3" class="level">
-                    <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
-                    <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
-                    <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
-                </div>
-                <img id="#img-overlay-start" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="background start">
-            </div> -->
             <div id="overlay-settings" class="overlay-settings">
-             
-                    <div id="info-block" class="info-block">
-                        <div class="info-ctn info-keys-ctn">
+                <div id="info-block" class="info-block">
+                    <div class="info-ctn info-keys-ctn">
+                        <div id="keys-headline" onclick="openInfoDescription('info-keys-description', 'img-arrow-keys')" class="info-headline">
                             <h2 id="info-keys-title">Tastatur</h2>
-                            <div id="info-keys-description" class="info-line"><b>li/re:</b> Preil li/re, <b>Sprung:</b> Pfeil hoch, <b>Wurf:</b> Leertaste</div>
+                            <img id="img-arrow-keys" src="img/buttons/icons8-pfeil-runter-24.png" alt=" Pfeil nach unten zum ausklappen">
                         </div>
-                        <div class="info-ctn info-story-ctn">
+                        <div id="info-keys-description" class="info-line"><b>li/re:</b> Preil li/re, <b>Sprung:</b> Pfeil hoch, <b>Wurf:</b> Leertaste</div>
+                    </div>
+                    <div class="info-ctn info-story-ctn">
+                        <div id="story-headline" onclick="openInfoDescription('info-story-description', 'img-arrow-story')" class="info-headline">
                             <h2 id="info-story-title">Story</h2>
-                            <div id="info-story-description" class="info-line">Unser Freund Pepe benötigt deine Hilfe. Erlegt zusammen die verrückt gewordenen und gefährlichen Hühnchen. Sammle Salsa Flaschen und werfe sie zum Angriff, sammle Münzen um dein Energielevel aufzufrischen. Auf geht's! Viel Erfolg.</div>
+                            <img id="img-arrow-story" src="img/buttons/icons8-pfeil-runter-24.png" alt=" Pfeil nach unten zum ausklappen">
                         </div>
-                        <div class="info-ctn info-impressum-ctn">
-                            <h2 id="info-impressum-title">Impressum</h2>
-                            <div id="info-impressum-description" class="info-line">Sabrina Fritz <br>Mühlmatt 54 <br>77723 Gengenbach <br>01741495568 <br> (C) 2025 Sabrina Fritz</div>
-                        </div>
+                        <div id="info-story-description" class="info-line">Unser Freund Pepe benötigt deine Hilfe. Erlegt zusammen die verrückt gewordenen und gefährlichen Hühnchen. Sammle Salsa Flaschen und werfe sie zum Angriff, sammle Münzen um dein Energielevel aufzufrischen. Auf geht's! Viel Erfolg.</div>
                     </div>
-                    <div class="settings-buttons">
-                        <div id="button-home" class="button button-home">
-                            <img src="img/buttons/icons8-zuhause-30.png" alt="Haus">
+                    <div class="info-ctn info-impressum-ctn">
+                        <div id="impressum-headline" onclick="openInfoDescription('info-impressum-description', 'img-arrow-impressum')" class="info-headline">
+                            <h2 onclick="" id="info-impressum-title">Impressum</h2>
+                            <img id="img-arrow-impressum" src="img/buttons/icons8-pfeil-runter-24.png" alt=" Pfeil nach unten zum ausklappen">
                         </div>
-                        <div id="button-screen" class="button button-screen">
-                            <img id="img-fullscreen" class="img-screen" src="img/buttons/icons8-design-65.png" alt="Fullscreen">
-                            <img id="img-smallscreen" class="img-screen" src="img/buttons/icons8-steuern-65.png" alt="small screen">
-                        </div>
-                        <div id="button-sound" class="button button-sound">
-                            <img src="img/buttons/icons8-kein-ton-50 (1).png" alt="Sound off">
-                        </div>
-                        <div id="button-openinfo" class="button button-openinfo closed">
-                            <img src="img/buttons/icons8-information-50 (1).png" alt="drei Punkte / mehr">
-                        </div>
+                        <div id="info-impressum-description" class="info-line">Sabrina Fritz <br>Mühlmatt 54 <br>77723 Gengenbach <br>01741495568 <br> (C) 2025 Sabrina Fritz</div>
                     </div>
-              
+                </div>
+                <div class="settings-buttons">
+                    <div id="button-home" class="button button-home">
+                        <img src="img/buttons/icons8-zuhause-30.png" alt="Haus">
+                    </div>
+                    <div id="button-screen" class="button button-screen">
+                        <img id="img-fullscreen" class="img-screen" src="img/buttons/icons8-design-65.png" alt="Fullscreen">
+                        <img id="img-smallscreen" class="img-screen" src="img/buttons/icons8-steuern-65.png" alt="small screen">
+                    </div>
+                    <div id="button-sound" class="button button-sound">
+                        <img src="img/buttons/icons8-kein-ton-50 (1).png" alt="Sound off">
+                    </div>
+                    <div id="button-openinfo" class="button button-openinfo closed">
+                        <img src="img/buttons/icons8-information-50 (1).png" alt="drei Punkte / mehr">
+                    </div>
+                </div>
             </div>
             <div id="overlay-game" class="overlay-game">
                 <div class="buttons-row-top">
                     <div id="button-throw" class="button button-throw">
                         <img src="img/buttons/icons8-wasserflasche-50 (1).png" alt="Flasche">
                     </div>
-                 
                     <div id="button-left" class="button button-left">
                         <img id="button-left-img" src="img/buttons/icons8-right-arrow-52.png" alt="Pfeil hoch">
                     </div>
@@ -88,7 +79,6 @@
                 <img id="img-msg-loose" src="img/9_intro_outro_screens/game_over/game over.png" alt="game over">
             </div>
         </div>
-       
     </div>
   
 
