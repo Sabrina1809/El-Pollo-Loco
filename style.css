@@ -152,7 +152,7 @@ canvas {
 .descr-visible {
     height: 100%;
     opacity: 1;
-    display: flex;
+    display: block;
 }
 
 .overlay-ctn {
