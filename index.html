@@ -10,57 +10,54 @@
 
     <body onload="init()">
 
-    <h1>El Pollo Loco</h1>
+  
     
-    <canvas id="canvas" width="720" height="480"></canvas>
-    <div class="overlay-game">
-        <div class="buttons-game">
-            <div class="buttons-row-top">
-                <div id="button-throw" class="button button-throw">
-                    <img src="img/buttons/icons8-wasserflasche-50 (1).png" alt="Flsche">
-                </div>
-                <div id="button-jump" class="button button-jump">
-                    <img id="button-jump-img" src="img/buttons/icons8-right-arrow-52.png" alt="Pfeil hoch">
-                </div>
-            </div>
-            <div class="buttons-row-bottom">
-                <div id="button-left" class="button button-left">
-                    <img id="button-left-img" src="img/buttons/icons8-right-arrow-52.png" alt="Pfeil hoch">
-                </div>
-                <div id="button-right" class="button button-right">
-                    <img src="img/buttons/icons8-right-arrow-52.png" alt="Pfeil hoch">
-                </div>
-            </div>
-        </div>
-        <div class="menu-more">
-            <div class="opened-menu">
-                <div id="info-line" class="info-line"><b>li/re:</b> Preil li/re, <b>Sprung:</b> Pfeil hoch, <b>Wurf:</b> Leertaste</div>
-                <div class="menu-buttons">
-                    <div id="more-buttons" class="more-buttons">
-                        <div id="button-home" class="button button-home">
-                            <img src="img/buttons/icons8-zuhause-30.png" alt="Haus">
-                        </div>
-                        <div id="button-screen" class="button button-screen">
-                            <img src="img/buttons/icons8-toggle-full-screen-48.png" alt="Fullscreen">
-                        </div>
-                        <div id="button-sound" class="button button-sound">
-                            <!-- <img src="img/buttons/icons8-hohe-lautstärke-50 (2).png" alt="Sound on"> -->
-                            <img src="img/buttons/icons8-kein-ton-50 (1).png" alt="Sound off">
-                        </div>
+    <div id="fullscreen">
+        <h1>El Pollo Loco</h1>
+        <canvas id="canvas" width="720" height="480"></canvas>
+        <div class="overlay-game">
+            <div class="buttons-game">
+                <div class="buttons-row-top">
+                    <div id="button-throw" class="button button-throw">
+                        <img src="img/buttons/icons8-wasserflasche-50 (1).png" alt="Flsche">
                     </div>
-                    <div id="button-openmenu" class="button button-openmenu closed">
-                        <img src="img/buttons/icons8-more-48.png" alt="drei Punkte / mehr">
+                    <div id="button-jump" class="button button-jump">
+                        <img id="button-jump-img" src="img/buttons/icons8-right-arrow-52.png" alt="Pfeil hoch">
                     </div>
                 </div>
-              
-               
+                <div class="buttons-row-bottom">
+                    <div id="button-left" class="button button-left">
+                        <img id="button-left-img" src="img/buttons/icons8-right-arrow-52.png" alt="Pfeil hoch">
+                    </div>
+                    <div id="button-right" class="button button-right">
+                        <img src="img/buttons/icons8-right-arrow-52.png" alt="Pfeil hoch">
+                    </div>
+                </div>
             </div>
-            
-
-          
-            
+            <div class="menu-more">
+                <div class="opened-menu">
+                    <div id="info-line" class="info-line"><b>li/re:</b> Preil li/re, <b>Sprung:</b> Pfeil hoch, <b>Wurf:</b> Leertaste</div>
+                    <div class="menu-buttons">
+                        <div id="more-buttons" class="more-buttons">
+                            <div id="button-home" class="button button-home">
+                                <img src="img/buttons/icons8-zuhause-30.png" alt="Haus">
+                            </div>
+                            <div id="button-screen" class="button button-screen">
+                                <img src="img/buttons/icons8-toggle-full-screen-48.png" alt="Fullscreen">
+                            </div>
+                            <div id="button-sound" class="button button-sound">
+                                <img src="img/buttons/icons8-kein-ton-50 (1).png" alt="Sound off">
+                            </div>
+                        </div>
+                        <div id="button-openinfo" class="button button-openinfo closed">
+                            <img src="img/buttons/icons8-information-50 (1).png" alt="drei Punkte / mehr">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+  
 
     </body>
     <script src="./models/drawable-object.class.js"></script>

@@ -46,11 +46,11 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url('img/5_background/backgroundGame.webp') ;
+    /* background-image: url('img/5_background/backgroundGame.webp') ;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    backdrop-filter: grayscale(0.5);
+    backdrop-filter: grayscale(0.5); */
     font-family: 'Kelly Slab', Arial, Helvetica, sans-serif;
     position: relative;
 }
@@ -72,6 +72,22 @@ h1 {
 #kelly {
     font-family: 'Kelly Slab';
 }
+
+#fullscreen {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    background-image: url('img/5_background/backgroundGameGray.png') ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
 
 canvas {
     background-color: black;
@@ -189,7 +205,7 @@ canvas {
                     display: flex;
                     gap: 20px;
                     justify-content: end;
-                    visibility: hidden;
+                    /* visibility: hidden; */
                 }
             }
         }
