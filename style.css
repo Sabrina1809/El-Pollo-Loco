@@ -154,7 +154,7 @@ canvas {
     align-items: center;
     justify-content: end;
     position: absolute;
-    border: 3px solid rgb(178, 103, 11);
+    /* border: 3px solid rgb(178, 103, 11); */
     width: 720px;
     height: 480px;
     border-radius: 20px;
@@ -169,6 +169,12 @@ canvas {
         right: 20px;
         display: flex;
         justify-content: space-between;
+        & #button-left-img {
+            rotate: 180deg;
+        }
+        & #button-jump-img {
+            rotate: 270deg;
+        }
     }
     & #overlay-settings {
         /* border: 2px solid white; */
@@ -208,7 +214,8 @@ canvas {
             justify-content: center;
             /* background-color: lightcoral; */
             & .button {
-                margin: 5px 15px;
+                margin: 5px 10px;
+                aspect-ratio: 1/1;
             }
             & .button-screen {
                 & #img-smallscreen {

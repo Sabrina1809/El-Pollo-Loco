@@ -1,6 +1,11 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let isTouch = false;
+const infoButton = document.getElementById('button-openinfo');
+const soundButton = document.getElementById('button-sound');
+const screenButton = document.getElementById('button-screen');
+const homeButton = document.getElementById('button-home');
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -9,8 +14,65 @@ function init() {
     
 }
 
-document.getElementById('button-openinfo').addEventListener('click', openMenu);
-document.getElementById('button-openinfo').addEventListener('touchend', openMenu);
+
+
+infoButton.addEventListener('touchstart', () => {
+    isTouch = true;
+});
+soundButton.addEventListener('touchstart', () => {
+    isTouch = true;
+});
+screenButton.addEventListener('touchstart', () => {
+    isTouch = true;
+});
+homeButton.addEventListener('touchstart', () => {
+    isTouch = true;
+});
+
+
+infoButton.addEventListener('click', (event) => {
+    if (isTouch) {
+        event.preventDefault();
+        isTouch = false;
+        return;
+    }
+    openMenu();
+});
+soundButton.addEventListener('click', (event) => {
+    if (isTouch) {
+        event.preventDefault();
+        isTouch = false;
+        return;
+    };
+});
+screenButton.addEventListener('click', (event) => {
+    if (isTouch) {
+        event.preventDefault();
+        isTouch = false;
+        return;
+    };
+});
+homeButton.addEventListener('click', (event) => {
+    if (isTouch) {
+        event.preventDefault();
+        isTouch = false;
+        return;
+    };
+});
+
+
+infoButton.addEventListener('touchend', () => {
+    openMenu();
+});
+soundButton.addEventListener('touchend', () => {
+});
+screenButton.addEventListener('touchend', () => {
+});
+homeButton.addEventListener('touchend', () => {
+});
+
+// document.getElementById('button-openinfo').addEventListener('click', openMenu);
+// document.getElementById('button-openinfo').addEventListener('touchend', openMenu);
 
 function openMenu() {
     console.log('openMenu erreicht');
@@ -120,18 +182,18 @@ document.getElementById('button-right').addEventListener('touchcancel', () => {
     keyboard.RIGHT = false;
 });
 
-document.getElementById('button-home').addEventListener('touchend', () => {
-    console.log('home');
-});
+// document.getElementById('button-home').addEventListener('touchend', () => {
+//     console.log('home');
+// });
 
-document.getElementById('button-screen').addEventListener('touchend', () => {
-    console.log('screen');
-});
+// document.getElementById('button-screen').addEventListener('touchend', () => {
+//     console.log('screen');
+// });
 
 
-document.getElementById('button-sound').addEventListener('touchend', () => {
-    console.log('sound');
-});
+// document.getElementById('button-sound').addEventListener('touchend', () => {
+//     console.log('sound');
+// });
 
 document.getElementById("button-screen").addEventListener("click", toggleFullscreen);
 document.getElementById("button-screen").addEventListener("touchstart", toggleFullscreen);
