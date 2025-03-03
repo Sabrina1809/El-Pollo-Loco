@@ -9,22 +9,18 @@ function init() {
     
 }
 
-document.getElementById('button-openinfo').addEventListener('click', openMenu)
+document.getElementById('button-openinfo').addEventListener('click', openMenu);
+document.getElementById('button-openinfo').addEventListener('touchend', openMenu);
 
 function openMenu() {
     console.log('openMenu erreicht');
-    if (document.getElementById('button-openinfo').classList.contains('closed')) {
-        document.getElementById('button-openinfo').classList.remove('closed');
-        document.getElementById('info-line').style.width = 'fit-content';
-        // document.getElementById('more-buttons').style.width = 'fit-content';
-        document.getElementById('info-line').style.visibility = 'visible';
-        // document.getElementById('more-buttons').style.visibility = 'visible';
+    if (document.getElementById('info-block').classList.contains('visible')) {
+        document.getElementById('info-block').classList.remove('visible');
+        document.getElementById('info-block').style.display = 'none';
     } else {
-        document.getElementById('button-openinfo').classList.add('closed');
-        document.getElementById('info-line').style.width = '0px';
-        // document.getElementById('more-buttons').style.width = '0px';
-        document.getElementById('info-line').style.visibility = 'hidden';
-        // document.getElementById('more-buttons').style.visibility = 'hidden';
+        document.getElementById('info-block').classList.add('visible');
+        document.getElementById('info-block').style.display = 'block';
+
     }
 }
 
@@ -139,6 +135,8 @@ document.getElementById('button-sound').addEventListener('touchend', () => {
 
 document.getElementById("button-screen").addEventListener("click", toggleFullscreen);
 document.getElementById("button-screen").addEventListener("touchstart", toggleFullscreen);
+
+
 
 function toggleFullscreen() {
     let fullscreenElement = document.getElementById("fullscreen");
