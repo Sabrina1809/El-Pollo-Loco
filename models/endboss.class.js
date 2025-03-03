@@ -124,7 +124,6 @@ class Endboss extends MovableObject {
                         this.x += 10;
                         this.height -= 10;
                     }, 50)
-                  
                     setTimeout(() => {
                         world.level.enemies.pop();
                         clearInterval(deadInterval);
@@ -134,10 +133,7 @@ class Endboss extends MovableObject {
         }, 1200)
         setTimeout(() => {
             document.getElementById('overlay-start').style.display = 'block';
-
         }, 8000)
-       
-
     }
          
     animate() {

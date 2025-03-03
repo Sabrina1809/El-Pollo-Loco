@@ -11,12 +11,16 @@ function showStartScreen() {
     document.getElementById('overlay-start').style.display = 'block';
 }
 
+function hideStartScreen() {
+    document.getElementById('overlay-start').style.display = 'none';
+
+}
+
 function init(level) {
     debugger
     level = level;
     console.log(level);
     
-    document.getElementById('overlay-start').style.display = 'none';
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level);
     console.log('my character is: ', world.character);

@@ -74,7 +74,9 @@ class Character extends MovableObject {
                 setTimeout(()=> {
                     this.y += 20;
                 }, 1500)
-               
+                setTimeout(() => {
+                    document.getElementById('overlay-start').style.display = 'block';
+                }, 8000)
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
@@ -109,7 +111,7 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.isDead()) {
-                // this.playAnimation(this.IMAGES_DEAD);
+              
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
@@ -126,7 +128,6 @@ class Character extends MovableObject {
         
         setInterval(() => {
             if (this.world.character.energy <= 0) {
-                // console.log('tot');
                 let hurtInterval = setInterval(() => {
                     this.playAnimation(this.IMAGES_HURT);
                 }, 200);
@@ -136,22 +137,15 @@ class Character extends MovableObject {
                 setTimeout(() => {
                     let deadInterval = setInterval(() => {
                         this.playAnimation(this.IMAGES_DEAD);
-                       
-                        // setTimeout(()=> {
-                        //     setInterval(() => {
-                        //         this.width -= 15;
-                        //         this.y -= 15;
-                        //         this.height -= 20;
-                        //     },250)
-                         
-                        // },2000);
                         setTimeout(() => {
-                            // world.ctx.clearRect(this.x, this.y, this.width, this.height)
                             clearInterval(deadInterval)
                         }, 2000)
                     }, 250);
-                  
+                    setTimeout(() => {
+                        document.getElementById('overlay-start').style.display = 'block';
+                    }, 8000)
                 }, 1000)
+               
             }
         }, 200)
      
