@@ -127,11 +127,15 @@ class Endboss extends MovableObject {
                   
                     setTimeout(() => {
                         world.level.enemies.pop();
-                        clearInterval(deadInterval)
+                        clearInterval(deadInterval);
                     }, 1000)
                 },2000);
             }, 150);
         }, 1200)
+        setTimeout(() => {
+            document.getElementById('overlay-start').style.display = 'block';
+
+        }, 8000)
        
 
     }

@@ -7,9 +7,18 @@ const soundButton = document.getElementById('button-sound');
 const screenButton = document.getElementById('button-screen');
 const homeButton = document.getElementById('button-home');
 
-function init() {
+function showStartScreen() {
+    document.getElementById('overlay-start').style.display = 'block';
+}
+
+function init(level) {
+    debugger
+    level = level;
+    console.log(level);
+    
+    document.getElementById('overlay-start').style.display = 'none';
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
+    world = new World(canvas, keyboard, level);
     console.log('my character is: ', world.character);
     
 }
