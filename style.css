@@ -33,10 +33,35 @@
     src: url('./fonts/kelly-slab-v17-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   }
 
+/* Für Webkit-Browser (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+    width: 10px; /* Breite der Scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, white, orange, white, orange); /* Farbverlauf */
+    border: 1px solid whitesmoke;
+    border-radius: 10px; /* Abgerundete Ecken */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    cursor: pointer;
+    background: linear-gradient(180deg, orange, white, orange, white); /* Dunkler beim Hover */
+}
+
+::-webkit-scrollbar-track {
+    background: transparent; /* Hintergrund der Scrollbar */
+    border-radius: 10px;
+}
+
+
 * {
     margin: 0;
     padding: 0;
     -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -99,152 +124,92 @@ canvas {
     display: block;
 }
 
-.overlay-game {
-    width: 720px;
-    height: 200px;
-    /* border: 2px solid white; */
-    position: absolute;
-    top: calc(50% + 40px);
-    left: 50%;
-    transform: translateX(-50%);
+.button {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.75);
+    box-shadow: 0 0 5px black;
     display: flex;
-    flex-direction: column;
-    justify-content: end;
-    font-size: 28px;
-    color: white;
-    padding-bottom: 30px;
-    & .button {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: rgba(256,256,256, 0.8);
-        text-shadow: 0 0 2px black;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0 0 5px black;
-        & img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            filter: drop-shadow(0 0 2px black);
-        }
-        #button-jump-img {
-            rotate: 270deg;
-        }
-        #button-left-img {
-            rotate: 180deg;
-        }
-        .button-openmenu {
-            margin-bottom: 10px;
-        }
-        &:hover {
-            box-shadow: 0 0 5px black inset;
-            cursor: pointer;
-        }
-        &:active {
-            scale: 0.95;
-        }
+    justify-content: center;
+    align-items: center;
+    margin: 15px 10px;
+    & img {
+        width: 30px;
+        height: 30px;
+        filter: drop-shadow(0 0 2px black);
     }
-    & .buttons-game {
-        position: absolute;
-        left: 0;
-        right: 0;
-        /* border: 1px solid orange; */
-        display: flex;
-        flex-direction: column;
-        align-items:center;
-        justify-content: space-between;
-        gap: 20px;
-        & .buttons-row-top, 
-        .buttons-row-bottom {
-            display: flex;
-            justify-content: space-between;
-            width: 90%;
-            margin: 0 auto;
-            /* border: 1px solid green; */
-
-           
-        }
-      
-        /* & .buttons-row-bottom {
-            display: flex;
-            justify-content: space-between;
-            width: 90%;
-            margin: 0 auto;
-            border: 1px solid green;
-        } */
+    &:hover {
+        box-shadow: 0 0 5px black inset;
+        cursor: pointer;
     }
-    & .menu-more {
-        /* border: 1px solid orangered; */
-        display: flex;
-        flex-direction: column;
-        width: 70%;
-        margin: 0 auto;
-        & .opened-menu {
-            display: flex;
-            width: 100%;
-            flex-direction: column;
-            justify-content: center;
-            align-items: end;
-            gap: 10px;
-            & .info-line {
-                font-size: 20px;
-                margin-bottom: 10px;
-                width: fit-content;
-                max-width: 100%;
-                background-color: rgba(0, 0, 0, 0.6);
-                border-radius: 5px;
-                padding: 10px;
-                text-align: center;
-                visibility: hidden;
-            }
-            & .menu-buttons {
-                display: flex;
-                justify-content: end;
-                gap: 20px;
-                & .more-buttons {
-                    display: flex;
-                    gap: 20px;
-                    justify-content: end;
-                    /* visibility: hidden; */
-                    & #img-smallscreen {
-                        display: none;
-                    }
-                    & #img-fullscreen {
-                        display: flex;
-                    }
-                }
-            }
-        }
+    &:active {
+        scale: 0.95;
     }
 }
 
-.overlay-messages {
+.overlay-ctn {
+    display: block;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
     position: absolute;
-    top: calc(50% - 212px);
-    height: calc(480px);
+    border: 3px solid rgb(178, 103, 11);
     width: 720px;
-    display: none;
-    border-radius: 18px;
-    overflow: hidden;
-    & img {
+    height: 480px;
+    border-radius: 20px;
+    top: 50%;
+    transform: translateY(calc(-50% + 30px));
+    aspect-ratio: auto 720 / 480;
+    & #overlay-game {
+        /* border: 2px solid white; */
         position: absolute;
-        border-radius: 18px;
-        top: calc(0%);
+        bottom: 0px;
+        left: 20px;
+        right: 20px;
+        display: flex;
+        justify-content: space-between;
     }
-    #img-msg-win {
-        right: 50%;
-        width: 500px;
-        height: auto;
-        display: none;
-        animation: winningMessage 5s ease-in-out;
-    }
-    #img-msg-loose {
-        width: 720px;
-        height: 480px;
-        display: none;
-        animation: loosingMessage 5s linear;
+    & #overlay-settings {
+        border: 2px solid white;
+        position: absolute;
+        bottom: 0px;
+        left: 80px;
+        right: 80px;
+        display: flex;
+        margin: 0 auto;
+        padding: 10px 70px;
+        flex-direction: column;
+        z-index: 5;
+        & .info-block {
+            max-height: 385px;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            & .info-ctn {
+                background-color: rgba(0, 0, 0, 0.75);
+                border-radius: 5px;
+                padding: 5px;
+                margin: 10px;
+                & h2 {
+                    color: white;
+                }
+                & .info-line {
+                
+                    padding: 5px;
+                    color: white;
+                    margin: 0 auto;
+                }
+            }
+        }
+        & .settings-buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            /* background-color: lightcoral; */
+            & .button {
+                margin: 5px 15px;
+            }
+        }
     }
 }
 
@@ -299,7 +264,7 @@ canvas {
 }
 
 @media only screen and (max-width: 720px) {
-    canvas, .overlay-game {
+    canvas  {
         width: 100%;
     }
 }
@@ -307,11 +272,11 @@ canvas {
 @media only screen and (max-height: 600px) {
     h1 {
         display: none;
-    }
-    .overlay-game {
-        height: 200px;
+    } 
+    .overlay-ctn {
         top: 50%;
-    }   
+        transform: translateY(-50%);
+    } 
 }
 
 
@@ -319,5 +284,8 @@ canvas {
     canvas {
         height: 100vh;
     }
-   
+    .overlay-ctn {
+        height: 100vh;
+        width: unset;
+    }
 }
