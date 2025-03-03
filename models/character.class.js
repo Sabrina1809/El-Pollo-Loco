@@ -70,6 +70,7 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 clearInterval(checkMoveInterval);
                 this.playAnimation(this.IMAGES_DEAD);
+                this.world.level.win = false;
                 setTimeout(()=> {
                     this.y += 20;
                 }, 1500)

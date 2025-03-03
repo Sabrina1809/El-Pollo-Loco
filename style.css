@@ -85,6 +85,7 @@ h1 {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    position: relative;
 }
 
 
@@ -206,9 +207,42 @@ canvas {
                     gap: 20px;
                     justify-content: end;
                     /* visibility: hidden; */
+                    & #img-smallscreen {
+                        display: none;
+                    }
+                    & #img-fullscreen {
+                        display: flex;
+                    }
                 }
             }
         }
+    }
+}
+
+.overlay-messages {
+    position: absolute;
+    top: calc(50% - 212px);
+    height: calc(480px);
+    width: 720px;
+    border: 2px solid white;
+    display: none;
+    border-radius: 18px;
+    & img {
+        position: absolute;
+        border-radius: 18px;
+        top: calc(50%);
+        transform: translateY(-50%);
+    }
+    #img-msg-win {
+        width: 500px;
+        height: auto;
+        display: none;
+        right: calc(50% - 250px);
+    }
+    #img-msg-loose {
+        width: 720px;
+        height: 480px;
+        display: none;
     }
 }
 
@@ -216,10 +250,7 @@ canvas {
     canvas, .overlay-game {
         width: 100%;
     }
-  
 }
-
-
 
 @media only screen and (max-height: 600px) {
     h1 {
@@ -228,18 +259,9 @@ canvas {
     .overlay-game {
         height: 200px;
         top: 50%;
-
-    }
-   
+    }   
 }
 
-@media  (max-height: 600px) {
-    
-    /* .overlay-game {
-        height: 50vh;
-    } */
-   
-}
 
 @media only screen and (max-height: 480px) {
     canvas {

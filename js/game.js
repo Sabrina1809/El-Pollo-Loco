@@ -144,6 +144,8 @@ function toggleFullscreen() {
     let fullscreenElement = document.getElementById("fullscreen");
 
     if (!document.fullscreenElement) {
+        document.getElementById('img-fullscreen').style.display = 'none';
+        document.getElementById('img-smallscreen').style.display = 'block';
         if (fullscreenElement.requestFullscreen) {
             fullscreenElement.requestFullscreen();
         } else if (fullscreenElement.mozRequestFullScreen) { // Firefox
@@ -154,6 +156,8 @@ function toggleFullscreen() {
             fullscreenElement.msRequestFullscreen();
         }
     } else {
+        document.getElementById('img-fullscreen').style.display = 'block';
+        document.getElementById('img-smallscreen').style.display = 'none';
         if (document.exitFullscreen) {
             document.exitFullscreen();
         } else if (document.mozCancelFullScreen) {

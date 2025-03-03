@@ -67,7 +67,8 @@ class Endboss extends MovableObject {
         if (this.hit == true && this.energy > 20) {
            this.endbossHurt();
         } else if (this.hit == true && this.energy <= 20) {
-            this.endbossDead();   
+            this.endbossDead();  
+            world.level.win = true; 
         }
         return this.hit = false;
     }
@@ -120,6 +121,7 @@ class Endboss extends MovableObject {
                         this.x += 10;
                         this.height -= 10;
                     }, 50)
+                  
                     setTimeout(() => {
                         world.level.enemies.pop();
                         clearInterval(deadInterval)
@@ -127,6 +129,8 @@ class Endboss extends MovableObject {
                 },2000);
             }, 150);
         }, 1200)
+       
+
     }
          
     animate() {
