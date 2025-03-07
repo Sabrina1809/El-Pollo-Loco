@@ -13,6 +13,7 @@ class World {
     ]
     collectedBottles = 0;
     collectedCoins = 0;
+    intervalIds = [];
 
     constructor(canvas, keyboard, level) {
         this.ctx = canvas.getContext('2d');
@@ -22,6 +23,14 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+    }
+
+    stopGame() {
+        console.log('stopGame erreicht');
+        console.log(this.intervalIds);
+        
+        this.intervalIds.forEach(clearInterval);
+        console.log(this.intervalIds);
     }
 
     setWorld() {

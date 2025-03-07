@@ -7,6 +7,7 @@ const soundButton = document.getElementById('button-sound');
 const screenButton = document.getElementById('button-screen');
 const homeButton = document.getElementById('button-home');
 
+
 function showStartScreen() {
     document.getElementById('overlay-start').style.display = 'block';
 }
@@ -17,17 +18,45 @@ function hideStartScreen() {
 }
 
 function init(level) {
-    debugger
-    level = level;
     console.log(level);
-    
+    level.enemies = checkEnemies(level);
+    // console.log('enemies nach Prüfung: ', level.enemies);
+    level.collectableObjects = checkCollObj(level)
+    // console.log('collObj nach Prüfung: ', level.collectableObjects);
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level);
-    console.log('my character is: ', world.character);
+    console.log(level);
     
 }
 
+function checkEnemies(level) {
+    // console.log('Level vor Prüfung', level);
+    if(level.copyOfEnemies.length == 0) {
+        level.enemies.forEach(enemy => {
+            level.copyOfEnemies.push(enemy)
+        });    
+    }
+    level.enemies = [];
+    level.copyOfEnemies.forEach(enemy => {
+        level.enemies.push(enemy)
+    })
+    return level.enemies
+} 
 
+function checkCollObj(level) {
+    // console.log('Level vor Prüfung', level);
+    if(level.copyOfCollectableObjects.length == 0) {
+        level.collectableObjects.forEach(collObj => {
+            level.copyOfCollectableObjects.push(collObj)
+        });    
+    }
+    level.collectableObjects = [];
+    level.copyOfCollectableObjects.forEach(collObj => {
+        level.collectableObjects.push(collObj)
+    })
+    return level.collectableObjects
+}
+    
 
 infoButton.addEventListener('touchstart', () => {
     isTouch = true;

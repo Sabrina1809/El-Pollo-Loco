@@ -37,10 +37,10 @@ class ThrowableObject extends MovableObject {
             this.checkCollWithEnemy()
         }, 100) 
         setTimeout(() => {
-            console.log(world.throwableObjects);
+            // console.log(world.throwableObjects);
                         
             world.throwableObjects.shift();
-            console.log(world.throwableObjects);
+            // console.log(world.throwableObjects);
             clearInterval(collInterval);
         }, 1500);
     }

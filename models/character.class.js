@@ -53,6 +53,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.applyGravity();
         let checkMoveInterval = setInterval(()=> {
+            // console.log('checkMoveInterval ', checkMoveInterval);
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                         this.otherDirection = false;
                         this.moveRight();
@@ -67,6 +68,7 @@ class Character extends MovableObject {
                     this.world.camera_x = -this.x + 60;
         }, 1000/60)
         let checkAnimationInterval = setInterval(() => {
+            // console.log('checkAnimationInterval ', checkAnimationInterval);
             if (this.isDead()) {
                 clearInterval(checkMoveInterval);
                 this.playAnimation(this.IMAGES_DEAD);
@@ -76,6 +78,7 @@ class Character extends MovableObject {
                 }, 1500)
                 setTimeout(() => {
                     document.getElementById('overlay-start').style.display = 'block';
+                    clearInterval(checkAnimationInterval)
                 }, 8000)
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
@@ -94,7 +97,9 @@ class Character extends MovableObject {
     
 
     animate() {
-        setInterval(() => {
+        
+        let keyboardInterval = setInterval(() => {
+            
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.otherDirection = false;
                 this.moveRight();
@@ -110,9 +115,7 @@ class Character extends MovableObject {
         }, 1000/60)
 
         setInterval(() => {
-            if (this.isDead()) {
-              
-            } else if (this.isHurt()) {
+            if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
@@ -122,9 +125,9 @@ class Character extends MovableObject {
                 } else {
                     this.loadImage('img/2_character_pepe/2_walk/W-21.png');
                 }
-            }
-           
+            } 
         }, 200);
+   
         
         setInterval(() => {
             if (this.world.character.energy <= 0) {
