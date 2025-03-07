@@ -114,7 +114,7 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 60;
         }, 1000/60)
 
-        setInterval(() => {
+        let deadInterval = setInterval(() => {
             if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
@@ -151,6 +151,5 @@ class Character extends MovableObject {
                
             }
         }, 200)
-     
     }
 }

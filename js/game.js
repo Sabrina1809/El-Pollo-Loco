@@ -8,9 +8,9 @@ const screenButton = document.getElementById('button-screen');
 const homeButton = document.getElementById('button-home');
 
 
-function showStartScreen() {
-    document.getElementById('overlay-start').style.display = 'block';
-}
+// function showStartScreen() {
+//     document.getElementById('overlay-start').style.display = 'block';
+// }
 
 function hideStartScreen() {
     document.getElementById('overlay-start').style.display = 'none';
@@ -19,14 +19,9 @@ function hideStartScreen() {
 
 function init(level) {
     console.log(level);
-    level.enemies = checkEnemies(level);
-    // console.log('enemies nach Prüfung: ', level.enemies);
-    level.collectableObjects = checkCollObj(level)
-    // console.log('collObj nach Prüfung: ', level.collectableObjects);
+    level.enemies = checkEnemies(level)
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level);
-    console.log(level);
-    
 }
 
 function checkEnemies(level) {

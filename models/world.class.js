@@ -29,8 +29,8 @@ class World {
         console.log('stopGame erreicht');
         console.log(this.intervalIds);
         
-        this.intervalIds.forEach(clearInterval);
-        console.log(this.intervalIds);
+        this.intervalIds.forEach(id => clearInterval(id));
+        this.intervalIds = []; // Lösche alle gespeicherten Intervalle
     }
 
     setWorld() {
@@ -42,6 +42,7 @@ class World {
             this.checkCollisions();
             this.checkThrowObjects();
         }, 200)
+        this.enemyDead();
     }
 
     checkCollisions() {
@@ -72,6 +73,40 @@ class World {
             }
         }
     }
+
+    enemyDead() {
+        this.level.enemies.forEach((enemy) => {
+            if (enemy.deadInterval) {
+                console.warn('Intervall existiert bereits für', enemy);
+                return; // Verhindert doppelte Intervalle
+            }
+    
+            enemy.deadInterval = setInterval(() => {
+                // console.log(`Enemy ${enemy} status:`, enemy.dead);
+    
+                if (enemy.dead) {
+                    console.log('TOT', enemy);
+                    enemy.loadImage(enemy.IMAGE_DEAD);
+                    
+                    clearInterval(enemy.deadInterval);
+                    console.log(`Intervall gestoppt für Enemy ${enemy}`, enemy.deadInterval);
+                    
+                    enemy.deadInterval = null;
+                    this.intervalIds = this.intervalIds.filter(id => id !== enemy.deadInterval);
+    
+                    setTimeout(() => {
+                        this.deleteFromCanvas(enemy, this.level.enemies);
+                    }, 600);
+                }
+            }, 100);
+    
+            console.log(`Neues Intervall gestartet für Enemy ${enemy}`, enemy.deadInterval);
+            this.intervalIds.push(enemy.deadInterval);
+        });
+    }
+    
+    
+    
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
@@ -118,6 +153,8 @@ class World {
                         mo.loadImage(mo.IMAGE_DEAD);
                         setTimeout(() => {
                             this.deleteFromCanvas(mo, this.level.enemies);
+                            mo.dead = true;
+                            clearInterval(mo.hitInterval);
                         }, 150)
                     }
             } else if (char.y + 130 + char.height - 150 >= halfYOfMo && this.character.speed > -20) {
@@ -138,6 +175,9 @@ class World {
                         mo.loadImage(mo.IMAGE_DEAD);
                         setTimeout(() => {
                             this.deleteFromCanvas(mo, this.level.enemies);
+                            mo.dead = true;
+
+                            clearInterval(mo.hitInterval);
                         }, 150)
                     }
                     else if (char.y + 130 + char.height - 150 >= halfYOfMo && this.character.speed > -20) {
