@@ -33,15 +33,15 @@ class ThrowableObject extends MovableObject {
             }
         }, 1000/25)
         this.throw(gravityInterval);
-        let collInterval = setInterval(() => {
-            this.checkCollWithEnemy()
-        }, 100) 
+        // let collInterval = setInterval(() => {
+        //     this.checkCollWithEnemy()
+        // }, 100) 
         setTimeout(() => {
             // console.log(world.throwableObjects);
                         
             world.throwableObjects.shift();
             // console.log(world.throwableObjects);
-            clearInterval(collInterval);
+            // clearInterval(collInterval);
         }, 1500);
     }
 
@@ -55,11 +55,11 @@ class ThrowableObject extends MovableObject {
             this.playAnimation(this.IMAGES_THROWING);
         }, 100)
         let collInterval = setInterval(() => {
-            this.checkCollWithEnemy(collInterval, xInterval, gravityInterval, );
+            this.checkCollWithEnemy(collInterval, xInterval, gravityInterval);
         }, 100)
     }
 
-    checkCollWithEnemy(collInterval, xInterval, gravityInterval, ) {
+    checkCollWithEnemy(collInterval, xInterval, gravityInterval) {
         for (let i = 0; i < world.level.enemies.length; i++) {
             if (this.y > world.level.enemies[i].y && this.y < world.level.enemies[i].y + world.level.enemies[i].height &&
                 this.x + 30 + (this.width/2 - 60) < world.level.enemies[i].x + world.level.enemies[i].width &&
@@ -67,16 +67,8 @@ class ThrowableObject extends MovableObject {
             ) {
                 // clearInterval(throwInterval);
                 clearInterval(collInterval);
-
                 let splashInterrval = setInterval(() => {
                     this.playAnimation(this.IMAGES_SPLASH);
-                    // setTimeout(()=> {
-                    //     console.log(world.throwableObjects);
-                        
-                    //     world.throwableObjects.shift();
-                    //     console.log(world.throwableObjects);
-
-                    // },900)
                 }, 150);
                 clearInterval(gravityInterval);
                 clearInterval(xInterval);
@@ -87,6 +79,8 @@ class ThrowableObject extends MovableObject {
                 if (world.level.enemies[i] instanceof Endboss) {
                     this.width = this.width*1.075;
                     this.height = this.height*1.075;
+                    world.level.enemies[i].hit = true;
+                    world.level.enemies[i].checkEnergy();
                 }
                 if (world.level.enemies[i] instanceof Chicken) {
                     console.log('chicken dead');

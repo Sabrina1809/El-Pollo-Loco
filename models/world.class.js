@@ -88,37 +88,49 @@ class World {
         this.collectedBottles = 0;
         this.collectedCoins = 0;
         this.collisionInterval = setInterval(() => {
-            this.checkCollisions();
-            this.checkThrowObjects();
+            this.checkCollCharEnemiesAndObjects();
         }, 1000 / 60);
+        this.throwObjectInterval = setInterval(() => {
+            this.checkThrowObjects(this.throwObjectInterval);
+        }, 200);
         this.enemyDead();
     }
 
-    checkCollisions() {
-            this.checkCollisions();
-            this.checkThrowObjects();
-    }
+    // checkCollisions() {
+    //         // this.checkCollCharEnemiesAndObjects();
+    //         this.checkThrowObjects();
+    // }
 
-    checkThrowObjects() {
+    checkThrowObjects(throwObjectInterval) {
         if (this.keyboard.SPACE && this.collectedBottles != 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.collectedBottles--;
-            let hitEndbossIntervall = setInterval(() => {
-                this.collBottleEndboss(bottle, this.level.enemies[this.level.enemies.length - 1], hitEndbossIntervall);
-            },100)
+            // let hitEndbossIntervall = setInterval(() => {
+                this.collBottleEndboss(bottle, this.level.enemies[this.level.enemies.length - 1], throwObjectInterval);
+            // },300)
         }
     }
 
-    collBottleEndboss(bottle, enemy, hitEndbossIntervall) {
+    collBottleEndboss(bottle, enemy, throwObjectInterval) {
         console.log('Kollision wird geprüft!');
-        if (this.level.enemies[this.level.enemies.length - 1] instanceof Endboss) {
+        console.log('Endboss in Level:', world.level.enemies.find(e => e instanceof Endboss));
+        console.log('Enemy in Collision:', enemy);
+        console.log('Sind sie gleich?', enemy === world.level.enemies.find(e => e instanceof Endboss));
+        
+        
+        if (enemy instanceof Endboss) {
             if (bottle.y + bottle.y / 2 > enemy.y && bottle.y + bottle.y / 2 < enemy.y + enemy.width &&
                 bottle.x + bottle.width / 2 > enemy.x && bottle.x + bottle.width / 2 < enemy.x + enemy.width
             ) {
                 console.log('Endboss getroffen!');
-                clearInterval(hitEndbossIntervall);
-                return this.level.enemies[this.level.enemies.length - 1].hit = true;
+                this.level.enemies[this.level.enemies.length - 1].hit = true;
+                this.level.enemies[this.level.enemies.length - 1].checkEnergy();
+                setTimeout(() => {
+                    clearInterval(throwObjectInterval);
+                },1000)
+               
+                // return this.level.enemies[this.level.enemies.length - 1].hit = true;
             }
         }
     }
@@ -159,7 +171,7 @@ class World {
         });
     }
     
-    checkCollisions() {
+    checkCollCharEnemiesAndObjects() {
         this.level.enemies.forEach((enemy) => {
             this.checkPosXAndY(this.character, enemy)
         })

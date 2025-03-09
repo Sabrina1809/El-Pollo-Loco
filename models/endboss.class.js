@@ -57,13 +57,17 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_WALK);
         this.animate();
-        let energyInterval = setInterval(()=> {
+        this.energyInterval = setInterval(()=> {
+            console.log('Checking Energy:', this.energy, 'Hit:', this.hit);
             this.checkEnergy();
         }, 100) 
        
     }
 
     checkEnergy() {
+        console.log('Endboss Energy: ', this.energy);
+        console.log('CheckEnergy aufgerufen:', this.hit);
+
         if (this.hit == true && this.energy > 20) {
            this.endbossHurt();
         } else if (this.hit == true && this.energy <= 20) {
@@ -73,7 +77,9 @@ class Endboss extends MovableObject {
             },1000)
           
         }
-        return this.hit = false;
+        setTimeout(() => {
+            this.hit = false;
+        }, 2500);  
     }
 
     endbossHurt() {
