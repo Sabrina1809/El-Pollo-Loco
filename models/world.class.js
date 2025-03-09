@@ -32,12 +32,20 @@ class World {
 
     resetEnemies() {
         this.level.enemies.forEach(enemy => {
+            
             enemy.dead = false;
             enemy.deadInterval = null;
-            enemy.x = enemy.x;
-            enemy.y = enemy.y;
+            if (enemy instanceof Chicken) {
+                enemy.x = 300 + Math.random() * 1500;
+                enemy.y = 350;
+            }
+            if (enemy instanceof ChickenSmall) {
+                enemy.x = 800 + Math.random() * 1000;
+                enemy.y = 370;
+            }
+           
         });
-        // console.log('Alle Gegner wurden zurückgesetzt:', this.level.enemies);
+        console.log('Alle Gegner wurden zurückgesetzt:', this.level.enemies);
     }
 
     resetCharacter() {
@@ -45,16 +53,18 @@ class World {
         this.character.lastHit = 0;
         this.character.x = 60;
         this.character.y = -200;
-        // console.log('Alle Gegner wurde zurückgesetzt:', this.character);
+        console.log('Alle Gegner wurde zurückgesetzt:', this.character);
     }
 
     resetEndboss() {
         let endboss = this.level.enemies[this.level.enemies.length - 1];
         endboss.energy = 100;
         endboss.lastHit = 0;
+        endboss.width = 400;
+        endboss.height = 400;
         endboss.x = 2000;
         endboss.y = 55;
-        // console.log('Endboss wurde zurückgesetzt:', this.level.enemies[this.level.enemies.length - 1]);
+        console.log('Endboss wurde zurückgesetzt:', this.level.enemies[this.level.enemies.length - 1]);
     }
 
     resetWorld() {
@@ -63,50 +73,82 @@ class World {
         this.collectedCoins = 0;
     }
 
-    stopGame() {
+    // stopGame() {
   
+    //     console.log('stopGame erreicht');
+    //     console.log('nach Ende noch laufende Intervalle', this.intervalIds);
+    //     this.intervalIds.forEach(id => clearInterval(id));
+    //     this.intervalIds = []; // Lösche alle gespeicherten Intervalle
+    //      // Speziell das Kollisions-Intervall stoppen
+    // if (this.collisionInterval) {
+    //     clearInterval(this.collisionInterval);
+    //     this.collisionInterval = null;
+    // }
+    //     console.log('nach Löschen noch laufende Intervalle', this.intervalIds);
+    // }
+
+    stopGame() {
         console.log('stopGame erreicht');
-        console.log('nach Ende noch laufende Intervalle', this.intervalIds);
+        
+        // Alle gespeicherten Intervalle stoppen
         this.intervalIds.forEach(id => clearInterval(id));
-        this.intervalIds = []; // Lösche alle gespeicherten Intervalle
-         // Speziell das Kollisions-Intervall stoppen
-    if (this.collisionInterval) {
-        clearInterval(this.collisionInterval);
-        this.collisionInterval = null;
+        this.intervalIds = []; // Liste zurücksetzen
+        
+        console.log('Alle Intervalle gestoppt.');
     }
-        console.log('nach Löschen noch laufende Intervalle', this.intervalIds);
-    }
+    
 
     setWorld() {
         this.character.world = this;
     }
 
+    // run() {
+    //     this.resetEnemies()
+    //     this.resetCharacter()
+    //     this.resetEndboss()
+    //     this.collectedBottles = 0;
+    //     this.collectedCoins = 0;
+    //     this.collIntervalEndboss = setInterval(() => {
+    //         this.collCharEndboss(this.character)
+    //     },200)
+    //     this.collisionIntervalEnem = setInterval(() => {
+    //         this.collCharChickenX(this.character);
+    //     }, 200);
+    //     this.jumpIntervallEnem = setInterval(() => {
+    //         this.collCharChickenY(this.character);
+    //     }, 1000/60)
+    //     this.collisionIntervalObj = setInterval(() => {
+    //         this.checkCollCharObjects(this.character);
+    //     }, 200);
+    //     this.jumpIntervalObj = setInterval(() => {
+    //         this.checkCollCharObjects(this.character);
+    //     }, 1000/60);
+    //     this.throwObjectInterval = setInterval(() => {
+    //         this.checkThrowObjects(this.throwObjectInterval);
+    //     }, 200);
+    //     this.enemyDead();
+    // }
+
     run() {
-        this.resetEnemies()
-        this.resetCharacter()
-        this.resetEndboss()
+        this.resetEnemies();
+        console.log('this.level.enemies', this.level.enemies);
+        
+        this.level.checkEnemies(this.level.enemies);
+        this.resetCharacter();
+        this.resetEndboss();
         this.collectedBottles = 0;
         this.collectedCoins = 0;
-        this.collIntervalEndboss = setInterval(() => {
-            this.collCharEndboss(this.character)
-        },200)
-        this.collisionIntervalEnem = setInterval(() => {
-            this.collCharChickenX(this.character);
-        }, 200);
-        this.jumpIntervallEnem = setInterval(() => {
-            this.collCharChickenY(this.character);
-        }, 1000/60)
-        this.collisionIntervalObj = setInterval(() => {
-            this.checkCollCharObjects(this.character);
-        }, 200);
-        this.jumpIntervalObj = setInterval(() => {
-            this.checkCollCharObjects(this.character);
-        }, 1000/60);
-        this.throwObjectInterval = setInterval(() => {
-            this.checkThrowObjects(this.throwObjectInterval);
-        }, 200);
+    
+        this.intervalIds.push(setInterval(() => this.collCharEndboss(this.character), 200));
+        this.intervalIds.push(setInterval(() => this.collCharChickenX(this.character), 200));
+        this.intervalIds.push(setInterval(() => this.collCharChickenY(this.character), 1000/60));
+        this.intervalIds.push(setInterval(() => this.checkCollCharObjects(this.character), 200));
+        this.intervalIds.push(setInterval(() => this.checkCollCharObjects(this.character), 1000/60));
+        this.intervalIds.push(setInterval(() => this.checkThrowObjects(), 200));
+    
         this.enemyDead();
     }
+    
 
     checkThrowObjects(throwObjectInterval) {
         if (this.keyboard.SPACE && this.collectedBottles != 0) {
@@ -159,7 +201,7 @@ class World {
                 if (enemy.dead) {
                     enemy.loadImage(enemy.IMAGE_DEAD);
                     clearInterval(enemy.deadInterval);
-                    console.log(`Intervall gestoppt für Enemy`, enemy, enemy.deadInterval);
+                    // console.log(`Intervall gestoppt für Enemy`, enemy, enemy.deadInterval);
                     this.intervalIds = this.intervalIds.filter(id => id !== enemy.deadInterval);
                     console.log('übrige IntervalIDs', this.intervalIds);
                     enemy.deadInterval = null;

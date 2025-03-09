@@ -20,7 +20,7 @@ class Level {
     }
 
     checkEnemies(enemies) {
-        // console.log('checkEnemies erreicht');
+        console.log('checkEnemies erreicht');
         if(this.copyOfEnemies.length == 0) {
             enemies.forEach(enemy => {
                 this.copyOfEnemies.push(enemy)
