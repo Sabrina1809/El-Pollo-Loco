@@ -107,7 +107,7 @@ class World {
         }, 200);
         this.enemyDead();
     }
-    
+
     checkThrowObjects(throwObjectInterval) {
         if (this.keyboard.SPACE && this.collectedBottles != 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
@@ -142,7 +142,6 @@ class World {
         }
     }
     
-
     enemyDead() {
         this.level.enemies.forEach((enemy) => {
             if (enemy.deadInterval) {
@@ -177,12 +176,6 @@ class World {
 
         });
     }
-    
-    checkCollCharEnemies() {
-        this.level.enemies.forEach((enemy) => {
-            this.checkPosXAndY(this.character, enemy)
-        })
-    }
 
     checkCollCharObjects() {
         this.level.collectableObjects.forEach((collectableObject) => {
@@ -208,13 +201,7 @@ class World {
         })
     }
 
-    checkPosXAndY(char, mo) {
-      
-       
-    }
-
     collCharChickenX(char) {
-     
         this.level.enemies.forEach((mo) => {
             let tolerance = mo.width/2;
             let halfYOfMo = mo.y + (mo.height/2);
@@ -230,7 +217,6 @@ class World {
     }
 
     collCharChickenY(char) {
-    
         this.level.enemies.forEach((mo) => {
             let tolerance = mo.width/2;
             let halfYOfMo = mo.y + (mo.height/2);
@@ -304,7 +290,6 @@ class World {
                 }
             }
         })
-      
     }
 
     deleteFromCanvas(object, objects) {

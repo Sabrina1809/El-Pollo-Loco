@@ -72,13 +72,13 @@ class Level {
                     console.log('collisionInterval', world.collisionInterval);
                     document.getElementById('overlay-messages').style.display = 'block';
                     document.getElementById('img-msg-win').style.display = 'block';
-                },2000)
+                },1000)
                 clearInterval(interval)
                 setTimeout(() => {
                     document.getElementById('overlay-messages').style.display = 'none';
                     document.getElementById('img-msg-win').style.display = 'none';
                     world.stopGame(world.intervalIds);
-                }, 7000);
+                }, 6000);
                 return
             } else if (this.win == false) {
                 console.log('übrige enemies vor Löschen', world.level.enemies);
@@ -92,13 +92,13 @@ class Level {
                     console.log('collisionInterval', world.collisionInterval);
                     document.getElementById('overlay-messages').style.display = 'block';
                     document.getElementById('img-msg-loose').style.display = 'block';
-                },2000)
+                },1000)
                 clearInterval(interval)
                 setTimeout(() => {
                     document.getElementById('overlay-messages').style.display = 'none';
                     document.getElementById('img-msg-loose').style.display = 'none';
 
-                }, 7000);
+                }, 6000);
                 return
             }
         },200)

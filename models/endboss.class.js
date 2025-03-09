@@ -139,12 +139,12 @@ class Endboss extends MovableObject {
                         world.level.enemies.pop();
                         clearInterval(deadInterval);
                     }, 1000)
-                },2000);
+                },1000);
             }, 150);
         }, 1200)
         setTimeout(() => {
             document.getElementById('overlay-start').style.display = 'block';
-        }, 8000)
+        }, 10000)
     }
          
     animate() {
