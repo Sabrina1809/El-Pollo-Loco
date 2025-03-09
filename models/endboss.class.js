@@ -65,21 +65,26 @@ class Endboss extends MovableObject {
     }
 
     checkEnergy() {
-        console.log('Endboss Energy: ', this.energy);
-        console.log('CheckEnergy aufgerufen:', this.hit);
+        // console.log('Endboss Energy: ', this.energy);
+        // console.log('CheckEnergy aufgerufen:', this.hit);
 
         if (this.hit == true && this.energy > 20) {
            this.endbossHurt();
+           setTimeout(() => {
+            this.hit = false;
+        }, 2000);  
         } else if (this.hit == true && this.energy <= 20) {
             this.endbossDead();  
             setTimeout(() => {
                 world.level.win = true; 
-            },1000)
+                this.hit = false;
+            },4000)
+            // setTimeout(() => {
+              
+            // }, 400);  
           
         }
-        setTimeout(() => {
-            this.hit = false;
-        }, 2500);  
+      
     }
 
     endbossHurt() {

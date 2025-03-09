@@ -87,20 +87,27 @@ class World {
         this.resetEndboss()
         this.collectedBottles = 0;
         this.collectedCoins = 0;
-        this.collisionInterval = setInterval(() => {
-            this.checkCollCharEnemiesAndObjects();
-        }, 1000 / 60);
+        this.collIntervalEndboss = setInterval(() => {
+            this.collCharEndboss(this.character)
+        },200)
+        this.collisionIntervalEnem = setInterval(() => {
+            this.collCharChickenX(this.character);
+        }, 200);
+        this.jumpIntervallEnem = setInterval(() => {
+            this.collCharChickenY(this.character);
+        }, 1000/60)
+        this.collisionIntervalObj = setInterval(() => {
+            this.checkCollCharObjects(this.character);
+        }, 200);
+        this.jumpIntervalObj = setInterval(() => {
+            this.checkCollCharObjects(this.character);
+        }, 1000/60);
         this.throwObjectInterval = setInterval(() => {
             this.checkThrowObjects(this.throwObjectInterval);
         }, 200);
         this.enemyDead();
     }
-
-    // checkCollisions() {
-    //         // this.checkCollCharEnemiesAndObjects();
-    //         this.checkThrowObjects();
-    // }
-
+    
     checkThrowObjects(throwObjectInterval) {
         if (this.keyboard.SPACE && this.collectedBottles != 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
@@ -171,10 +178,13 @@ class World {
         });
     }
     
-    checkCollCharEnemiesAndObjects() {
+    checkCollCharEnemies() {
         this.level.enemies.forEach((enemy) => {
             this.checkPosXAndY(this.character, enemy)
         })
+    }
+
+    checkCollCharObjects() {
         this.level.collectableObjects.forEach((collectableObject) => {
             if(this.character.isColliding(collectableObject)) {
                 if (collectableObject instanceof CollectableBottle) {
@@ -199,69 +209,102 @@ class World {
     }
 
     checkPosXAndY(char, mo) {
-        this.collCharChicken(char, mo);
-        this.collCharChickenSmall(char, mo);
-        this.collCharEndboss(char, mo);
+      
+       
     }
 
-    collCharChicken(char, mo) {
-        let tolerance = mo.width/2;
-        let halfYOfMo = mo.y + (mo.height/2);
-        if (mo instanceof Chicken) {
-            if (char.y + 130 + char.height - 150 >= mo.y - tolerance &&  
-                char.y + 130 + char.height - 150 < halfYOfMo && 
-                this.character.speedY < 0) { 
-                    if (char.x + (char.width/2) > mo.x - tolerance*2 && char.x + (char.width/2) < mo.x + mo.width + tolerance*2) {
-                        this.character.jump();
-                        mo.loadImage(mo.IMAGE_DEAD);
-                        setTimeout(() => {
-                            this.deleteFromCanvas(mo, this.level.enemies);
-                            mo.dead = true;
-                            clearInterval(mo.hitInterval);
-                        }, 150)
+    collCharChickenX(char) {
+     
+        this.level.enemies.forEach((mo) => {
+            let tolerance = mo.width/2;
+            let halfYOfMo = mo.y + (mo.height/2);
+            if (mo instanceof Chicken) {
+                if (char.y + 130 + char.height - 150 >= halfYOfMo && this.character.speed > -20) {
+                    if (char.x + 30 < mo.x && char.x + 30 + char.width - 70 >= mo.x ||
+                        char.x + 30 + char.width - 70 > mo.x + mo.width && char.x + 30 <= mo.x + mo.width) {
+                            this.character.hit();
                     }
-            } else if (char.y + 130 + char.height - 150 >= halfYOfMo && this.character.speed > -20) {
-                if (char.x + 30 < mo.x && char.x + 30 + char.width - 70 >= mo.x ||
-                    char.x + 30 + char.width - 70 > mo.x + mo.width && char.x + 30 <= mo.x + mo.width) {
-                        this.character.hit();
                 }
             }
-        }
+        })
     }
-    collCharChickenSmall(char, mo) {
-        if (mo instanceof ChickenSmall) {
-            if (char.y + 130 + char.height - 150 >= mo.y - this.tolerance &&  
-                char.y + 130 + char.height - 150 < halfYOfMo && 
-                this.character.speedY < 0) { 
-                    if (char.x + (char.width/2) > mo.x - tolerance*2 && char.x + (char.width/2) < mo.x + mo.width + tolerance*2) {
-                        this.character.jump();
-                        mo.loadImage(mo.IMAGE_DEAD);
-                        setTimeout(() => {
-                            this.deleteFromCanvas(mo, this.level.enemies);
-                            mo.dead = true;
 
-                            clearInterval(mo.hitInterval);
-                        }, 150)
-                    }
-                    else if (char.y + 130 + char.height - 150 >= halfYOfMo && this.character.speed > -20) {
-                        if (char.x + 30 + char.width - 70 - 80 > mo.x - mo.width && char.x + 30 + char.width - 70 - 80 <= mo.x + mo.width + mo.width ||
-                        char.x + 30 + 80 > mo.x - mo.width && char.x + 30 + 80 <= mo.x + mo.width + mo.width) {
-                            this.character.hit();
-                            console.log(this.character.speedY);
+    collCharChickenY(char) {
+    
+        this.level.enemies.forEach((mo) => {
+            let tolerance = mo.width/2;
+            let halfYOfMo = mo.y + (mo.height/2);
+            if (mo instanceof Chicken) {
+                if (char.y + 130 + char.height - 150 >= mo.y - tolerance &&  
+                    char.y + 130 + char.height - 150 < halfYOfMo && 
+                    this.character.speedY < 0) { 
+                        if (char.x + (char.width/2) > mo.x - tolerance*2 && char.x + (char.width/2) < mo.x + mo.width + tolerance*2) {
+                            this.character.jump();
+                            mo.loadImage(mo.IMAGE_DEAD);
+                            setTimeout(() => {
+                                this.deleteFromCanvas(mo, this.level.enemies);
+                                mo.dead = true;
+                                clearInterval(mo.hitInterval);
+                            }, 150)
                         }
-                    }
+                } 
             }
-        }
+        })
     }
-    collCharEndboss(char, mo) {
-        if (mo instanceof Endboss) {
-            if (char.y + 130 + char.height - 150 > mo.y + 10 &&
-                char.x + 30 + char.width - 70 > mo.x + 30
-            ) {
-                console.log('Endboss Kollision erkannt!');
-                this.character.hit();
+
+    collCharChickenSmallX(char) {
+        this.level.enemies.forEach((mo) => {
+            if (mo instanceof ChickenSmall) {
+                if (char.y + 130 + char.height - 150 >= mo.y - this.tolerance &&  
+                    char.y + 130 + char.height - 150 < halfYOfMo && 
+                    this.character.speedY < 0) { 
+                        if (char.y + 130 + char.height - 150 >= halfYOfMo && this.character.speed > -20) {
+                            if (char.x + 30 + char.width - 70 - 80 > mo.x - mo.width && char.x + 30 + char.width - 70 - 80 <= mo.x + mo.width + mo.width ||
+                            char.x + 30 + 80 > mo.x - mo.width && char.x + 30 + 80 <= mo.x + mo.width + mo.width) {
+                                this.character.hit();
+                                console.log(this.character.speedY);
+                            }
+                        }
+                }
             }
-        }
+        })
+    }
+
+    collCharChickenSmallY(char) {
+        this.level.enemies.forEach((mo) => {
+            if (mo instanceof ChickenSmall) {
+                if (char.y + 130 + char.height - 150 >= mo.y - this.tolerance &&  
+                    char.y + 130 + char.height - 150 < halfYOfMo && 
+                    this.character.speedY < 0) { 
+                        if (char.x + (char.width/2) > mo.x - tolerance*2 && char.x + (char.width/2) < mo.x + mo.width + tolerance*2) {
+                            this.character.jump();
+                            mo.loadImage(mo.IMAGE_DEAD);
+                            setTimeout(() => {
+                                this.deleteFromCanvas(mo, this.level.enemies);
+                                mo.dead = true;
+    
+                                clearInterval(mo.hitInterval);
+                            }, 150)
+                        }
+                      
+                }
+            }
+        })
+      
+    }
+
+    collCharEndboss(char) {
+        this.level.enemies.forEach((mo) => {
+            if (mo instanceof Endboss) {
+                if (char.y + 130 + char.height - 150 > mo.y + 10 &&
+                    char.x + 30 + char.width - 70 > mo.x + 30
+                ) {
+                    console.log('Endboss Kollision erkannt!');
+                    this.character.hit();
+                }
+            }
+        })
+      
     }
 
     deleteFromCanvas(object, objects) {
