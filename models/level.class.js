@@ -10,7 +10,7 @@ class Level {
     copyOfCollectableObjects = [];
 
     constructor(enemies, clouds, backgroundObjects, collectableObjects) {
-        console.log(enemies);
+        // console.log(enemies);
         
         this.enemies = this.checkEnemies(enemies);
         this.collectableObjects = this.checkCollObj(collectableObjects);
@@ -20,7 +20,7 @@ class Level {
     }
 
     checkEnemies(enemies) {
-        console.log('checkEnemies erreicht');
+        // console.log('checkEnemies erreicht');
         if(this.copyOfEnemies.length == 0) {
             enemies.forEach(enemy => {
                 this.copyOfEnemies.push(enemy)
@@ -35,7 +35,7 @@ class Level {
     }
 
     checkCollObj(collectableObjects) {
-        console.log('checkCollObj erreicht');
+        // console.log('checkCollObj erreicht');
 
         if (this.copyOfCollectableObjects.length == 0) {
             collectableObjects.forEach(collObj => {
@@ -61,8 +61,15 @@ class Level {
     checkWinOrLoose() {
         let interval = setInterval(() => {
             if (this.win == true) {
+                console.log(world.level.enemies);
+                world.level.enemies = [];
+                console.log(world.level.enemies);
+                world.stopGame();
                 setTimeout(() => {
                     console.log('gewonnen');
+                    console.log('collisionInterval', world.collisionInterval);
+                    clearInterval(world.collisionInterval)
+                    console.log('collisionInterval', world.collisionInterval);
                     document.getElementById('overlay-messages').style.display = 'block';
                     document.getElementById('img-msg-win').style.display = 'block';
                 },2000)
@@ -74,8 +81,15 @@ class Level {
                 }, 7000);
                 return
             } else if (this.win == false) {
+                console.log('übrige enemies vor Löschen', world.level.enemies);
+                world.level.enemies = [];
+                console.log('übrige enemies nach Löschen', world.level.enemies);
+                world.stopGame();
                 setTimeout(() => {
                     console.log('verloren');
+                    console.log('collisionInterval', world.collisionInterval);
+                    clearInterval(world.collisionInterval)
+                    console.log('collisionInterval', world.collisionInterval);
                     document.getElementById('overlay-messages').style.display = 'block';
                     document.getElementById('img-msg-loose').style.display = 'block';
                 },2000)
@@ -83,7 +97,7 @@ class Level {
                 setTimeout(() => {
                     document.getElementById('overlay-messages').style.display = 'none';
                     document.getElementById('img-msg-loose').style.display = 'none';
-                    world.stopGame(world.intervalIds);
+
                 }, 7000);
                 return
             }

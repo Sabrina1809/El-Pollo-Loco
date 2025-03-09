@@ -1,7 +1,12 @@
 let skriptsLoaded = false;
+let canvas;
+let world;
 
 function showStartScreen() {
     document.getElementById('overlay-start').style.display = 'block';
+}
+function hideStartScreen() {
+    document.getElementById('overlay-start').style.display = 'none';
 }
 
 document.getElementById('level-1-button').addEventListener('click', function () {
@@ -52,4 +57,43 @@ function loadScript(src) {
         script.onerror = () => reject(`Fehler beim Laden von ${src}`);
         document.body.appendChild(script);
     });
+}
+
+function init(level) {
+    console.log('Level vor checkEnemies & checkCollObj', level);
+    level.enemies = checkEnemies(level);
+    level.collectableObjects = checkCollObj(level);
+    level.win = undefined;
+    console.log('Level NACH checkEnemies & checkCollObj', level);
+    
+    canvas = document.getElementById('canvas');
+    world = new World(canvas, keyboard, level);
+}
+
+function checkEnemies(level) {
+    // console.log('Level vor Prüfung', level);
+    if(level.copyOfEnemies.length == 0) {
+        level.enemies.forEach(enemy => {
+            level.copyOfEnemies.push(enemy)
+        });    
+    }
+    level.enemies = [];
+    level.copyOfEnemies.forEach(enemy => {
+        level.enemies.push(enemy)
+    })
+    return level.enemies
+} 
+
+function checkCollObj(level) {
+    // console.log('Level vor Prüfung', level);
+    if(level.copyOfCollectableObjects.length == 0) {
+        level.collectableObjects.forEach(collObj => {
+            level.copyOfCollectableObjects.push(collObj)
+        });    
+    }
+    level.collectableObjects = [];
+    level.copyOfCollectableObjects.forEach(collObj => {
+        level.collectableObjects.push(collObj)
+    })
+    return level.collectableObjects
 }

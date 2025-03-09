@@ -1,57 +1,10 @@
-let canvas;
-let world;
+
 let keyboard = new Keyboard();
 let isTouch = false;
 const infoButton = document.getElementById('button-openinfo');
 const soundButton = document.getElementById('button-sound');
 const screenButton = document.getElementById('button-screen');
 const homeButton = document.getElementById('button-home');
-
-
-// function showStartScreen() {
-//     document.getElementById('overlay-start').style.display = 'block';
-// }
-
-function hideStartScreen() {
-    document.getElementById('overlay-start').style.display = 'none';
-
-}
-
-function init(level) {
-    console.log(level);
-    level.enemies = checkEnemies(level)
-    canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard, level);
-}
-
-function checkEnemies(level) {
-    // console.log('Level vor Prüfung', level);
-    if(level.copyOfEnemies.length == 0) {
-        level.enemies.forEach(enemy => {
-            level.copyOfEnemies.push(enemy)
-        });    
-    }
-    level.enemies = [];
-    level.copyOfEnemies.forEach(enemy => {
-        level.enemies.push(enemy)
-    })
-    return level.enemies
-} 
-
-function checkCollObj(level) {
-    // console.log('Level vor Prüfung', level);
-    if(level.copyOfCollectableObjects.length == 0) {
-        level.collectableObjects.forEach(collObj => {
-            level.copyOfCollectableObjects.push(collObj)
-        });    
-    }
-    level.collectableObjects = [];
-    level.copyOfCollectableObjects.forEach(collObj => {
-        level.collectableObjects.push(collObj)
-    })
-    return level.collectableObjects
-}
-    
 
 infoButton.addEventListener('touchstart', () => {
     isTouch = true;
@@ -65,7 +18,6 @@ screenButton.addEventListener('touchstart', () => {
 homeButton.addEventListener('touchstart', () => {
     isTouch = true;
 });
-
 
 infoButton.addEventListener('click', (event) => {
     if (isTouch) {
@@ -108,9 +60,6 @@ screenButton.addEventListener('touchend', () => {
 homeButton.addEventListener('touchend', () => {
 });
 
-// document.getElementById('button-openinfo').addEventListener('click', openMenu);
-// document.getElementById('button-openinfo').addEventListener('touchend', openMenu);
-
 function openMenu() {
     console.log('openMenu erreicht');
     if (document.getElementById('info-block').classList.contains('visible')) {
@@ -119,7 +68,6 @@ function openMenu() {
     } else {
         document.getElementById('info-block').classList.add('visible');
         document.getElementById('info-block').style.display = 'block';
-
     }
 }
 
@@ -139,13 +87,9 @@ window.addEventListener('keydown', () => {
     if(event.keyCode == 32) {
         keyboard.SPACE = true;
     }
-    // if(event.keyCode == 68) {
-    //     keyboard.D = true;
-    // }
 }) 
 
 window.addEventListener('keyup', () => {
-    // console.log(event);
     if(event.keyCode == 39) {
         keyboard.RIGHT = false;
     }
@@ -161,9 +105,6 @@ window.addEventListener('keyup', () => {
     if(event.keyCode == 32) {
         keyboard.SPACE = false;
     }
-    // if(event.keyCode == 68) {
-    //     keyboard.D = false;
-    // }
 }) 
 
 document.getElementById('button-throw').addEventListener('touchstart', () => {
@@ -242,10 +183,7 @@ function openInfoDescription(descriptionID, arrowID) {
         descrElement.classList.remove('descr-visible');
         descrElement.style.display = 'none';
         arrowElement.style.transform = 'rotate(0deg)';
-
-     
     } else {
-   
         descrElement.classList.add('descr-visible');
         descrElement.style.display = 'flex';
         arrowElement.style.transform = 'rotate(180deg)';

@@ -28,39 +28,20 @@ class Chicken extends MovableObject {
         setInterval(() => {
             this.moveLeft(this.speed)
         }, 1000 / 60);
-        // let hitInterval = setInterval(() => {
-        //     console.log('hitInterval chicken', hitInterval);
-
-        //     this.checkHit('img/3_enemies_chicken/chicken_normal/2_dead/dead.png', hitInterval)
-        // }, 100)
-        // this.checkHit('img/3_enemies_chicken/chicken_normal/2_dead/dead.png', 'chicken')
     }
-
-    // checkHit(image, hitInterval) {
-    //     if (this.dead == true) {
-    //         this.loadImage(image);
-    //         setTimeout(() => {
-    //             world.deleteFromCanvas(this, world.level.enemies);
-    //             clearInterval(hitInterval)
-    //         }, 600)
-    //     }
-    // }
 
     checkHit(image, chicken) {
                
         let hitInterval = setInterval(() => {
             console.log('hitInterval ', hitInterval, chicken);
             console.log(this);
-            
             if (this.dead == true) {
                 console.log(this);
                 this.loadImage(image);
-                setTimeout((hitInterval) => {
+                setTimeout(() => {
                     world.deleteFromCanvas(this, world.level.enemies);
-                 
-
-                }, 600)
-             
+                    this.dead = false;
+                }, 600)             
             }
         }, 100)
         let clearHitInterval = setInterval(() => {
