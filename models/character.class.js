@@ -4,9 +4,10 @@ class Character extends MovableObject {
     height = 350;
     width = 160;
     speed = 7;
-    // speed = 2;
     standing = 0;
     sawEndboss = false;
+    world;
+    currentImage = 0;
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -27,7 +28,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/3_jump/J-37.png',
         'img/2_character_pepe/3_jump/J-38.png',
         'img/2_character_pepe/3_jump/J-39.png'
-    ]
+    ];
 
     IMAGES_DEAD = [
         'img/2_character_pepe/5_dead/D-51.png',
@@ -37,13 +38,13 @@ class Character extends MovableObject {
         'img/2_character_pepe/5_dead/D-55.png',
         'img/2_character_pepe/5_dead/D-56.png',
         'img/2_character_pepe/5_dead/D-57.png'
-    ]
+    ];
 
     IMAGES_HURT = [
         'img/2_character_pepe/4_hurt/H-41.png',
         'img/2_character_pepe/4_hurt/H-42.png',
         'img/2_character_pepe/4_hurt/H-43.png'
-    ]
+    ];
 
     IMAGES_TIRED = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
@@ -56,7 +57,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/idle/I-8.png',
         'img/2_character_pepe/1_idle/idle/I-9.png',
         'img/2_character_pepe/1_idle/idle/I-10.png'
-    ]
+    ];
 
     IMAGES_SLEEPING = [
         'img/2_character_pepe/1_idle/long_idle/I-11.png',
@@ -69,14 +70,10 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-18.png',
         'img/2_character_pepe/1_idle/long_idle/I-19.png',
         'img/2_character_pepe/1_idle/long_idle/I-20.png'
-    ]
-
-    world;
-    currentImage = 0;
+    ];
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
-  
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
@@ -111,12 +108,10 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 this.loadImage('img/2_character_pepe/2_walk/W-21.png');
                 world.level.win = false;
-
                 this.playAnimation(this.IMAGES_DEAD);
                 setTimeout(()=> {
                     this.playAnimation(this.IMAGES_DEAD);
                     this.y += 20;
-                 
                     this.energy = 100;
                     this.lastHit = 0;
                     this.standing = 0;
@@ -153,10 +148,10 @@ class Character extends MovableObject {
                     // if (this.standing <= 8) {
                         this.loadImage('img/2_character_pepe/2_walk/W-21.png');
                     // }
-                    if (this.standing > 8) {
+                    if (this.standing > 1) {
                         this.playAnimation(this.IMAGES_TIRED);
                     }
-                    if (this.standing > 14) {
+                    if (this.standing > 10) {
                         this.playAnimation(this.IMAGES_SLEEPING);
                     }
                 }
@@ -166,7 +161,7 @@ class Character extends MovableObject {
 
     firstTimeEndboss() {
         let findEndbossInterval = setInterval(() => {
-            if (this.sawEndboss == false && this.x >= 1800) {
+            if (this.sawEndboss == false && this.x >= 1700) {
                     console.log('close to Endboss', world.level.enemies[world.level.enemies.length - 1]);
                     world.level.enemies[world.level.enemies.length - 1].x -=40;
                     world.level.enemies[world.level.enemies.length - 1].playAnimation(world.level.enemies[world.level.enemies.length - 1].IMAGES_WALK);
@@ -181,7 +176,6 @@ class Character extends MovableObject {
     increaseStandingTime() {
         let standingInterval = setInterval(() => {
             this.standing++
-            console.log(this.standing);
         },1000)
         let checkEndInterval = setInterval(() => {
             if (world.level.win == true || this.world.level.win == false) {

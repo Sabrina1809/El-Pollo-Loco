@@ -34,19 +34,17 @@ async function loadGameScripts() {
             "./models/cloud.class.js",
             "./models/background-object.class.js",
             "./models/endboss.class.js",
-            "./models/level.class.js", // <--- Level-Klasse kommt vor level1.js!
+            "./models/level.class.js",
             "./levels/level1.js",
             "./models/world.class.js",
             "./models/keyboard.class.js",
             "./js/game.js"
         ];
-    
         for (const src of scripts) {
             await loadScript(src);
         }
         return skriptsLoaded = true;
     }
-   
 }
 
 function loadScript(src) {
@@ -61,11 +59,9 @@ function loadScript(src) {
 
 function init(level) {
     canvas = document.getElementById('canvas');
-    // console.log('Level vor checkEnemies & checkCollObj', level);
     level.enemies = checkEnemies(level);
     level.collectableObjects = checkCollObj(level);
     level.win = undefined;
-   
     world = new World(canvas, keyboard, level);
     world.character.energy = 100;
     world.character.lastHit = 0;
@@ -74,7 +70,6 @@ function init(level) {
 }
 
 function checkEnemies(level) {
-    // console.log('Level vor Prüfung', level);
     if(level.copyOfEnemies.length == 0) {
         level.enemies.forEach(enemy => {
             level.copyOfEnemies.push(enemy)
@@ -88,7 +83,6 @@ function checkEnemies(level) {
 } 
 
 function checkCollObj(level) {
-    // console.log('Level vor Prüfung', level);
     if(level.copyOfCollectableObjects.length == 0) {
         level.collectableObjects.forEach(collObj => {
             level.copyOfCollectableObjects.push(collObj)

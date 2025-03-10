@@ -58,7 +58,6 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_WALK);
         this.animate();
         this.energyInterval = setInterval(()=> {
-            // console.log('Checking Energy:', this.energy, 'Hit:', this.hit);
             this.checkEnergy();
         }, 100) 
     }
@@ -129,11 +128,9 @@ class Endboss extends MovableObject {
                     clearInterval(shrinkInterval);
                 },2500)
             }, 1000)
-          
             setTimeout(() => {
                 clearInterval(hurtInterval);
             },2000)
-          
         },1000)
         setTimeout(() => {
             world.level.enemies.pop();
@@ -149,5 +146,4 @@ class Endboss extends MovableObject {
             this.playAnimation(this.IMAGES_WALKING);
         }, 500);
     }
-
 }

@@ -13,7 +13,6 @@ class Chicken extends MovableObject {
     ]
 
     IMAGE_DEAD = 'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
-    
     currentImage = 0;
 
     constructor() {
@@ -27,14 +26,11 @@ class Chicken extends MovableObject {
             setInterval(() => {
                 this.moveLeft(this.speed)
             }, 1000 / 60);
-        },2000)
+        },1200)
     }
 
     checkHit(image, chicken) {
-               
         let hitInterval = setInterval(() => {
-            console.log('hitInterval ', hitInterval, chicken);
-            console.log(this);
             if (this.dead == true) {
                 console.log(this);
                 this.loadImage(image);
@@ -45,8 +41,6 @@ class Chicken extends MovableObject {
             }
         }, 100)
         let clearHitInterval = setInterval(() => {
-            console.log('clearHitInterval erreicht', clearHitInterval);
-            
             if (this.dead == true) {
                 clearInterval(hitInterval)
                 clearInterval(clearHitInterval)
@@ -54,7 +48,7 @@ class Chicken extends MovableObject {
             }
         }, 200)
     }
-    
+
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
@@ -62,6 +56,5 @@ class Chicken extends MovableObject {
         setInterval(() => {
             this.moveLeft(this.speed)
         }, 1000 / 60)
-       
     }
 }

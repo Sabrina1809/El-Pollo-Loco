@@ -73,7 +73,6 @@ class World {
         this.intervalIds = [];
     }
     
-
     setWorld() {
         this.character.world = this;
     }
@@ -81,7 +80,7 @@ class World {
     run() {
         this.resetWorld();
         this.resetEnemies();
-        console.log('this.level.enemies', this.level.enemies);
+        // console.log('this.level.enemies', this.level.enemies);
         this.resetCharacter();
         this.resetEndboss();
         this.level.checkEnemies(this.level.enemies);
@@ -101,7 +100,6 @@ class World {
         this.enemyDead();
     }
     
-
     checkThrowObjects(throwObjectInterval) {
         if (this.keyboard.SPACE && this.collectedBottles != 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
@@ -139,11 +137,7 @@ class World {
     enemyDead() {
         this.level.enemies.forEach((enemy) => {
             if (enemy.deadInterval) {
-                console.warn('Intervall existiert bereits für', enemy);
                 clearInterval(enemy.deadInterval);
-                console.log(`Intervall gestoppt für Enemy`, enemy, enemy.deadInterval);
-                
-          
                 this.intervalIds = this.intervalIds.filter(id => id !== enemy.deadInterval);
                 console.log(this.intervalIds);
                 enemy.deadInterval = null;
@@ -153,9 +147,7 @@ class World {
                 if (enemy.dead) {
                     enemy.loadImage(enemy.IMAGE_DEAD);
                     clearInterval(enemy.deadInterval);
-                    // console.log(`Intervall gestoppt für Enemy`, enemy, enemy.deadInterval);
                     this.intervalIds = this.intervalIds.filter(id => id !== enemy.deadInterval);
-                    // console.log('übrige IntervalIDs', this.intervalIds);
                     enemy.deadInterval = null;
                     setTimeout(() => {
                         this.deleteFromCanvas(enemy, this.level.enemies);
@@ -163,11 +155,8 @@ class World {
                     return this.intervalIds
                 }
             }, 100);
-    
-            // console.log(`Neues Intervall gestartet für Enemy`, enemy, enemy.deadInterval);
             this.intervalIds.push(enemy.deadInterval);
             return this.intervalIds
-
         });
     }
 
@@ -190,7 +179,6 @@ class World {
                         this.character.energy = 100;
                     }
                 }
-                
             }
         })
     }
@@ -262,7 +250,6 @@ class World {
                             setTimeout(() => {
                                 this.deleteFromCanvas(mo, this.level.enemies);
                                 mo.dead = true;
-    
                                 clearInterval(mo.hitInterval);
                             }, 150)
                         }
@@ -279,7 +266,6 @@ class World {
                 if (char.y + 130 + char.height - 150 > mo.y + 10 &&
                     char.x + 30 + char.width - 70 > mo.x + 30
                 ) {
-                    console.log('Endboss Kollision erkannt!');
                     this.character.hit();
                 }
             }
@@ -296,27 +282,20 @@ class World {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
-        
         this.addObjectsToMap(this.level.clouds);
         this.addToMap(this.character);
-        // console.log(this.level.enemies);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.collectableObjects);
-        // this.addObjectsToMap(this.level.statusBars);
-
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBarHealth);
         this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarCoin);
         this.addToMap(this.statusBarEndboss);
         this.ctx.translate(this.camera_x, 0);
-        
         this.ctx.translate(-this.camera_x, 0);
-
         let self = this;
         requestAnimationFrame(function() {
             self.draw();
