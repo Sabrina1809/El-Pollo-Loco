@@ -1,6 +1,6 @@
 class Endboss extends MovableObject {
 
-    x = 2000;
+    x = 2200;
     y = 55;
     height = 400;
     width = 400;
@@ -61,13 +61,9 @@ class Endboss extends MovableObject {
             // console.log('Checking Energy:', this.energy, 'Hit:', this.hit);
             this.checkEnergy();
         }, 100) 
-       
     }
 
     checkEnergy() {
-        // console.log('Endboss Energy: ', this.energy);
-        // console.log('CheckEnergy aufgerufen:', this.hit);
-
         if (this.hit == true && this.energy > 20) {
            this.endbossHurt();
            setTimeout(() => {
@@ -79,41 +75,35 @@ class Endboss extends MovableObject {
                 world.level.win = true; 
                 this.hit = false;
             },4000)
-            // setTimeout(() => {
-              
-            // }, 400);  
-          
         }
-      
     }
 
     endbossHurt() {
         this.energy -= 20;
         this.hit = false;
-            console.log('über 0:', this.energy);
-            let hurtInterval = setInterval(() => {
-                this.playAnimation(this.IMAGES_HURT);
-            }, 200);
+        let hurtInterval = setInterval(() => {
+            this.playAnimation(this.IMAGES_HURT);
+        }, 200);
+        setTimeout(() => {
+            clearInterval(hurtInterval)
+        }, 1000);
+        setTimeout(() => {
+            let walkInterval = setInterval(() => {
+                this.x -= 30;
+                this.playAnimation(this.IMAGES_WALK);
+            }, 75)
             setTimeout(() => {
-                clearInterval(hurtInterval)
-            }, 1000);
-            setTimeout(() => {
-                let walkInterval = setInterval(() => {
-                    this.x -= 30;
-                    this.playAnimation(this.IMAGES_WALK);
-                }, 75)
-                setTimeout(() => {
-                    clearInterval(walkInterval);
-                }, 1000)
+                clearInterval(walkInterval);
             }, 1000)
+        }, 1000)
+        setTimeout(() => {
+            let attackInterval = setInterval(() => {
+                this.playAnimation(this.IMAGES_ATTACK);
+            }, 60)
             setTimeout(() => {
-                let attackInterval = setInterval(() => {
-                    this.playAnimation(this.IMAGES_ATTACK);
-                }, 60)
-                setTimeout(() => {
-                    clearInterval(attackInterval);
-                }, 1000)
-            }, 2000)
+                clearInterval(attackInterval);
+            }, 1000)
+        }, 2000)
     }
 
     endbossDead() {
@@ -147,12 +137,7 @@ class Endboss extends MovableObject {
         },1000)
         setTimeout(() => {
             world.level.enemies.pop();
-           
-            // clearInterval(shrinkInterval);
-               
-
             world.level.win = undefined;
-            // return world.level.win = undefined;
             setTimeout(() => {
                 document.getElementById('overlay-start').style.display = 'block';
             },1000)

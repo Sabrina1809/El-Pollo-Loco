@@ -55,7 +55,7 @@ class World {
         endboss.lastHit = 0;
         endboss.width = 400;
         endboss.height = 400;
-        endboss.x = 2000;
+        endboss.x = 2200;
         endboss.y = 55;
     }
 

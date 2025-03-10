@@ -6,6 +6,7 @@ class Character extends MovableObject {
     speed = 7;
     // speed = 2;
     standing = 0;
+    sawEndboss = false;
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -84,7 +85,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_SLEEPING);
         this.applyGravity();
         this.intervals = [];
-        this.clearAllIntervals(); // Vorherige Intervalle löschen
+        this.clearAllIntervals();
         let checkMoveInterval = setInterval(()=> {
             // console.log('checkMoveInterval ', checkMoveInterval);
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -104,11 +105,11 @@ class Character extends MovableObject {
 
         }, 1000/60);
         this.increaseStandingTime();
-       
+        this.firstTimeEndboss();
         let checkAnimationInterval = setInterval(() => {
             this.intervals.push(checkAnimationInterval);
-            // console.log('checkAnimationInterval ', checkAnimationInterval);
             if (this.isDead()) {
+                this.loadImage('img/2_character_pepe/2_walk/W-21.png');
                 world.level.win = false;
 
                 this.playAnimation(this.IMAGES_DEAD);
@@ -135,6 +136,7 @@ class Character extends MovableObject {
                     })
                 },4500)
                 setTimeout(() => {
+                    this.sawEndboss = false;
                     document.getElementById('overlay-start').style.display = 'block';
                 }, 7000)
             } else if (this.isHurt()) {
@@ -148,7 +150,9 @@ class Character extends MovableObject {
                     this.playAnimation(this.IMAGES_WALKING);
                     this.standing = 0;
                 } else {
-                    this.loadImage('img/2_character_pepe/2_walk/W-21.png');
+                    // if (this.standing <= 8) {
+                        this.loadImage('img/2_character_pepe/2_walk/W-21.png');
+                    // }
                     if (this.standing > 8) {
                         this.playAnimation(this.IMAGES_TIRED);
                     }
@@ -158,6 +162,20 @@ class Character extends MovableObject {
                 }
             }
         }, 100);   
+    }
+
+    firstTimeEndboss() {
+        let findEndbossInterval = setInterval(() => {
+            if (this.sawEndboss == false && this.x >= 1800) {
+                    console.log('close to Endboss', world.level.enemies[world.level.enemies.length - 1]);
+                    world.level.enemies[world.level.enemies.length - 1].x -=40;
+                    world.level.enemies[world.level.enemies.length - 1].playAnimation(world.level.enemies[world.level.enemies.length - 1].IMAGES_WALK);
+                setTimeout(() => {
+                    clearInterval(findEndbossInterval);
+                    return this.sawEndboss = true;
+                }, 1000)
+            }
+        },100)
     }
 
     increaseStandingTime() {
@@ -175,8 +193,6 @@ class Character extends MovableObject {
     }
 
     clearAllIntervals() {
-        // console.log('Character Intervalle', this.intervals);
-        
         this.intervals.forEach((interval) => {
             clearInterval(interval)
         });
