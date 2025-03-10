@@ -52,33 +52,52 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
         this.applyGravity();
+        this.intervals = [];
+        this.clearAllIntervals(); // Vorherige Intervalle löschen
         let checkMoveInterval = setInterval(()=> {
             // console.log('checkMoveInterval ', checkMoveInterval);
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                        this.otherDirection = false;
-                        this.moveRight();
-                    } 
-                    if (this.world.keyboard.LEFT && this.x >= -500) {
-                        this.otherDirection = true;
-                        this.moveLeft(this.speed);
-                    }
-                    if (!this.isAboveGround() && this.world.keyboard.UP) {
-                        this.jump();
-                    }
-                    this.world.camera_x = -this.x + 60;
+                    this.otherDirection = false;
+                    this.moveRight();
+                } 
+                if (this.world.keyboard.LEFT && this.x >= -500) {
+                    this.otherDirection = true;
+                    this.moveLeft(this.speed);
+                }
+                if (!this.isAboveGround() && this.world.keyboard.UP) {
+                    this.jump();
+                }
+                this.world.camera_x = -this.x + 60;
+            
+                // console.log(this.intervals);
+
         }, 1000/60)
         let checkAnimationInterval = setInterval(() => {
+            this.intervals.push(checkAnimationInterval);
             // console.log('checkAnimationInterval ', checkAnimationInterval);
             if (this.isDead()) {
-                clearInterval(checkMoveInterval);
+                world.level.win = false;
+
                 this.playAnimation(this.IMAGES_DEAD);
-                this.world.level.win = false;
                 setTimeout(()=> {
                     this.y += 20;
-                }, 1500)
+                    world.level.win = undefined;
+                    this.energy = 100;
+                    this.lastHit = 0;
+                }, 1500);
+                setTimeout(() => {
+                    console.log('timeout erreicht 88');
+                    this.intervals.push(checkMoveInterval);
+                    this.intervals.push(checkAnimationInterval);
+                 
+                    clearInterval(checkAnimationInterval);
+                    clearInterval(checkMoveInterval);
+                    this.intervals.forEach((interval) => {
+                        clearInterval(interval)
+                    })
+                },2500)
                 setTimeout(() => {
                     document.getElementById('overlay-start').style.display = 'block';
-                    clearInterval(checkAnimationInterval)
                 }, 8000)
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
@@ -93,63 +112,12 @@ class Character extends MovableObject {
             }
         }, 100)
     }
-
-    
-
-    animate() {
+    clearAllIntervals() {
+        // console.log('Character Intervalle', this.intervals);
         
-        let keyboardInterval = setInterval(() => {
-            
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.otherDirection = false;
-                this.moveRight();
-            } 
-            if (this.world.keyboard.LEFT && this.x >= -500) {
-                this.otherDirection = true;
-                this.moveLeft(this.speed);
-            }
-            if (!this.isAboveGround() && this.world.keyboard.UP) {
-                this.jump();
-            }
-            this.world.camera_x = -this.x + 60;
-        }, 1000/60)
-
-        let deadInterval = setInterval(() => {
-            if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else {
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.playAnimation(this.IMAGES_WALKING);
-                } else {
-                    this.loadImage('img/2_character_pepe/2_walk/W-21.png');
-                }
-            } 
-        }, 200);
-   
-        
-        setInterval(() => {
-            if (this.world.character.energy <= 0) {
-                let hurtInterval = setInterval(() => {
-                    this.playAnimation(this.IMAGES_HURT);
-                }, 200);
-                setTimeout(() => {
-                    clearInterval(hurtInterval)
-                }, 1000);
-                setTimeout(() => {
-                    let deadInterval = setInterval(() => {
-                        this.playAnimation(this.IMAGES_DEAD);
-                        setTimeout(() => {
-                            clearInterval(deadInterval)
-                        }, 2000)
-                    }, 250);
-                    setTimeout(() => {
-                        document.getElementById('overlay-start').style.display = 'block';
-                    }, 8000)
-                }, 1000)
-               
-            }
-        }, 200)
+        this.intervals.forEach((interval) => {
+            clearInterval(interval)
+        });
+        this.intervals = [];
     }
 }

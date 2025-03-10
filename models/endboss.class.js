@@ -127,9 +127,12 @@ class Endboss extends MovableObject {
             clearInterval(hurtInterval)
         }, 1000);
         setTimeout(() => {
+            world.level.win = true;
             let deadInterval = setInterval(() => {
                 this.playAnimation(this.IMAGES_DEAD);
                 setTimeout(()=> {
+                    world.level.win = undefined; 
+                    this.hit = false;
                     let shrinkInterval = setInterval(() => {
                         this.width -= 10;
                         this.x += 10;
@@ -139,14 +142,14 @@ class Endboss extends MovableObject {
                         clearInterval(deadInterval);
                         clearInterval(shrinkInterval);
                         world.level.enemies.pop();
-
-                    }, 1000)
+                      
+                    }, 3000)
                 },1000);
             }, 150);
         }, 1200)
         setTimeout(() => {
             document.getElementById('overlay-start').style.display = 'block';
-        }, 10000)
+        }, 9000)
     }
          
     animate() {

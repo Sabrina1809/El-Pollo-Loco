@@ -64,10 +64,15 @@ function init(level) {
     level.enemies = checkEnemies(level);
     level.collectableObjects = checkCollObj(level);
     level.win = undefined;
+   
     console.log('Level NACH checkEnemies & checkCollObj', level);
     
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level);
+    world.character.energy = 100;
+    world.character.lastHit = 0;
+    world.level.win = undefined;
+    level.checkWinOrLoose();
 }
 
 function checkEnemies(level) {
