@@ -119,36 +119,43 @@ class Endboss extends MovableObject {
     endbossDead() {
         this.energy -= 20;
         this.hit = false;
-        console.log('kaputt: ', this.energy);
         let hurtInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_HURT);
         }, 200);
         setTimeout(() => {
-            clearInterval(hurtInterval)
-        }, 1000);
-        setTimeout(() => {
-            world.level.win = true;
-            let deadInterval = setInterval(() => {
+            let dieInterval = setInterval(() => {
                 this.playAnimation(this.IMAGES_DEAD);
-                setTimeout(()=> {
-                    world.level.win = undefined; 
-                    this.hit = false;
-                    let shrinkInterval = setInterval(() => {
-                        this.width -= 10;
-                        this.x += 10;
-                        this.height -= 10;
-                    }, 50);
-                    setTimeout(() => {
-                        clearInterval(deadInterval);
-                        clearInterval(shrinkInterval);
-                        world.level.enemies.pop();
-                      
-                    }, 3000)
-                },1000);
-            }, 150);
-        }, 1200)
+            },200)
+            setTimeout(() => {
+                clearInterval(dieInterval);
+            },3000)
+            setTimeout(() => {
+                let shrinkInterval = setInterval(() => {
+                    this.width -= 25;
+                    this.x += 30;
+                    this.height -= 25;
+                },100)
+                setTimeout(() => {
+                    clearInterval(shrinkInterval);
+                },2500)
+            }, 1000)
+          
+            setTimeout(() => {
+                clearInterval(hurtInterval);
+            },2000)
+          
+        },1000)
         setTimeout(() => {
-            document.getElementById('overlay-start').style.display = 'block';
+            world.level.enemies.pop();
+           
+            // clearInterval(shrinkInterval);
+               
+
+            world.level.win = undefined;
+            // return world.level.win = undefined;
+            setTimeout(() => {
+                document.getElementById('overlay-start').style.display = 'block';
+            },1000)
         }, 9000)
     }
          

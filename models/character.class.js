@@ -80,8 +80,9 @@ class Character extends MovableObject {
 
                 this.playAnimation(this.IMAGES_DEAD);
                 setTimeout(()=> {
+                    this.playAnimation(this.IMAGES_DEAD);
                     this.y += 20;
-                    world.level.win = undefined;
+                 
                     this.energy = 100;
                     this.lastHit = 0;
                 }, 1500);
@@ -89,16 +90,19 @@ class Character extends MovableObject {
                     console.log('timeout erreicht 88');
                     this.intervals.push(checkMoveInterval);
                     this.intervals.push(checkAnimationInterval);
-                 
-                    clearInterval(checkAnimationInterval);
+                    world.level.win = undefined;
                     clearInterval(checkMoveInterval);
+                  
+                },2500)
+                setTimeout(()=> {
+                    clearInterval(checkAnimationInterval);
                     this.intervals.forEach((interval) => {
                         clearInterval(interval)
                     })
-                },2500)
+                },4500)
                 setTimeout(() => {
                     document.getElementById('overlay-start').style.display = 'block';
-                }, 8000)
+                }, 7000)
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {

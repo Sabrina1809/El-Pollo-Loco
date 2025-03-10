@@ -125,18 +125,20 @@ class Level {
                 console.log('world.level.win:', world.level.win);
                 this.handleWin();
                 // this.win = null;
-                world.level.win = undefined;
-
-                clearInterval(this.checkWinInterval);
+                setTimeout(() => {
+                    world.level.win = undefined;
+                    clearInterval(this.checkWinInterval);
+                },2000)
+              
 
             } else if (world.level.win === false) {
                 console.log('this.win:', this.win);
                 console.log('world.level.win:', world.level.win);
                 this.handleLose();
-                // this.win = null;
-                world.level.win = undefined;
-
-                clearInterval(this.checkWinInterval);
+                setTimeout(() => {
+                    world.level.win = undefined;
+                    clearInterval(this.checkWinInterval);
+                },2000)
 
             }
         }, 200);
