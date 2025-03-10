@@ -60,14 +60,12 @@ function loadScript(src) {
 }
 
 function init(level) {
-    console.log('Level vor checkEnemies & checkCollObj', level);
+    canvas = document.getElementById('canvas');
+    // console.log('Level vor checkEnemies & checkCollObj', level);
     level.enemies = checkEnemies(level);
     level.collectableObjects = checkCollObj(level);
     level.win = undefined;
    
-    console.log('Level NACH checkEnemies & checkCollObj', level);
-    
-    canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level);
     world.character.energy = 100;
     world.character.lastHit = 0;

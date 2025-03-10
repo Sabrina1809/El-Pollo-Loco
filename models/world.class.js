@@ -19,22 +19,15 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-       
-
         this.level = level;
-        console.log('world vor reset', this);
         this.draw();
         this.setWorld();
         this.run();
-        this.level.win = undefined;
-
-        console.log('world NACH reset', this);
-
+        this.level.win = undefined;         
     }
 
     resetEnemies() {
         this.level.enemies.forEach(enemy => {
-            
             enemy.dead = false;
             enemy.deadInterval = null;
             if (enemy instanceof Chicken) {
@@ -45,9 +38,7 @@ class World {
                 enemy.x = 800 + Math.random() * 1000;
                 enemy.y = 370;
             }
-           
         });
-        // console.log('Alle Gegner wurden zurückgesetzt:', this.level.enemies);
     }
 
     resetCharacter() {
@@ -56,8 +47,6 @@ class World {
         this.character.x = 60;
         this.character.y = -200;
         this.character.clearAllIntervals();
-      
-        console.log('Character wurde zurückgesetzt:', this.character);
     }
 
     resetEndboss() {
@@ -68,30 +57,20 @@ class World {
         endboss.height = 400;
         endboss.x = 2000;
         endboss.y = 55;
-        console.log('Endboss wurde zurückgesetzt:', this.level.enemies[this.level.enemies.length - 1]);
     }
 
     resetWorld() {
         this.level.win = undefined;
-
         this.collectedBottles = 0;
         this.collectedCoins = 0;
-        // console.log('IntervalIds vor Reset', this.intervalIds);
         this.intervalIds.forEach((interval) => {
             clearInterval(interval)
         })
-        // console.log('IntervalIds NACH Reset', this.intervalIds);
-
     }
 
     stopGame() {
-        console.log('stopGame erreicht');
-        
-        // Alle gespeicherten Intervalle stoppen
         this.intervalIds.forEach(id => clearInterval(id));
-        this.intervalIds = []; // Liste zurücksetzen
-        
-        console.log('Alle Intervalle gestoppt.');
+        this.intervalIds = [];
     }
     
 

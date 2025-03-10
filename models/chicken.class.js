@@ -21,13 +21,13 @@ class Chicken extends MovableObject {
         this.x = 300 + Math.random() * 1500;
         this.loadImages(this.IMAGES_WALKING);
         this.applyGravity();
-        this.animate();
-        // setInterval(() => {
+        setTimeout(() => {
             this.playAnimation(this.IMAGES_WALKING);
-        // }, 200);
-        setInterval(() => {
-            this.moveLeft(this.speed)
-        }, 1000 / 60);
+            this.animate();
+            setInterval(() => {
+                this.moveLeft(this.speed)
+            }, 1000 / 60);
+        },2000)
     }
 
     checkHit(image, chicken) {
@@ -54,11 +54,7 @@ class Chicken extends MovableObject {
             }
         }, 200)
     }
-
-    enemyHit() {
-
-    }
-
+    
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);

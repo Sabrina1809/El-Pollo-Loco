@@ -33,20 +33,14 @@ class ThrowableObject extends MovableObject {
             }
         }, 1000/25)
         this.throw(gravityInterval);
-        // let collInterval = setInterval(() => {
-        //     this.checkCollWithEnemy()
-        // }, 100) 
         setTimeout(() => {
-            // console.log(world.throwableObjects);
-                        
             world.throwableObjects.shift();
-            // console.log(world.throwableObjects);
-            // clearInterval(collInterval);
         }, 1500);
     }
 
     throw(gravityInterval) {
-        this.speedY = 24;
+        // this.speedY = 24;
+        this.speedY = 20;
         // this.applyGravity();
         let xInterval = setInterval(() => {
             this.x += 8
@@ -65,7 +59,6 @@ class ThrowableObject extends MovableObject {
                 this.x + 30 + (this.width/2 - 60) < world.level.enemies[i].x + world.level.enemies[i].width &&
                 this.x + 30 + (this.width/2 - 60) > world.level.enemies[i].x
             ) {
-                // clearInterval(throwInterval);
                 clearInterval(collInterval);
                 let splashInterrval = setInterval(() => {
                     this.playAnimation(this.IMAGES_SPLASH);
