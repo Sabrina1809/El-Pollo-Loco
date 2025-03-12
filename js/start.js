@@ -7,7 +7,21 @@ const soundButton = document.getElementById('button-sound');
 const screenButton = document.getElementById('button-screen');
 let soundMuted = JSON.parse(localStorage.getItem('soundMuted')) || false;
 
+function checkOrientation() {
+    let overlayRotate = document.getElementById('overlay-rotate');
+    
+    if (window.matchMedia("(orientation: portrait)").matches) {
+        overlayRotate.style.display = 'flex';
+    } else {
+        overlayRotate.style.display = 'none';
+    }
+}
 
+// Initialer Check beim Laden der Seite
+checkOrientation();
+
+// Event Listener für Änderungen der Orientierung
+window.addEventListener('resize', checkOrientation);
 
 // Event-Listener für den Button
 soundButton.addEventListener('click', () => {
