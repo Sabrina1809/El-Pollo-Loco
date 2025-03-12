@@ -201,10 +201,10 @@ class World {
             let tolerance = mo.width/2;
             let halfYOfMo = mo.y + (mo.height/2);
             if (mo instanceof Chicken) {
-                if (char.y + 130 + char.height - 150 >= mo.y - tolerance &&  
+                if (char.y + 130 + char.height - 150 >= mo.y &&  
                     char.y + 130 + char.height - 150 < halfYOfMo && 
                     this.character.speedY < 0) { 
-                        if (char.x + (char.width/2) > mo.x - tolerance*2 && char.x + (char.width/2) < mo.x + mo.width + tolerance*2) {
+                        if (char.x + (char.width/2) > mo.x - tolerance/2 && char.x + (char.width/2) < mo.x + mo.width + tolerance/2) {
                             this.character.jump();
                             mo.loadImage(mo.IMAGE_DEAD);
                             setTimeout(() => {
