@@ -73,7 +73,11 @@ class World {
     stopGame() {
         this.intervalIds.forEach(id => clearInterval(id));
         this.intervalIds = [];
+        world.character.intervals.forEach(id => clearInterval(id));
+        world.character.intervals = [];
     }
+       
+    
     
     setWorld() {
         this.character.world = this;

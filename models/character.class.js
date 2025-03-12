@@ -116,9 +116,12 @@ class Character extends MovableObject {
         let jumped = false;
 
         let checkAnimationInterval = setInterval(() => {            
-            this.intervals.push(checkAnimationInterval);
             if (this.isDead()) {
                 this.animateCharactersDead(checkAnimationInterval, checkMoveInterval);
+                setTimeout(() => {
+                    this.energy = 100;
+                    clearInterval(checkAnimationInterval)
+                }, 1500);
             } else if (this.isHurt()) {
                 this.audioHit.play();
                 this.playAnimation(this.IMAGES_HURT);
@@ -146,8 +149,6 @@ class Character extends MovableObject {
     }
 
     animateCharactersDead(checkAnimationInterval, checkMoveInterval) {
-        console.log('Abbruch');
-        
         this.loadImage('img/2_character_pepe/2_walk/W-21.png');
         world.level.win = false;
         this.world.keyboard.UP = false;
@@ -160,29 +161,33 @@ class Character extends MovableObject {
         setTimeout(()=> {
             this.playAnimation(this.IMAGES_DEAD);
             this.y += 20;
-            // this.energy = 100;
             this.lastHit = 0;
             this.standing = 0;
-        }, 1500);
-        setTimeout(() => {
-            this.intervals.push(checkMoveInterval);
-            this.intervals.push(checkAnimationInterval);
             world.level.win = undefined;
-            clearInterval(checkMoveInterval);
-        },2500)
-        setTimeout(()=> {
-            clearInterval(checkAnimationInterval);
-            this.intervals.forEach((interval) => {
-                clearInterval(interval)
-            })
-        },4500)
+            // this.energy = 100;
+
+
+            // this.intervals.forEach((interval) => {
+            //     clearInterval(interval)
+            // })
+        }, 1000);
+     
         setTimeout(() => {
-            this.sawEndboss = false;
-            this.energy = 100;
             this.world.stopGame();
+            this.sawEndboss = false;
+          
+           clearInterval(world.character.checkAnimationInterval);
             document.getElementById('overlay-start').style.display = 'block';
             document.getElementById('button-home').style.display = 'none';
-
+            console.log('Abbruch Ende');
+            console.log(world.character.intervals);
+           
+            world.intervalIds.forEach((id) => {
+                clearInterval(id)
+            })
+             console.log(world.intervalIds);
+            // console.log('checkAnim', checkAnimationInterval);
+            // console.log('checkMoveInt', checkMoveInterval);
         }, 6000)
     }
 

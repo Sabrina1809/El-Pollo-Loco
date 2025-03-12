@@ -59,30 +59,31 @@ class Level {
         }
         this.checkWinInterval = setInterval(() => {
             if (world.level.win === true) {
-                
                 this.handleWin();
+                clearInterval(world.level.checkWinInterval);
                 setTimeout(() => {
                     world.keyboardActive = false;
-                
                     world.character.sawEndboss = false;
-                    clearInterval(this.checkWinInterval);
+                   
                 },2000)
                 setTimeout(() => {
                     world.level.win = undefined;
                     world.keyboardActive = true;
                 },8000)
             } else if (world.level.win === false) {
-               
                 this.handleLose();
+                clearInterval(world.level.checkWinInterval);
                 setTimeout(() => {
                     world.keyboardActive = false;
                     world.character.sawEndboss = false;
-                    clearInterval(this.checkWinInterval);
+                    // clearInterval(this.checkWinInterval);
                 },2000)
                 setTimeout(() => {
                     world.level.win = undefined;
+                },6000)
+                setTimeout(() => {
                     world.keyboardActive = true;
-                },10000)
+                },8000)
             }
         }, 200);
     }
@@ -105,16 +106,24 @@ class Level {
     
     handleLose() {
         world.level.win = null;
+        clearInterval(this.checkWinInterval);
+        clearInterval(world.character.checkMoveInterval);
+        clearInterval(world.character.checkAnimationInterval);
+        console.log('checkwininterval', this.checkWinInterval);
+        console.log('checvkmoveinterval', world.character.checkMoveInterval);
+        console.log('checvkmoveinterval', world.character.checkAnimationInterval);
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'block';
             document.getElementById('img-msg-loose').style.display = 'block';
-            clearInterval(this.checkWinInterval);
-           
+         
+         
+            
         }, 1000);
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-loose').style.display = 'none';
-            world.intervalIds.forEach(id => clearInterval(id));
+           
+          
         }, 6000);
     }
 }
