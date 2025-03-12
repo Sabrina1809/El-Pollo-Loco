@@ -5,8 +5,8 @@ let isTouch = false;
 const infoButton = document.getElementById('button-openinfo');
 const soundButton = document.getElementById('button-sound');
 const screenButton = document.getElementById('button-screen');
-const homeButton = document.getElementById('button-home');
 let soundMuted = JSON.parse(localStorage.getItem('soundMuted')) || false;
+
 
 
 // Event-Listener für den Button
@@ -63,16 +63,16 @@ function handleClick(event) {
 
 soundButton.addEventListener('touchstart', handleTouchStart);
 screenButton.addEventListener('touchstart', handleTouchStart);
-homeButton.addEventListener('touchstart', handleTouchStart);
+
 
 infoButton.addEventListener('click', handleInfoButtonToggle);
 soundButton.addEventListener('click', handleClick);
 screenButton.addEventListener('click', handleClick);
-homeButton.addEventListener('click', handleClick);
+
 
 soundButton.addEventListener('touchend', () => setTimeout(() => isTouch = false, 300));
 screenButton.addEventListener('touchend', () => setTimeout(() => isTouch = false, 300));
-homeButton.addEventListener('touchend', () => setTimeout(() => isTouch = false, 300));
+
 
 function handleInfoButtonToggle() {
     const infoBlock = document.getElementById('info-block');

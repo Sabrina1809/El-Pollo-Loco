@@ -88,7 +88,6 @@ class Level {
     }
     
     handleWin() {
-      
         world.level.win = null;
         world.stopGame();
         setTimeout(() => {
@@ -105,17 +104,10 @@ class Level {
     }
     
     handleLose() {
-        // setTimeout(() => {
-        //     world.level.enemies = [];
-        // },700)
         world.level.win = null;
-        // world.stopGame();
-     
-     
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'block';
             document.getElementById('img-msg-loose').style.display = 'block';
-          
             clearInterval(this.checkWinInterval);
            
         }, 1000);

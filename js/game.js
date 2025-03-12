@@ -1,5 +1,4 @@
 let keyboard = new Keyboard();
-
 const keyMap = {
     39: 'RIGHT',
     37: 'LEFT',
@@ -7,6 +6,15 @@ const keyMap = {
     40: 'DOWN',
     32: 'SPACE'
 };
+const homeButton = document.getElementById('button-home');
+homeButton.addEventListener('touchstart', handleTouchStart);
+homeButton.addEventListener('click', handleClick);
+homeButton.addEventListener('touchend', () => setTimeout(() => isTouch = false, 300));
+
+homeButton.addEventListener('click', () => {
+    world.character.energy = 0;
+    world.level.win = false;
+})
 
 function canMoveRight() {
     let lastEnemy = world.level.enemies[world.level.enemies.length - 1];

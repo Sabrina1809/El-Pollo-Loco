@@ -116,38 +116,7 @@ class Character extends MovableObject {
         let checkAnimationInterval = setInterval(() => {            
             this.intervals.push(checkAnimationInterval);
             if (this.isDead()) {
-                this.loadImage('img/2_character_pepe/2_walk/W-21.png');
-                world.level.win = false;
-                this.world.keyboard.UP = false;
-                this.world.keyboard.DOWN = false;
-                this.world.keyboard.LEFT = false;
-                this.world.keyboard.RIGHT = false;
-                this.world.keyboard.SPACE = false;
-                world.keyboardActive = false;
-                this.playAnimation(this.IMAGES_DEAD);
-                setTimeout(()=> {
-                    this.playAnimation(this.IMAGES_DEAD);
-                    this.y += 20;
-                    this.energy = 100;
-                    this.lastHit = 0;
-                    this.standing = 0;
-                }, 1500);
-                setTimeout(() => {
-                    this.intervals.push(checkMoveInterval);
-                    this.intervals.push(checkAnimationInterval);
-                    world.level.win = undefined;
-                    clearInterval(checkMoveInterval);
-                },2500)
-                setTimeout(()=> {
-                    clearInterval(checkAnimationInterval);
-                    this.intervals.forEach((interval) => {
-                        clearInterval(interval)
-                    })
-                },4500)
-                setTimeout(() => {
-                    this.sawEndboss = false;
-                    document.getElementById('overlay-start').style.display = 'block';
-                }, 6000)
+                this.animateCharactersDead(checkAnimationInterval, checkMoveInterval);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
                 this.standing = 0;
@@ -171,6 +140,43 @@ class Character extends MovableObject {
                 }
             }
         }, 100);   
+    }
+
+    animateCharactersDead(checkAnimationInterval, checkMoveInterval) {
+        console.log('Abbruch');
+        
+        this.loadImage('img/2_character_pepe/2_walk/W-21.png');
+        world.level.win = false;
+        this.world.keyboard.UP = false;
+        this.world.keyboard.DOWN = false;
+        this.world.keyboard.LEFT = false;
+        this.world.keyboard.RIGHT = false;
+        this.world.keyboard.SPACE = false;
+        world.keyboardActive = false;
+        this.playAnimation(this.IMAGES_DEAD);
+        setTimeout(()=> {
+            this.playAnimation(this.IMAGES_DEAD);
+            this.y += 20;
+            this.energy = 100;
+            this.lastHit = 0;
+            this.standing = 0;
+        }, 1500);
+        setTimeout(() => {
+            this.intervals.push(checkMoveInterval);
+            this.intervals.push(checkAnimationInterval);
+            world.level.win = undefined;
+            clearInterval(checkMoveInterval);
+        },2500)
+        setTimeout(()=> {
+            clearInterval(checkAnimationInterval);
+            this.intervals.forEach((interval) => {
+                clearInterval(interval)
+            })
+        },4500)
+        setTimeout(() => {
+            this.sawEndboss = false;
+            document.getElementById('overlay-start').style.display = 'block';
+        }, 6000)
     }
 
     firstTimeEndboss() {
