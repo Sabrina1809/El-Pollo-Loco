@@ -8,6 +8,8 @@ class Character extends MovableObject {
     sawEndboss = false;
     world;
     currentImage = 0;
+    audioHit = new Audio('audio/cartoon-slap-2-189831.mp3');
+    audioJump = new Audio('audio/cartoon-jump-6462.mp3');
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -118,6 +120,7 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 this.animateCharactersDead(checkAnimationInterval, checkMoveInterval);
             } else if (this.isHurt()) {
+                this.audioHit.play();
                 this.playAnimation(this.IMAGES_HURT);
                 this.standing = 0;
             } else if (this.isAboveGround()) {
@@ -157,7 +160,7 @@ class Character extends MovableObject {
         setTimeout(()=> {
             this.playAnimation(this.IMAGES_DEAD);
             this.y += 20;
-            this.energy = 100;
+            // this.energy = 100;
             this.lastHit = 0;
             this.standing = 0;
         }, 1500);
@@ -175,6 +178,8 @@ class Character extends MovableObject {
         },4500)
         setTimeout(() => {
             this.sawEndboss = false;
+            this.energy = 100;
+            this.world.stopGame();
             document.getElementById('overlay-start').style.display = 'block';
             document.getElementById('button-home').style.display = 'none';
 

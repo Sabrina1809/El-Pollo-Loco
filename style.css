@@ -240,9 +240,6 @@ canvas {
                     display: none;
                 }
             }
-            & #button-home {
-                /* display: flex; */
-            }
             & #button-sound-img {
                 width: 26px;
                 height: 26px;
