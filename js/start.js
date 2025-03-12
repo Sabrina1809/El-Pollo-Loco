@@ -162,6 +162,7 @@ function loadScript(src) {
 }
 
 function init(level) {
+    openMenu();
     canvas = document.getElementById('canvas');
     level.enemies = checkEnemies(level);
     level.collectableObjects = checkCollObj(level);
