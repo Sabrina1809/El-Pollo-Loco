@@ -214,6 +214,7 @@ canvas {
                         cursor: pointer;
                     }
                     & img {
+                        rotate: 0deg;
                         width: 16px;
                         height: 16px;
                     }

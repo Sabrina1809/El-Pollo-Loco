@@ -1,6 +1,11 @@
 let skriptsLoaded = false;
 let canvas;
 let world;
+let isTouch = false;
+const infoButton = document.getElementById('button-openinfo');
+const soundButton = document.getElementById('button-sound');
+const screenButton = document.getElementById('button-screen');
+const homeButton = document.getElementById('button-home');
 
 function showStartScreen() {
     document.getElementById('overlay-start').style.display = 'block';
@@ -9,12 +14,111 @@ function hideStartScreen() {
     document.getElementById('overlay-start').style.display = 'none';
 }
 
+function handleTouchStart() {
+    isTouch = true;
+}
+
+function handleClick(event) {
+    if (isTouch) {
+        event.preventDefault();
+        isTouch = false;
+        return;
+    }
+}
+
+soundButton.addEventListener('touchstart', handleTouchStart);
+screenButton.addEventListener('touchstart', handleTouchStart);
+homeButton.addEventListener('touchstart', handleTouchStart);
+
+
+infoButton.addEventListener('click', handleInfoButtonToggle);
+soundButton.addEventListener('click', handleClick);
+screenButton.addEventListener('click', handleClick);
+homeButton.addEventListener('click', handleClick);
+
+soundButton.addEventListener('touchend', () => setTimeout(() => isTouch = false, 300));
+screenButton.addEventListener('touchend', () => setTimeout(() => isTouch = false, 300));
+homeButton.addEventListener('touchend', () => setTimeout(() => isTouch = false, 300));
+
+function handleInfoButtonToggle() {
+    const infoBlock = document.getElementById('info-block');
+    if (infoBlock.classList.contains('visible')) {
+        infoBlock.classList.remove('visible');
+        infoBlock.style.display = 'none';
+    } else {
+        infoBlock.classList.add('visible');
+        infoBlock.style.display = 'block';
+        isTouch = true;
+    }
+}
+
+function openMenu() {
+    console.log('openMenu erreicht');
+    if (document.getElementById('info-block').classList.contains('visible')) {
+        document.getElementById('info-block').classList.remove('visible');
+        document.getElementById('info-block').style.display = 'none';
+    } else {
+        document.getElementById('info-block').classList.add('visible');
+        document.getElementById('info-block').style.display = 'block';
+    }
+}
+
+function openInfoDescription(descriptionID, arrowID) {
+    let descrElement = document.getElementById(descriptionID);
+    let arrowElement = document.getElementById(arrowID);
+
+    if (descrElement.classList.contains('descr-visible')) {
+        descrElement.classList.remove('descr-visible');
+        descrElement.style.display = 'none';
+        arrowElement.style.transform = 'rotate(0deg)';
+    } else {
+        descrElement.classList.add('descr-visible');
+        descrElement.style.display = 'flex';
+        arrowElement.style.transform = 'rotate(180deg)';
+    }
+}
+
 document.getElementById('level-1-button').addEventListener('click', function () {
     document.getElementById('overlay-start').style.display = 'none';
     loadGameScripts().then(() => {
         init(level1);
     });
 });
+
+document.getElementById("button-screen").addEventListener("click", toggleFullscreen);
+document.getElementById("button-screen").addEventListener("touchstart", toggleFullscreen);
+
+
+
+function toggleFullscreen() {
+    let fullscreenElement = document.getElementById("fullscreen");
+
+    if (!document.fullscreenElement) {
+        document.getElementById('img-fullscreen').style.display = 'none';
+        document.getElementById('img-smallscreen').style.display = 'block';
+        if (fullscreenElement.requestFullscreen) {
+            fullscreenElement.requestFullscreen();
+        } else if (fullscreenElement.mozRequestFullScreen) { // Firefox
+            fullscreenElement.mozRequestFullScreen();
+        } else if (fullscreenElement.webkitRequestFullscreen) { // Chrome, Safari, Edge
+            fullscreenElement.webkitRequestFullscreen();
+        } else if (fullscreenElement.msRequestFullscreen) { // IE/Edge
+            fullscreenElement.msRequestFullscreen();
+        }
+    } else {
+        document.getElementById('img-fullscreen').style.display = 'block';
+        document.getElementById('img-smallscreen').style.display = 'none';
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+}
 
 async function loadGameScripts() {
     if (skriptsLoaded == false) {

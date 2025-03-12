@@ -112,17 +112,17 @@ class World {
     }
 
     collBottleEndboss(bottle, enemy, throwObjectInterval) {
-        console.log('Kollision wird geprüft!');
-        console.log('Endboss in Level:', world.level.enemies.find(e => e instanceof Endboss));
-        console.log('Enemy in Collision:', enemy);
-        console.log('Sind sie gleich?', enemy === world.level.enemies.find(e => e instanceof Endboss));
+        // console.log('Kollision wird geprüft!');
+        // console.log('Endboss in Level:', world.level.enemies.find(e => e instanceof Endboss));
+        // console.log('Enemy in Collision:', enemy);
+        // console.log('Sind sie gleich?', enemy === world.level.enemies.find(e => e instanceof Endboss));
         
         
         if (enemy instanceof Endboss) {
             if (bottle.y + bottle.y / 2 > enemy.y && bottle.y + bottle.y / 2 < enemy.y + enemy.width &&
                 bottle.x + bottle.width / 2 > enemy.x && bottle.x + bottle.width / 2 < enemy.x + enemy.width
             ) {
-                console.log('Endboss getroffen!');
+                // console.log('Endboss getroffen!');
                 this.level.enemies[this.level.enemies.length - 1].hit = true;
                 this.level.enemies[this.level.enemies.length - 1].checkEnergy();
                 setTimeout(() => {
