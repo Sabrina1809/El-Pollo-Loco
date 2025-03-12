@@ -175,8 +175,8 @@ class Character extends MovableObject {
 
     firstTimeEndboss() {
         let findEndbossInterval = setInterval(() => {
-            if (this.sawEndboss == false && this.x >= 1700) {
-                    world.level.enemies[world.level.enemies.length - 1].x -=50;
+            if (this.sawEndboss == false && this.x >= 1600) {
+                    world.level.enemies[world.level.enemies.length - 1].x -=70;
                     world.level.enemies[world.level.enemies.length - 1].playAnimation(world.level.enemies[world.level.enemies.length - 1].IMAGES_WALK);
                 setTimeout(() => {
                     clearInterval(findEndbossInterval);

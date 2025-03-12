@@ -6,6 +6,41 @@ const infoButton = document.getElementById('button-openinfo');
 const soundButton = document.getElementById('button-sound');
 const screenButton = document.getElementById('button-screen');
 const homeButton = document.getElementById('button-home');
+let soundMuted = JSON.parse(localStorage.getItem('soundMuted')) || false;
+
+
+// Event-Listener für den Button
+soundButton.addEventListener('click', () => {
+    if (soundMuted) {
+        soundMuted = false;
+        localStorage.setItem('soundMuted', JSON.stringify(false));
+    } else {
+        soundMuted = true;
+        localStorage.setItem('soundMuted', JSON.stringify(true));
+    }
+    
+    updateSoundState();
+});
+
+// Funktion zum Aktualisieren des Sound-Zustands
+function updateSoundState() {
+    console.log('soundMuted', soundMuted);
+    
+    let allSounds = document.querySelectorAll('audio');
+
+    if (soundMuted) {
+        allSounds.forEach(sound => sound.muted = true);
+        soundButton.classList.add('muted'); // Optional: Button-Styling ändern
+        document.getElementById('button-sound-img').src = 'img/buttons/icons8-kein-ton-50 (1).png';
+    } else {
+        allSounds.forEach(sound => sound.muted = false);
+        soundButton.classList.remove('muted');
+          document.getElementById('button-sound-img').src = 'img/buttons/icons8-hohe-lautstärke-50 (2).png';
+    }
+}
+
+// Initialen Zustand aus dem Local Storage setzen
+updateSoundState();
 
 function showStartScreen() {
     document.getElementById('overlay-start').style.display = 'block';
@@ -30,7 +65,6 @@ soundButton.addEventListener('touchstart', handleTouchStart);
 screenButton.addEventListener('touchstart', handleTouchStart);
 homeButton.addEventListener('touchstart', handleTouchStart);
 
-
 infoButton.addEventListener('click', handleInfoButtonToggle);
 soundButton.addEventListener('click', handleClick);
 screenButton.addEventListener('click', handleClick);
@@ -52,16 +86,16 @@ function handleInfoButtonToggle() {
     }
 }
 
-function openMenu() {
-    console.log('openMenu erreicht');
-    if (document.getElementById('info-block').classList.contains('visible')) {
-        document.getElementById('info-block').classList.remove('visible');
-        document.getElementById('info-block').style.display = 'none';
-    } else {
-        document.getElementById('info-block').classList.add('visible');
-        document.getElementById('info-block').style.display = 'block';
-    }
-}
+// function openMenu() {
+//     console.log('openMenu erreicht');
+//     if (document.getElementById('info-block').classList.contains('visible')) {
+//         document.getElementById('info-block').classList.remove('visible');
+//         document.getElementById('info-block').style.display = 'none';
+//     } else {
+//         document.getElementById('info-block').classList.add('visible');
+//         document.getElementById('info-block').style.display = 'block';
+//     }
+// }
 
 function openInfoDescription(descriptionID, arrowID) {
     let descrElement = document.getElementById(descriptionID);
@@ -87,8 +121,6 @@ document.getElementById('level-1-button').addEventListener('click', function () 
 
 document.getElementById("button-screen").addEventListener("click", toggleFullscreen);
 document.getElementById("button-screen").addEventListener("touchstart", toggleFullscreen);
-
-
 
 function toggleFullscreen() {
     let fullscreenElement = document.getElementById("fullscreen");
