@@ -17,7 +17,9 @@ class Chicken extends MovableObject {
 
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
-        this.x = 300 + Math.random() * 1500;
+        this.x = 800 + Math.random() * 1200;
+        console.log(this.x);
+        
         this.loadImages(this.IMAGES_WALKING);
         this.applyGravity();
         setTimeout(() => {
@@ -33,6 +35,10 @@ class Chicken extends MovableObject {
         let hitInterval = setInterval(() => {
             if (this.dead == true) {
                 console.log(this);
+                this.loadImage(image);
+                this.loadImage(image);
+                this.loadImage(image);
+                this.loadImage(image);
                 this.loadImage(image);
                 setTimeout(() => {
                     world.deleteFromCanvas(this, world.level.enemies);

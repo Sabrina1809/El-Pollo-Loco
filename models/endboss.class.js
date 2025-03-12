@@ -93,7 +93,9 @@ class Endboss extends MovableObject {
         }, 1000);
         setTimeout(() => {
             let walkInterval = setInterval(() => {
-                this.x -= 30;
+                if (this.x > world.character.x) {
+                    this.x -= 30;
+                }
                 this.playAnimation(this.IMAGES_WALK);
             }, 75)
             setTimeout(() => {

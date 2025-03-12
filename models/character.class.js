@@ -107,7 +107,11 @@ class Character extends MovableObject {
             this.intervals.push(checkAnimationInterval);
             if (this.isDead()) {
                 this.loadImage('img/2_character_pepe/2_walk/W-21.png');
-                world.level.win = false;
+                world.level.win = false;this.world.keyboard.UP = false;
+                world.level.win = false;this.world.keyboard.DOWN = false;
+                world.level.win = false;this.world.keyboard.LEFT = false;
+                world.level.win = false;this.world.keyboard.RIGHT = false;
+                world.level.win = false;this.world.keyboard.SPACE = false;
                 world.keyboardActive = false;
                 this.playAnimation(this.IMAGES_DEAD);
                 setTimeout(()=> {
@@ -131,7 +135,6 @@ class Character extends MovableObject {
                 },4500)
                 setTimeout(() => {
                     this.sawEndboss = false;
-                    world.keyboardActive = true;
                     document.getElementById('overlay-start').style.display = 'block';
                 }, 7000)
             } else if (this.isHurt()) {
@@ -145,12 +148,8 @@ class Character extends MovableObject {
                     this.playAnimation(this.IMAGES_WALKING);
                     this.standing = 0;
                 } else {
-                    if (this.world.level.win == true) {
-                        this.loadImage('img/2_character_pepe/3_jump/J-36.png');
-                        this.loadImage('img/2_character_pepe/3_jump/J-36.png');
-                        this.loadImage('img/2_character_pepe/3_jump/J-36.png');
-                        this.loadImage('img/2_character_pepe/3_jump/J-36.png');
-                        this.loadImage('img/2_character_pepe/3_jump/J-36.png');
+                    if (this.world.keyboardActive == false) {
+                        this.playAnimation(this.IMAGES_WIN);
                     } else {
                         this.loadImage('img/2_character_pepe/2_walk/W-21.png');
                         if (this.standing > 1) {
@@ -168,7 +167,7 @@ class Character extends MovableObject {
     firstTimeEndboss() {
         let findEndbossInterval = setInterval(() => {
             if (this.sawEndboss == false && this.x >= 1700) {
-                    console.log('close to Endboss', world.level.enemies[world.level.enemies.length - 1]);
+                    // console.log('close to Endboss', world.level.enemies[world.level.enemies.length - 1]);
                     world.level.enemies[world.level.enemies.length - 1].x -=40;
                     world.level.enemies[world.level.enemies.length - 1].playAnimation(world.level.enemies[world.level.enemies.length - 1].IMAGES_WALK);
                 setTimeout(() => {
