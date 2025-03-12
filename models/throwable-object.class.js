@@ -63,7 +63,7 @@ class ThrowableObject extends MovableObject {
                 clearInterval(throwInterval);
                 let splashInterrval = setInterval(() => {
                     this.playAnimation(this.IMAGES_SPLASH);
-                }, 150);
+                }, 200);
                 clearInterval(gravityInterval);
                 clearInterval(xInterval);
                 setTimeout(() => {

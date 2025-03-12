@@ -144,7 +144,7 @@ class Endboss extends MovableObject {
                 },100)
                 setTimeout(() => {
                     clearInterval(shrinkInterval);
-                },2500)
+                },3000)
             }, 1000)
             setTimeout(() => {
                 clearInterval(hurtInterval);
