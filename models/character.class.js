@@ -103,7 +103,7 @@ class Character extends MovableObject {
         }, 1000/60);
         this.increaseStandingTime();
         this.firstTimeEndboss();
-        let checkAnimationInterval = setInterval(() => {
+        let checkAnimationInterval = setInterval(() => {            
             this.intervals.push(checkAnimationInterval);
             if (this.isDead()) {
                 this.loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -117,12 +117,10 @@ class Character extends MovableObject {
                     this.standing = 0;
                 }, 1500);
                 setTimeout(() => {
-                    console.log('timeout erreicht 88');
                     this.intervals.push(checkMoveInterval);
                     this.intervals.push(checkAnimationInterval);
                     world.level.win = undefined;
                     clearInterval(checkMoveInterval);
-                  
                 },2500)
                 setTimeout(()=> {
                     clearInterval(checkAnimationInterval);
@@ -145,14 +143,20 @@ class Character extends MovableObject {
                     this.playAnimation(this.IMAGES_WALKING);
                     this.standing = 0;
                 } else {
-                    // if (this.standing <= 8) {
+                    if (this.world.level.win == true) {
+                        this.loadImage('img/2_character_pepe/3_jump/J-36.png');
+                        this.loadImage('img/2_character_pepe/3_jump/J-36.png');
+                        this.loadImage('img/2_character_pepe/3_jump/J-36.png');
+                        this.loadImage('img/2_character_pepe/3_jump/J-36.png');
+                        this.loadImage('img/2_character_pepe/3_jump/J-36.png');
+                    } else {
                         this.loadImage('img/2_character_pepe/2_walk/W-21.png');
-                    // }
-                    if (this.standing > 1) {
-                        this.playAnimation(this.IMAGES_TIRED);
-                    }
-                    if (this.standing > 10) {
-                        this.playAnimation(this.IMAGES_SLEEPING);
+                        if (this.standing > 1) {
+                            this.playAnimation(this.IMAGES_TIRED);
+                        }
+                        if (this.standing > 10) {
+                            this.playAnimation(this.IMAGES_SLEEPING);
+                        }
                     }
                 }
             }

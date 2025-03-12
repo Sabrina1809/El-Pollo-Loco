@@ -161,12 +161,12 @@ canvas {
     align-items: center;
     justify-content: end;
     position: absolute;
-    /* border: 3px solid rgb(178, 103, 11); */
+    /* border: 3px solid transparent; */
     width: 720px;
     height: 480px;
-    border-radius: 20px;
+    border-radius: 19px;
     top: 50%;
-    transform: translateY(calc(-50% + 30px));
+    transform: translateY(calc(-50% + 29.5px));
     aspect-ratio: auto 720 / 480;
     & #overlay-game {
         /* border: 2px solid white; */
