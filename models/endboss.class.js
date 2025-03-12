@@ -115,6 +115,17 @@ class Endboss extends MovableObject {
     endbossDead() {
         this.energy -= 20;
         this.hit = false;
+        world.level.win = true;
+        world.keyboard.UP = false;
+        world.keyboard.DOWN = false;
+        world.keyboard.LEFT = false;
+        world.keyboard.RIGHT = false;
+        world.keyboard.SPACE = false;
+        world.keyboardActive = false;
+        // if (world.collCharEndbossInterval) {
+        //     clearInterval(collCharEndbossInterval);
+        //         world.intervalIds = world.intervalIds.filter(id => id !== collCharEndbossInterval);
+        // }
         let hurtInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_HURT);
         }, 200);
@@ -138,7 +149,7 @@ class Endboss extends MovableObject {
             setTimeout(() => {
                 clearInterval(hurtInterval);
             },2000)
-        },1000)
+        },1500)
         setTimeout(() => {
             world.level.enemies.pop();
             world.level.win = undefined;

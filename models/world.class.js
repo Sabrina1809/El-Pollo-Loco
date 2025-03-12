@@ -90,8 +90,11 @@ class World {
 
         this.collectedBottles = 0;
         this.collectedCoins = 0;
+
+        let collCharEndbossInterval = setInterval(() => this.collCharEndboss(this.character), 200);
+        this.intervalIds.push(collCharEndbossInterval);
     
-        this.intervalIds.push(setInterval(() => this.collCharEndboss(this.character), 200));
+        // this.intervalIds.push(setInterval(() => this.collCharEndboss(this.character), 200));
         this.intervalIds.push(setInterval(() => this.collCharChickenX(this.character), 200));
         this.intervalIds.push(setInterval(() => this.collCharChickenY(this.character), 1000/60));
         this.intervalIds.push(setInterval(() => this.checkCollCharObjects(this.character), 200));

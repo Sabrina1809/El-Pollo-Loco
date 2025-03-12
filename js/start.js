@@ -162,7 +162,10 @@ function loadScript(src) {
 }
 
 function init(level) {
-    openMenu();
+    if (document.getElementById('info-block').classList.contains('visible')) {
+        document.getElementById('info-block').classList.remove('visible');
+        document.getElementById('info-block').style.display = 'none';
+    }
     canvas = document.getElementById('canvas');
     level.enemies = checkEnemies(level);
     level.collectableObjects = checkCollObj(level);

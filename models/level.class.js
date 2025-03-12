@@ -63,11 +63,12 @@ class Level {
                 this.handleWin();
                 setTimeout(() => {
                     world.keyboardActive = false;
-                    world.level.win = undefined;
+                
                     world.character.sawEndboss = false;
                     clearInterval(this.checkWinInterval);
                 },2000)
                 setTimeout(() => {
+                    world.level.win = undefined;
                     world.keyboardActive = true;
                 },8000)
             } else if (world.level.win === false) {
@@ -75,10 +76,11 @@ class Level {
                 this.handleLose();
                 setTimeout(() => {
                     world.keyboardActive = false;
-                    world.level.win = undefined;
                     world.character.sawEndboss = false;
+                    clearInterval(this.checkWinInterval);
                 },2000)
                 setTimeout(() => {
+                    world.level.win = undefined;
                     world.keyboardActive = true;
                 },10000)
             }
@@ -86,33 +88,41 @@ class Level {
     }
     
     handleWin() {
-        world.level.enemies = [];
+      
         world.level.win = null;
         world.stopGame();
         setTimeout(() => {
+            world.character.jump();
             document.getElementById('overlay-messages').style.display = 'block';
             document.getElementById('img-msg-win').style.display = 'block';
-        }, 1000);
+        }, 3500);
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-win').style.display = 'none';
             world.stopGame(world.intervalIds);
-        }, 6000);
+            world.level.enemies = [];
+        }, 8000);
     }
     
     handleLose() {
-        world.level.enemies = [];
+        // setTimeout(() => {
+        //     world.level.enemies = [];
+        // },700)
         world.level.win = null;
-        world.stopGame();
-        clearInterval(this.checkWinInterval);
-        world.intervalIds.forEach(id => clearInterval(id));
+        // world.stopGame();
+     
+     
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'block';
             document.getElementById('img-msg-loose').style.display = 'block';
+          
+            clearInterval(this.checkWinInterval);
+           
         }, 1000);
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-loose').style.display = 'none';
+            world.intervalIds.forEach(id => clearInterval(id));
         }, 6000);
     }
 }

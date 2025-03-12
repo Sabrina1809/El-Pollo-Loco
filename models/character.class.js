@@ -111,15 +111,18 @@ class Character extends MovableObject {
         }, 1000/60);
         this.increaseStandingTime();
         this.firstTimeEndboss();
+        let jumped = false;
+
         let checkAnimationInterval = setInterval(() => {            
             this.intervals.push(checkAnimationInterval);
             if (this.isDead()) {
                 this.loadImage('img/2_character_pepe/2_walk/W-21.png');
-                world.level.win = false;this.world.keyboard.UP = false;
-                world.level.win = false;this.world.keyboard.DOWN = false;
-                world.level.win = false;this.world.keyboard.LEFT = false;
-                world.level.win = false;this.world.keyboard.RIGHT = false;
-                world.level.win = false;this.world.keyboard.SPACE = false;
+                world.level.win = false;
+                this.world.keyboard.UP = false;
+                this.world.keyboard.DOWN = false;
+                this.world.keyboard.LEFT = false;
+                this.world.keyboard.RIGHT = false;
+                this.world.keyboard.SPACE = false;
                 world.keyboardActive = false;
                 this.playAnimation(this.IMAGES_DEAD);
                 setTimeout(()=> {
@@ -144,7 +147,7 @@ class Character extends MovableObject {
                 setTimeout(() => {
                     this.sawEndboss = false;
                     document.getElementById('overlay-start').style.display = 'block';
-                }, 7000)
+                }, 6000)
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
                 this.standing = 0;
@@ -152,20 +155,18 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_JUMPING);
                 this.standing = 0;
             } else {
+                
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                     this.playAnimation(this.IMAGES_WALKING);
                     this.standing = 0;
                 } else {
-                    if (this.world.keyboardActive == false) {
-                        this.playAnimation(this.IMAGES_WIN);
-                    } else {
-                        this.loadImage('img/2_character_pepe/2_walk/W-21.png');
-                        if (this.standing > 1) {
-                            this.playAnimation(this.IMAGES_TIRED);
-                        }
-                        if (this.standing > 10) {
-                            this.playAnimation(this.IMAGES_SLEEPING);
-                        }
+                    this.loadImage('img/2_character_pepe/2_walk/W-21.png');
+       
+                    if (this.standing > 1) {
+                        this.playAnimation(this.IMAGES_TIRED);
+                    }
+                    if (this.standing > 10) {
+                        this.playAnimation(this.IMAGES_SLEEPING);
                     }
                 }
             }
@@ -175,8 +176,7 @@ class Character extends MovableObject {
     firstTimeEndboss() {
         let findEndbossInterval = setInterval(() => {
             if (this.sawEndboss == false && this.x >= 1700) {
-                    // console.log('close to Endboss', world.level.enemies[world.level.enemies.length - 1]);
-                    world.level.enemies[world.level.enemies.length - 1].x -=40;
+                    world.level.enemies[world.level.enemies.length - 1].x -=50;
                     world.level.enemies[world.level.enemies.length - 1].playAnimation(world.level.enemies[world.level.enemies.length - 1].IMAGES_WALK);
                 setTimeout(() => {
                     clearInterval(findEndbossInterval);

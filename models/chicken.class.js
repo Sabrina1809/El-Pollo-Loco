@@ -17,7 +17,7 @@ class Chicken extends MovableObject {
 
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
-        this.x = 800 + Math.random() * 1200;
+        this.x = 1000 + Math.random() * 1200;
         console.log(this.x);
         
         this.loadImages(this.IMAGES_WALKING);
@@ -28,7 +28,7 @@ class Chicken extends MovableObject {
             setInterval(() => {
                 this.moveLeft(this.speed)
             }, 1000 / 60);
-        },1200)
+        },500)
     }
 
     checkHit(image, chicken) {
