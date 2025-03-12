@@ -447,6 +447,12 @@ canvas {
     }
 }
 
+@media (min-width: 1024px) {  
+    #overlay-game {  
+        display: none !important;  
+    }  
+}
+
 @media only screen and (max-width: 720px) {
     canvas  {
         width: 100%;
