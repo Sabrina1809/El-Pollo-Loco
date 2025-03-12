@@ -70,10 +70,15 @@ class Endboss extends MovableObject {
         }, 2000);  
         } else if (this.hit == true && this.energy <= 20) {
             this.endbossDead();  
+            world.keyboardActive = false;
+            this.playAnimation(this.IMAGES_DEAD);
             setTimeout(() => {
                 world.level.win = true; 
                 this.hit = false;
             },4000)
+            setTimeout(() => {
+                world.keyboardActive = true;
+            }, 7000)
         }
     }
 

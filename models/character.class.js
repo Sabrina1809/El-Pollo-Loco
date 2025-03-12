@@ -108,6 +108,7 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 this.loadImage('img/2_character_pepe/2_walk/W-21.png');
                 world.level.win = false;
+                world.keyboardActive = false;
                 this.playAnimation(this.IMAGES_DEAD);
                 setTimeout(()=> {
                     this.playAnimation(this.IMAGES_DEAD);
@@ -130,6 +131,7 @@ class Character extends MovableObject {
                 },4500)
                 setTimeout(() => {
                     this.sawEndboss = false;
+                    world.keyboardActive = true;
                     document.getElementById('overlay-start').style.display = 'block';
                 }, 7000)
             } else if (this.isHurt()) {

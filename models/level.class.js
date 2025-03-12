@@ -58,22 +58,27 @@ class Level {
             world.level.win = undefined;
         }
         this.checkWinInterval = setInterval(() => {
+            
             if (world.level.win === true) {
+               
                 this.handleWin();
                 setTimeout(() => {
                     world.level.win = undefined;
                     world.character.sawEndboss = false;
                     clearInterval(this.checkWinInterval);
                 },2000)
+              
             } else if (world.level.win === false) {
+             
                 this.handleLose();
                 setTimeout(() => {
                     world.level.win = undefined;
                     world.character.sawEndboss = false;
-                    setTimeout(() => {
-                        clearInterval(this.checkWinInterval);
-                    },2000)
+            
                 },2000)
+                setTimeout(() => {
+                    world.gameOver = false;
+                },6000)
             }
         }, 200);
     }
