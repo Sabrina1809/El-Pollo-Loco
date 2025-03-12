@@ -58,9 +58,12 @@ updateSoundState();
 
 function showStartScreen() {
     document.getElementById('overlay-start').style.display = 'block';
+    document.getElementById('button-home').style.display = 'none';
 }
 function hideStartScreen() {
     document.getElementById('overlay-start').style.display = 'none';
+    document.getElementById('button-home').style.display = 'flex';
+
 }
 
 function handleTouchStart() {
@@ -212,6 +215,9 @@ function init(level) {
         document.getElementById('info-block').classList.remove('visible');
         document.getElementById('info-block').style.display = 'none';
     }
+
+    document.getElementById('button-home').style.display = 'flex';
+
     canvas = document.getElementById('canvas');
     level.enemies = checkEnemies(level);
     level.collectableObjects = checkCollObj(level);

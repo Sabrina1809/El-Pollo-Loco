@@ -176,6 +176,8 @@ class Character extends MovableObject {
         setTimeout(() => {
             this.sawEndboss = false;
             document.getElementById('overlay-start').style.display = 'block';
+            document.getElementById('button-home').style.display = 'none';
+
         }, 6000)
     }
 

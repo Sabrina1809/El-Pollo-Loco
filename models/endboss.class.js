@@ -155,6 +155,7 @@ class Endboss extends MovableObject {
             world.level.win = undefined;
             setTimeout(() => {
                 document.getElementById('overlay-start').style.display = 'block';
+                document.getElementById('button-home').style.display = 'none';
             },1000)
         }, 9000)
     }
