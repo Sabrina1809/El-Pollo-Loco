@@ -255,8 +255,9 @@ canvas {
         bottom: 0;
         & #img-msg-win {
             display: none;
-            width: 450px;
-            transform: translateX(+50%);
+            width: 400px;
+            transform: translateX(100%);
+            transform: translateY(0%);
             height: auto;
             animation: winningMessage 5s linear;
         }
@@ -420,12 +421,12 @@ canvas {
 
 @keyframes winningMessage {
     0% {
-        transform: translateX(100%) rotate(360deg) translateY(-50%);
+        transform: translateX(100%) rotate(360deg);
         scale: 0.0;
         opacity: 0;
     }
     25% {
-        transform: translateX(50%) rotate(0deg);
+        transform: translateX(20%) rotate(0deg);
         opacity: 0.75;
     }
     30% {
@@ -436,13 +437,13 @@ canvas {
         scale: 1.0;
     }
     70% {
-        transform: translateX(50%) rotate(0deg);
+        transform: translateX(20%) rotate(0deg);
         opacity: 1;
         scale: 1.0;
     }
     100% {
         scale: 0.0;
-        transform: translateX(-100%) rotate(0deg);
+        transform: translateX(-100%) rotate(-360deg);
         opacity: 0;
     }
 }
