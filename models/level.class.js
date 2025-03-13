@@ -59,6 +59,7 @@ class Level {
         }
         this.checkWinInterval = setInterval(() => {
             if (world.level.win === true) {
+              
                 this.handleWin();
                 clearInterval(world.level.checkWinInterval);
                 setTimeout(() => {
@@ -69,28 +70,43 @@ class Level {
                 setTimeout(() => {
                     world.level.win = undefined;
                     world.keyboardActive = true;
+                    world.level.enemies.forEach((enemy) => {
+                        world.deleteFromCanvas(enemy, world.level.enemies)
+                    })
                 },8000)
+                setTimeout(() => {
+                    world.stopGame();
+                   }, 9000)
             } else if (world.level.win === false) {
+               
                 this.handleLose();
+               
                 clearInterval(world.level.checkWinInterval);
                 setTimeout(() => {
                     world.keyboardActive = false;
                     world.character.sawEndboss = false;
+                    world.level.enemies.forEach((enemy) => {
+                        world.deleteFromCanvas(enemy, world.level.enemies)
+                    })
                     // clearInterval(this.checkWinInterval);
                 },2000)
                 setTimeout(() => {
                     world.level.win = undefined;
+                
                 },6000)
                 setTimeout(() => {
                     world.keyboardActive = true;
                 },8000)
+               setTimeout(() => {
+                world.stopGame();
+               }, 9000)
             }
         }, 200);
     }
     
     handleWin() {
         world.level.win = null;
-        world.stopGame();
+       
         setTimeout(() => {
             world.character.jump();
             document.getElementById('overlay-messages').style.display = 'block';
@@ -109,9 +125,9 @@ class Level {
         clearInterval(this.checkWinInterval);
         clearInterval(world.character.checkMoveInterval);
         clearInterval(world.character.checkAnimationInterval);
-        console.log('checkwininterval', this.checkWinInterval);
-        console.log('checvkmoveinterval', world.character.checkMoveInterval);
-        console.log('checvkmoveinterval', world.character.checkAnimationInterval);
+        // console.log('checkwininterval', this.checkWinInterval);
+        // console.log('checvkmoveinterval', world.character.checkMoveInterval);
+        // console.log('checvkmoveinterval', world.character.checkAnimationInterval);
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'block';
             document.getElementById('img-msg-loose').style.display = 'block';
@@ -122,7 +138,7 @@ class Level {
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-loose').style.display = 'none';
-           
+            world.stopGame();
           
         }, 6000);
     }

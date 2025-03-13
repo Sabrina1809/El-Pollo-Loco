@@ -7,7 +7,7 @@ class Endboss extends MovableObject {
     currentImage = 0;
     hit = false;
     energy = 100;     
-
+    intervals = [];
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',
@@ -60,6 +60,12 @@ class Endboss extends MovableObject {
         this.energyInterval = setInterval(()=> {
             this.checkEnergy();
         }, 100) 
+
+    }
+
+    clearAllIntervals() {
+        this.intervals.forEach(clearInterval);
+        this.intervals = [];
     }
 
     checkEnergy() {
@@ -112,53 +118,136 @@ class Endboss extends MovableObject {
         }, 2000)
     }
 
+    // endbossDead() {
+    //     this.energy -= 20;
+    //     this.hit = false;
+    //     world.level.win = true;
+    //     world.keyboardActive = false;
+    //     // world.keyboard.UP = false;
+    //     // world.keyboard.DOWN = false;
+    //     // world.keyboard.LEFT = false;
+    //     // world.keyboard.RIGHT = false;
+    //     // world.keyboard.SPACE = false;
+    //     // world.keyboardActive = false;
+    //     // if (world.collCharEndbossInterval) {
+    //     //     clearInterval(collCharEndbossInterval);
+    //     //         world.intervalIds = world.intervalIds.filter(id => id !== collCharEndbossInterval);
+    //     // }
+    //     clearInterval(this.energyInterval)
+    //     console.log('energyInterval', this.energyInterval);
+        
+    //     let hurtInterval = setInterval(() => {
+    //         this.playAnimation(this.IMAGES_HURT);
+    //     }, 200);
+    //     setTimeout(() => {
+    //         let dieInterval = setInterval(() => {
+    //             this.playAnimation(this.IMAGES_DEAD);
+    //         },200)
+    //         setTimeout(() => {
+    //             clearInterval(dieInterval);
+    //             console.log('dieInterval', dieInterval);
+    //         },3000)
+    //     },1500)
+    //     setTimeout(() => {
+    //         let shrinkInterval = setInterval(() => {
+    //             this.width -= 25;
+    //             this.x += 30;
+    //             this.height -= 25;
+    //         },100)
+    //         setTimeout(() => {
+    //             clearInterval(shrinkInterval);
+    //             console.log('shrinkInterval', shrinkInterval);
+    //         },3000)
+    //     }, 2500)
+    //     setTimeout(() => {
+    //         clearInterval(hurtInterval);
+    //         console.log('hurtInterval', hurtInterval);
+    //     },3500)
+    //     setTimeout(() => {
+    //         world.level.enemies.pop();
+    //         world.level.win = undefined;
+    //         setTimeout(() => {
+    //             document.getElementById('overlay-start').style.display = 'block';
+    //             setTimeout(() => {
+    //                 document.getElementById('level-1-button').classList.remove('level-closed');
+    //             }, 2000)
+    //             document.getElementById('button-home').style.display = 'none';
+    //         },1000)
+    //     }, 8000)
+    // }
+
     endbossDead() {
         this.energy -= 20;
         this.hit = false;
         world.level.win = true;
-        world.keyboard.UP = false;
-        world.keyboard.DOWN = false;
-        world.keyboard.LEFT = false;
-        world.keyboard.RIGHT = false;
-        world.keyboard.SPACE = false;
         world.keyboardActive = false;
-        // if (world.collCharEndbossInterval) {
-        //     clearInterval(collCharEndbossInterval);
-        //         world.intervalIds = world.intervalIds.filter(id => id !== collCharEndbossInterval);
-        // }
+    
+        this.clearAllIntervals(); // Alle vorherigen Intervalle löschen
+        console.log('endboss this.intervals', this.intervals);
+        
+        clearInterval(this.energyInterval);
+        console.log('energyInteval', this.energyInterval);
+        
+    
         let hurtInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_HURT);
         }, 200);
+        this.intervals.push(hurtInterval);
+    
         setTimeout(() => {
             let dieInterval = setInterval(() => {
                 this.playAnimation(this.IMAGES_DEAD);
-            },200)
+            }, 200);
+            this.intervals.push(dieInterval);
+    
             setTimeout(() => {
                 clearInterval(dieInterval);
-            },3000)
+                console.log('dieInterval', dieInterval);
+                
+            }, 3000);
+        }, 1500);
+    
+        setTimeout(() => {
+            let shrinkInterval = setInterval(() => {
+                this.width -= 25;
+                this.x += 30;
+                this.height -= 25;
+            }, 100);
+            this.intervals.push(shrinkInterval);
+    
             setTimeout(() => {
-                let shrinkInterval = setInterval(() => {
-                    this.width -= 25;
-                    this.x += 30;
-                    this.height -= 25;
-                },100)
-                setTimeout(() => {
-                    clearInterval(shrinkInterval);
-                },3000)
-            }, 1000)
-            setTimeout(() => {
-                clearInterval(hurtInterval);
-            },2000)
-        },1500)
+                clearInterval(shrinkInterval);
+                console.log('shrinkInterval', shrinkInterval);
+
+            }, 3000);
+        }, 2500);
+    
+        setTimeout(() => {
+            clearInterval(hurtInterval);
+            console.log('hurtInterval', hurtInterval);
+
+        }, 3500);
+    
         setTimeout(() => {
             world.level.enemies.pop();
             world.level.win = undefined;
+    
             setTimeout(() => {
                 document.getElementById('overlay-start').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('level-1-button').classList.remove('level-closed');
+                }, 2000);
                 document.getElementById('button-home').style.display = 'none';
-            },1000)
+            }, 1000);
+            console.log('endboss this.intervals', this.intervals);
+            
+        }, 8000);
+        setTimeout(() => {
+            this.clearAllIntervals(); // Alle vorherigen Intervalle löschen
+            console.log('endboss this.intervals', this.intervals);
         }, 9000)
     }
+    
          
     animate() {
         setInterval(() => {

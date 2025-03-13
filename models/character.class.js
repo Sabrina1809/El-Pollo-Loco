@@ -119,7 +119,7 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 this.animateCharactersDead(checkAnimationInterval, checkMoveInterval);
                 setTimeout(() => {
-                    this.energy = 100;
+                    // this.energy = 100;
                     clearInterval(checkAnimationInterval)
                 }, 1500);
             } else if (this.isHurt()) {
@@ -164,28 +164,35 @@ class Character extends MovableObject {
             this.lastHit = 0;
             this.standing = 0;
             world.level.win = undefined;
-            // this.energy = 100;
+           
 
 
             // this.intervals.forEach((interval) => {
             //     clearInterval(interval)
             // })
+            clearInterval(world.level.enemies[world.level.enemies.length - 1].energyInterval)
+            console.log('energyInt', world.level.enemies[world.level.enemies.length - 1].energyInterval);
+            
         }, 1000);
      
         setTimeout(() => {
-            this.world.stopGame();
+            // this.world.stopGame();
             this.sawEndboss = false;
           
            clearInterval(world.character.checkAnimationInterval);
             document.getElementById('overlay-start').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('level-1-button').classList.remove('level-closed');
+            }, 2000)
             document.getElementById('button-home').style.display = 'none';
-            console.log('Abbruch Ende');
-            console.log(world.character.intervals);
+            // console.log('Abbruch Ende');
+            // console.log(world.character.intervals);
            
-            world.intervalIds.forEach((id) => {
-                clearInterval(id)
-            })
-             console.log(world.intervalIds);
+            // world.intervalIds.forEach((id) => {
+            //     clearInterval(id)
+            // })
+            this.energy = 100;
+            //  console.log(world.intervalIds);
             // console.log('checkAnim', checkAnimationInterval);
             // console.log('checkMoveInt', checkMoveInterval);
         }, 6000)

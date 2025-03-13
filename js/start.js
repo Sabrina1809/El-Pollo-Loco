@@ -59,9 +59,13 @@ updateSoundState();
 function showStartScreen() {
     document.getElementById('overlay-start').style.display = 'block';
     document.getElementById('button-home').style.display = 'none';
+    setTimeout(() => {
+        document.getElementById('level-1-button').classList.remove('level-closed');
+    }, 2000)
 }
 function hideStartScreen() {
     document.getElementById('overlay-start').style.display = 'none';
+    document.getElementById('level-1-button').classList.add('level-closed');
     document.getElementById('button-home').style.display = 'flex';
 
 }
@@ -131,6 +135,7 @@ function openInfoDescription(descriptionID, arrowID) {
 
 document.getElementById('level-1-button').addEventListener('click', function () {
     document.getElementById('overlay-start').style.display = 'none';
+    document.getElementById('level-1-button').classList.add('level-closed');
     loadGameScripts().then(() => {
         init(level1);
     });
