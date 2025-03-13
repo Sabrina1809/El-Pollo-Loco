@@ -58,14 +58,15 @@ class Level {
             world.level.win = undefined;
         }
         this.checkWinInterval = setInterval(() => {
+            console.log('EndbossX', world.level.enemies[world.level.enemies.length - 1].x, 'characterX', world.character.x);
+            // console.log('characterX', world.character.x);
+            
             if (world.level.win === true) {
-              
                 this.handleWin();
                 clearInterval(world.level.checkWinInterval);
                 setTimeout(() => {
                     world.keyboardActive = false;
                     world.character.sawEndboss = false;
-                   
                 },2000)
                 setTimeout(() => {
                     world.level.win = undefined;
@@ -78,24 +79,20 @@ class Level {
                     world.stopGame();
                    }, 9000)
             } else if (world.level.win === false) {
-               
                 this.handleLose();
-               
                 clearInterval(world.level.checkWinInterval);
                 setTimeout(() => {
                     world.keyboardActive = false;
                     world.character.sawEndboss = false;
-                    world.level.enemies.forEach((enemy) => {
-                        world.deleteFromCanvas(enemy, world.level.enemies)
-                    })
+             
                     // clearInterval(this.checkWinInterval);
                 },2000)
                 setTimeout(() => {
                     world.level.win = undefined;
-                
-                },6000)
-                setTimeout(() => {
                     world.keyboardActive = true;
+                    world.level.enemies.forEach((enemy) => {
+                        world.deleteFromCanvas(enemy, world.level.enemies)
+                    })
                 },8000)
                setTimeout(() => {
                 world.stopGame();
@@ -115,8 +112,8 @@ class Level {
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-win').style.display = 'none';
-            world.stopGame(world.intervalIds);
-            world.level.enemies = [];
+            // world.stopGame(world.intervalIds);
+            // world.level.enemies = [];
         }, 8000);
     }
     
@@ -138,7 +135,7 @@ class Level {
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-loose').style.display = 'none';
-            world.stopGame();
+            // world.stopGame();
           
         }, 6000);
     }

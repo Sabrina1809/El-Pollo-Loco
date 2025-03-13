@@ -1,6 +1,6 @@
 class Endboss extends MovableObject {
 
-    x = 2200;
+    x = 2000;
     y = 55;
     height = 400;
     width = 400;
@@ -60,7 +60,7 @@ class Endboss extends MovableObject {
         this.energyInterval = setInterval(()=> {
             this.checkEnergy();
         }, 100) 
-
+        this.intervals.push(this.energyInterval)
     }
 
     clearAllIntervals() {
@@ -81,10 +81,15 @@ class Endboss extends MovableObject {
             setTimeout(() => {
                 world.level.win = true; 
                 this.hit = false;
+                clearInterval(this.energyInterval);
+                world.stopGame();
             },4000)
             setTimeout(() => {
                 world.keyboardActive = true;
             }, 7000)
+            // setTimeout(() => {
+             
+            // }, 8000)
         }
     }
 

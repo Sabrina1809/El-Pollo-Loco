@@ -49,6 +49,7 @@ class World {
         this.character.x = 60;
         this.character.y = -200;
         this.character.clearAllIntervals();
+        this.character.sawEndboss = false;
     }
 
     resetEndboss() {
@@ -57,7 +58,7 @@ class World {
         endboss.lastHit = 0;
         endboss.width = 400;
         endboss.height = 400;
-        endboss.x = 2200;
+        endboss.x = 2300;
         endboss.y = 55;
     }
 
@@ -75,27 +76,14 @@ class World {
         this.intervalIds = [];
         world.character.intervals.forEach(id => clearInterval(id));
         world.character.intervals = [];
-        // console.log(world);
-        // console.log(world.level.enemies);
-        
-        // console.log(world.level.enemies[world.level.enemies.length - 1]);
         if (world.level.enemies.length > 0 && world.level.enemies[world.level.enemies.length - 1] instanceof Endboss) {
             // console.log( world.level.enemies[world.level.enemies.length - 1].intervals);
             world.level.enemies[world.level.enemies.length - 1].intervals.forEach(clearInterval);
             world.level.enemies[world.level.enemies.length - 1].intervals = [];
             // console.log( world.level.enemies[world.level.enemies.length - 1].intervals);
-        }
-        
-        // world.level.enemies[world.level.enemies.length - 1].intervals.forEach(clearInterval);
-        // world.level.enemies[world.level.enemies.length - 1].intervals = [];
-        // console.log('world Intervals', this.intervalIds);
-        // console.log('character Intervals', world.character.intervals);
-        // console.log('endboss Intervals', world.level.enemies[world.level.enemies.length - 1].intervals);
-        
+        }        
     }
-       
-    
-    
+
     setWorld() {
         this.character.world = this;
     }

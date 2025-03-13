@@ -119,9 +119,11 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 this.animateCharactersDead(checkAnimationInterval, checkMoveInterval);
                 setTimeout(() => {
-                    // this.energy = 100;
                     clearInterval(checkAnimationInterval)
                 }, 1500);
+                setTimeout(() => {
+                    world.stopGame();
+                   }, 5000)
             } else if (this.isHurt()) {
                 this.audioHit.play();
                 this.playAnimation(this.IMAGES_HURT);
@@ -164,48 +166,31 @@ class Character extends MovableObject {
             this.lastHit = 0;
             this.standing = 0;
             world.level.win = undefined;
-           
-
-
-            // this.intervals.forEach((interval) => {
-            //     clearInterval(interval)
-            // })
             clearInterval(world.level.enemies[world.level.enemies.length - 1].energyInterval)
             console.log('energyInt', world.level.enemies[world.level.enemies.length - 1].energyInterval);
-            
         }, 1000);
-     
         setTimeout(() => {
-            // this.world.stopGame();
             this.sawEndboss = false;
-          
-           clearInterval(world.character.checkAnimationInterval);
+            clearInterval(world.character.checkAnimationInterval);
             document.getElementById('overlay-start').style.display = 'block';
             setTimeout(() => {
                 document.getElementById('level-1-button').classList.remove('level-closed');
             }, 2000)
             document.getElementById('button-home').style.display = 'none';
-            // console.log('Abbruch Ende');
-            // console.log(world.character.intervals);
-           
-            // world.intervalIds.forEach((id) => {
-            //     clearInterval(id)
-            // })
             this.energy = 100;
-            //  console.log(world.intervalIds);
-            // console.log('checkAnim', checkAnimationInterval);
-            // console.log('checkMoveInt', checkMoveInterval);
         }, 6000)
     }
 
     firstTimeEndboss() {
         let findEndbossInterval = setInterval(() => {
-            if (this.sawEndboss == false && this.x >= 1600) {
-                    world.level.enemies[world.level.enemies.length - 1].x -=70;
+            if (this.sawEndboss == false && this.x >= 1750) {
+                    world.level.enemies[world.level.enemies.length - 1].x -=50;
                     world.level.enemies[world.level.enemies.length - 1].playAnimation(world.level.enemies[world.level.enemies.length - 1].IMAGES_WALK);
                 setTimeout(() => {
                     clearInterval(findEndbossInterval);
+                    // debugger;
                     return this.sawEndboss = true;
+                    
                 }, 1000)
             }
         },100)
