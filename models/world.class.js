@@ -278,7 +278,7 @@ class World {
 
     collCharEndboss(char) {
         this.level.enemies.forEach((mo) => {
-            if (mo instanceof Endboss) {
+            if (mo instanceof Endboss && mo.energy > 20) {
                 if (char.y + 130 + char.height - 150 > mo.y + 10 &&
                     char.x + 30 + char.width - 70 > mo.x + 30
                 ) {
