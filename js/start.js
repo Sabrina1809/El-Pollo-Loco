@@ -6,11 +6,9 @@ const infoButton = document.getElementById('button-openinfo');
 const soundButton = document.getElementById('button-sound');
 const screenButton = document.getElementById('button-screen');
 let soundMuted = JSON.parse(localStorage.getItem('soundMuted')) || false;
-// let audioHomeScreen = new Audio ('audio/chill-drum-loop-6887.mp3');
-// let audioGame = new Audio ('audio/bgm-blues-guitar-loop-192099.mp3');
+
 function checkOrientation() {
     let overlayRotate = document.getElementById('overlay-rotate');
-    
     if (window.matchMedia("(orientation: portrait)").matches) {
         overlayRotate.style.display = 'flex';
     } else {
@@ -18,13 +16,10 @@ function checkOrientation() {
     }
 }
 
-// Initialer Check beim Laden der Seite
 checkOrientation();
 
-// Event Listener für Änderungen der Orientierung
 window.addEventListener('resize', checkOrientation);
 
-// Event-Listener für den Button
 soundButton.addEventListener('click', () => {
     if (soundMuted) {
         soundMuted = false;
@@ -42,7 +37,8 @@ function updateSoundState() {
     console.log('soundMuted', soundMuted);
     
     let allSounds = document.querySelectorAll('audio');
-
+    console.log(allSounds);
+    
     if (soundMuted) {
         allSounds.forEach(sound => sound.muted = true);
         soundButton.classList.add('muted'); // Optional: Button-Styling ändern

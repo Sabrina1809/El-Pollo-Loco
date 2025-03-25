@@ -9,14 +9,16 @@ class Level {
     copyOfEnemies = [];
     copyOfCollectableObjects = [];
     audioGame = new Audio ('audio/bgm-blues-guitar-loop-192099.mp3');
-    audioHome = new Audio ('audio/chill-drum-loop-6887.mp3');
+    audioHome = new Audio ('audio/desert-sun-164212.mp3');
+    
 
     constructor(enemies, clouds, backgroundObjects, collectableObjects) {
         this.enemies = this.checkEnemies(enemies);
         this.collectableObjects = this.checkCollObj(collectableObjects);
         this.clouds = clouds;
         this.backgroundObjects = backgroundObjects;
-        this.checkWinOrLoose()
+        this.checkWinOrLoose();
+        this.audioGame.volume = 0.5;
     }
 
     checkEnemies(enemies) {
@@ -79,7 +81,6 @@ class Level {
                     world.level.enemies.forEach((enemy) => {
                         world.deleteFromCanvas(enemy, world.level.enemies)
                     });
-                    // this.audioHome.play();
                 },8000)
                 setTimeout(() => {
                     world.stopGame();
@@ -90,8 +91,6 @@ class Level {
                 setTimeout(() => {
                     world.keyboardActive = false;
                     world.character.sawEndboss = false;
-             
-                    // clearInterval(this.checkWinInterval);
                 },2000)
                 setTimeout(() => {
                   
@@ -102,8 +101,6 @@ class Level {
                     world.level.enemies.forEach((enemy) => {
                         world.deleteFromCanvas(enemy, world.level.enemies)
                     })
-                  
-                    // this.audioHome.play();
                 },8000)
                setTimeout(() => {
                 world.stopGame();
@@ -114,10 +111,8 @@ class Level {
     
     handleWin() {
         world.level.win = null;
-        // setTimeout(() => {
-            this.audioGame.pause();
-            this.audioGame.currentTime = 0;
-        // },2000)
+        this.audioGame.pause();
+        this.audioGame.currentTime = 0;
         setTimeout(() => {
             world.character.jump();
             document.getElementById('overlay-messages').style.display = 'block';
@@ -126,9 +121,10 @@ class Level {
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-win').style.display = 'none';
-            // world.stopGame(world.intervalIds);
-            // world.level.enemies = [];
+            this.audioHome.volume = 0.5;
             this.audioHome.play();
+           
+
         }, 8000);
     }
     
@@ -137,22 +133,15 @@ class Level {
         clearInterval(this.checkWinInterval);
         clearInterval(world.character.checkMoveInterval);
         clearInterval(world.character.checkAnimationInterval);
-        // console.log('checkwininterval', this.checkWinInterval);
-        // console.log('checvkmoveinterval', world.character.checkMoveInterval);
-        // console.log('checvkmoveinterval', world.character.checkAnimationInterval);
-
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'block';
             document.getElementById('img-msg-loose').style.display = 'block';
             this.audioGame.pause();
             this.audioGame.currentTime = 0;
-         
-            
         }, 1000);
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-loose').style.display = 'none';
-            // world.stopGame();
             this.audioHome.play();
         }, 6000);
     }
