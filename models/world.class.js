@@ -15,7 +15,7 @@ class World {
     collectedCoins = 0;
     intervalIds = [];
     keyboardActive = true; // Neue Variable zur Sperrung der Eingaben
-
+  
 
     constructor(canvas, keyboard, level) {
         this.ctx = canvas.getContext('2d');

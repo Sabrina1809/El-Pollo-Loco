@@ -6,7 +6,8 @@ const infoButton = document.getElementById('button-openinfo');
 const soundButton = document.getElementById('button-sound');
 const screenButton = document.getElementById('button-screen');
 let soundMuted = JSON.parse(localStorage.getItem('soundMuted')) || false;
-
+// let audioHomeScreen = new Audio ('audio/chill-drum-loop-6887.mp3');
+// let audioGame = new Audio ('audio/bgm-blues-guitar-loop-192099.mp3');
 function checkOrientation() {
     let overlayRotate = document.getElementById('overlay-rotate');
     
@@ -59,6 +60,8 @@ updateSoundState();
 function showStartScreen() {
     document.getElementById('overlay-start').style.display = 'block';
     document.getElementById('button-home').style.display = 'none';
+    // audioHomeScreen.play();
+    // audioHomeScreen.play();
     setTimeout(() => {
         document.getElementById('level-1-button').classList.remove('level-closed');
     }, 2000)
@@ -67,7 +70,8 @@ function hideStartScreen() {
     document.getElementById('overlay-start').style.display = 'none';
     document.getElementById('level-1-button').classList.add('level-closed');
     document.getElementById('button-home').style.display = 'flex';
-
+    // audioHomeScreen.pause();
+    // audioHomeScreen.currentTime = 0;
 }
 
 function handleTouchStart() {
@@ -107,17 +111,6 @@ function handleInfoButtonToggle() {
     }
 }
 
-// function openMenu() {
-//     console.log('openMenu erreicht');
-//     if (document.getElementById('info-block').classList.contains('visible')) {
-//         document.getElementById('info-block').classList.remove('visible');
-//         document.getElementById('info-block').style.display = 'none';
-//     } else {
-//         document.getElementById('info-block').classList.add('visible');
-//         document.getElementById('info-block').style.display = 'block';
-//     }
-// }
-
 function openInfoDescription(descriptionID, arrowID) {
     let descrElement = document.getElementById(descriptionID);
     let arrowElement = document.getElementById(arrowID);
@@ -138,6 +131,7 @@ document.getElementById('level-1-button').addEventListener('click', function () 
     document.getElementById('level-1-button').classList.add('level-closed');
     loadGameScripts().then(() => {
         init(level1);
+       
     });
 });
 
@@ -220,7 +214,9 @@ function init(level) {
         document.getElementById('info-block').classList.remove('visible');
         document.getElementById('info-block').style.display = 'none';
     }
-
+    // audioHomeScreen.pause();
+    // audioHomeScreen.currentTime = 0;
+    // audioGame.play();
     document.getElementById('button-home').style.display = 'flex';
 
     canvas = document.getElementById('canvas');
