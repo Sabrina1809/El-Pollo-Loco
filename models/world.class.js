@@ -28,6 +28,15 @@ class World {
         this.level.win = undefined;         
     }
 
+    lockKeyboard() {
+        world.keyboard.UP = false;
+        world.keyboard.DOWN = false;
+        world.keyboard.LEFT = false;
+        world.keyboard.RIGHT = false;
+        world.keyboard.SPACE = false;
+        world.keyboardActive = false;
+    }
+
     resetEnemies() {
         this.level.enemies.forEach(enemy => {
             enemy.dead = false;

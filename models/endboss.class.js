@@ -76,7 +76,7 @@ class Endboss extends MovableObject {
         }, 2000);  
         } else if (this.hit == true && this.energy <= 20) {
             this.endbossDead();  
-            world.keyboardActive = false;
+            world.lockKeyboard();
             this.playAnimation(this.IMAGES_DEAD);
             setTimeout(() => {
                 world.level.win = true; 
@@ -87,9 +87,6 @@ class Endboss extends MovableObject {
             setTimeout(() => {
                 world.keyboardActive = true;
             }, 7000)
-            // setTimeout(() => {
-             
-            // }, 8000)
         }
     }
 

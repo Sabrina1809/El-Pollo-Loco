@@ -153,12 +153,7 @@ class Character extends MovableObject {
     animateCharactersDead(checkAnimationInterval, checkMoveInterval) {
         this.loadImage('img/2_character_pepe/2_walk/W-21.png');
         world.level.win = false;
-        this.world.keyboard.UP = false;
-        this.world.keyboard.DOWN = false;
-        this.world.keyboard.LEFT = false;
-        this.world.keyboard.RIGHT = false;
-        this.world.keyboard.SPACE = false;
-        world.keyboardActive = false;
+        world.lockKeyboard();
         this.playAnimation(this.IMAGES_DEAD);
         setTimeout(()=> {
             this.playAnimation(this.IMAGES_DEAD);
@@ -170,14 +165,12 @@ class Character extends MovableObject {
             console.log('energyInt', world.level.enemies[world.level.enemies.length - 1].energyInterval);
         }, 1000);
         setTimeout(() => {
-            this.sawEndboss = false;
             clearInterval(world.character.checkAnimationInterval);
             document.getElementById('overlay-start').style.display = 'block';
             setTimeout(() => {
                 document.getElementById('level-1-button').classList.remove('level-closed');
             }, 2000)
             document.getElementById('button-home').style.display = 'none';
-            this.energy = 100;
         }, 6000)
     }
 

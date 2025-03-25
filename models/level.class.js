@@ -58,7 +58,7 @@ class Level {
             world.level.win = undefined;
         }
         this.checkWinInterval = setInterval(() => {
-            console.log('EndbossX', world.level.enemies[world.level.enemies.length - 1].x, 'characterX', world.character.x);
+            // console.log('EndbossX', world.level.enemies[world.level.enemies.length - 1].x, 'characterX', world.character.x);
             // console.log('characterX', world.character.x);
             
             if (world.level.win === true) {
