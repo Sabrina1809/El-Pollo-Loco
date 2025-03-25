@@ -94,60 +94,88 @@ class Character extends MovableObject {
         this.intervals = [];
         this.clearAllIntervals();
         let checkMoveInterval = setInterval(()=> {
-            // console.log('checkMoveInterval ', checkMoveInterval);
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.enemies[this.world.level.enemies.length - 1].x) {
-                    this.otherDirection = false;
-                    this.moveRight();
-                } 
-                if (this.world.keyboard.LEFT && this.x >= -500) {
-                    this.otherDirection = true;
-                    this.moveLeft(this.speed);
-                }
-                if (!this.isAboveGround() && this.world.keyboard.UP) {
-                    this.jump();
-                }
-                this.world.camera_x = -this.x + 60;
+            this.checkLeft();
+            this.checkRight();
+            this.checkUp();
+            this.world.camera_x = -this.x + 60;
         }, 1000/60);
         this.increaseStandingTime();
         this.firstTimeEndboss();
-        let jumped = false;
-
         let checkAnimationInterval = setInterval(() => {            
             if (this.isDead()) {
-                this.animateCharactersDead(checkAnimationInterval, checkMoveInterval);
-                setTimeout(() => {
-                    clearInterval(checkAnimationInterval)
-                }, 1500);
-                setTimeout(() => {
-                    world.stopGame();
-                   }, 5000)
+                this.showDead(checkAnimationInterval, checkMoveInterval);
             } else if (this.isHurt()) {
-                this.audioHit.play();
-                this.playAnimation(this.IMAGES_HURT);
-                this.standing = 0;
+                this.showHurt();
             } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-                this.standing = 0;
+                this.showJumping();
             } else {
-                
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    this.playAnimation(this.IMAGES_WALKING);
-                    this.standing = 0;
+                    this.showWalking();
                 } else {
-                    this.loadImage('img/2_character_pepe/2_walk/W-21.png');
-       
-                    if (this.standing > 1) {
-                        this.playAnimation(this.IMAGES_TIRED);
-                    }
-                    if (this.standing > 10) {
-                        this.playAnimation(this.IMAGES_SLEEPING);
-                    }
+                    this.showStanding();
                 }
             }
         }, 100);   
     }
 
-    animateCharactersDead(checkAnimationInterval, checkMoveInterval) {
+    showStanding() {
+        this.loadImage('img/2_character_pepe/2_walk/W-21.png');
+        if (this.standing > 1) {
+            this.playAnimation(this.IMAGES_TIRED);
+        }
+        if (this.standing > 10) {
+            this.playAnimation(this.IMAGES_SLEEPING);
+        }
+    }
+
+    showWalking() {
+        this.playAnimation(this.IMAGES_WALKING);
+        this.standing = 0;
+    }
+
+    showJumping() {
+        this.playAnimation(this.IMAGES_JUMPING);
+        this.standing = 0;
+    }
+
+    showDead(checkAnimationInterval, checkMoveInterval) {
+        this.animateCharactersDead();
+        setTimeout(() => {
+            clearInterval(checkAnimationInterval)
+        }, 1500);
+        setTimeout(() => {
+            world.stopGame();
+            clearInterval(checkMoveInterval)
+        }, 5000)
+    }
+
+    showHurt() {
+        this.audioHit.play();
+        this.playAnimation(this.IMAGES_HURT);
+        this.standing = 0;
+    }
+
+    checkLeft() {
+        if (this.world.keyboard.LEFT && this.x >= -500) {
+            this.otherDirection = true;
+            this.moveLeft(this.speed);
+        }
+    }
+
+    checkRight() {
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.enemies[this.world.level.enemies.length - 1].x) {
+            this.otherDirection = false;
+            this.moveRight();
+        } 
+    }
+
+    checkUp() {
+        if (!this.isAboveGround() && this.world.keyboard.UP) {
+            this.jump();
+        }
+    }
+
+    animateCharactersDead() {
         this.loadImage('img/2_character_pepe/2_walk/W-21.png');
         world.level.win = false;
         world.lockKeyboard();
@@ -171,27 +199,11 @@ class Character extends MovableObject {
         }, 6000)
     }
 
-    // firstTimeEndboss() {
-    //     let findEndbossInterval = setInterval(() => {
-    //         console.log('character x: ', this.x, 'endboss x: ',  world.level.enemies[world.level.enemies.length - 1].x);
-            
-    //         if (this.sawEndboss == false && this.x >= 1750) {
-    //             this.endbossRunsToCharacter();
-    //             setTimeout(() => {
-    //                 clearInterval(findEndbossInterval);
-    //                 return this.sawEndboss = true;
-    //             }, 1000)
-    //         }
-    //     },100)
-    // }
-
     firstTimeEndboss() {
         let findEndbossInterval = setInterval(() => {
-            console.log('character x: ', this.x, 'endboss x: ',  world.level.enemies[world.level.enemies.length - 1].x);
             if (this.sawEndboss == false && this.x >= 1750) {
                 this.endbossRunsToCharacter();
                 clearInterval(findEndbossInterval);
-                return this.sawEndboss = true;
             }
         },100)
     }
@@ -203,13 +215,9 @@ class Character extends MovableObject {
         },100)
         setTimeout(() => {
             clearInterval(endbossRunInterval);
+            return this.sawEndboss = true;
         }, 1000)
     }
-
-    // endbossRunsToCharacter() {
-    //     world.level.enemies[world.level.enemies.length - 1].x -=50;
-    //     world.level.enemies[world.level.enemies.length - 1].playAnimation(world.level.enemies[world.level.enemies.length - 1].IMAGES_WALK);
-    // }
 
     increaseStandingTime() {
         let standingInterval = setInterval(() => {
