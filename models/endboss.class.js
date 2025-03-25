@@ -8,6 +8,8 @@ class Endboss extends MovableObject {
     hit = false;
     energy = 100;     
     intervals = [];
+    audioDie = new Audio('audio/you-win-sequence-1-183948.mp3');
+
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',
@@ -150,6 +152,7 @@ class Endboss extends MovableObject {
 
     showEndbossShrink() {
         setTimeout(() => {
+            this.audioDie.play();
             let shrinkInterval = setInterval(() => {
                 this.width -= 25;
                 this.x += 30;

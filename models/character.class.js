@@ -10,6 +10,7 @@ class Character extends MovableObject {
     currentImage = 0;
     audioHit = new Audio('audio/retro-hurt-2-236675.mp3');
     audioJump = new Audio('audio/cartoon-jump-6462.mp3');
+    audioDie = new Audio('audio/videogame-death-sound-43894.mp3');
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -207,6 +208,7 @@ class Character extends MovableObject {
         setTimeout(()=> {
             this.playAnimation(this.IMAGES_DEAD);
             this.y += 20;
+            this.audioDie.play();
         }, 1000);
     }
 
