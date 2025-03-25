@@ -189,15 +189,7 @@ class Character extends MovableObject {
         setTimeout(()=> {
             this.playAnimation(this.IMAGES_DEAD);
             this.y += 20;
-            // world.level.win = undefined;
-            // clearInterval(world.level.enemies[world.level.enemies.length - 1].energyInterval)
-            // console.log('energyInt', world.level.enemies[world.level.enemies.length - 1].energyInterval);
         }, 1000);
-        setTimeout(() => {
-            // clearInterval(world.character.checkAnimationInterval);
-        
-            // this.backToHomeScreen();
-        }, 6000)
     }
 
     backToHomeScreen() {
