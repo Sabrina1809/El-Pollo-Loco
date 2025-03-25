@@ -95,7 +95,8 @@ class Character extends MovableObject {
         this.clearAllIntervals();
         let checkMoveInterval = setInterval(()=> {
             // console.log('checkMoveInterval ', checkMoveInterval);
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            // if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.enemies[this.world.level.enemies.length - 1].x) {
                     this.otherDirection = false;
                     this.moveRight();
                 } 
