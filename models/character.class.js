@@ -95,7 +95,6 @@ class Character extends MovableObject {
         this.clearAllIntervals();
         let checkMoveInterval = setInterval(()=> {
             // console.log('checkMoveInterval ', checkMoveInterval);
-            // if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.enemies[this.world.level.enemies.length - 1].x) {
                     this.otherDirection = false;
                     this.moveRight();
@@ -108,9 +107,6 @@ class Character extends MovableObject {
                     this.jump();
                 }
                 this.world.camera_x = -this.x + 60;
-            
-                // console.log(this.intervals);
-
         }, 1000/60);
         this.increaseStandingTime();
         this.firstTimeEndboss();
@@ -175,20 +171,45 @@ class Character extends MovableObject {
         }, 6000)
     }
 
+    // firstTimeEndboss() {
+    //     let findEndbossInterval = setInterval(() => {
+    //         console.log('character x: ', this.x, 'endboss x: ',  world.level.enemies[world.level.enemies.length - 1].x);
+            
+    //         if (this.sawEndboss == false && this.x >= 1750) {
+    //             this.endbossRunsToCharacter();
+    //             setTimeout(() => {
+    //                 clearInterval(findEndbossInterval);
+    //                 return this.sawEndboss = true;
+    //             }, 1000)
+    //         }
+    //     },100)
+    // }
+
     firstTimeEndboss() {
         let findEndbossInterval = setInterval(() => {
+            console.log('character x: ', this.x, 'endboss x: ',  world.level.enemies[world.level.enemies.length - 1].x);
             if (this.sawEndboss == false && this.x >= 1750) {
-                    world.level.enemies[world.level.enemies.length - 1].x -=50;
-                    world.level.enemies[world.level.enemies.length - 1].playAnimation(world.level.enemies[world.level.enemies.length - 1].IMAGES_WALK);
-                setTimeout(() => {
-                    clearInterval(findEndbossInterval);
-                    // debugger;
-                    return this.sawEndboss = true;
-                    
-                }, 1000)
+                this.endbossRunsToCharacter();
+                clearInterval(findEndbossInterval);
+                return this.sawEndboss = true;
             }
         },100)
     }
+
+    endbossRunsToCharacter() {
+        let endbossRunInterval = setInterval(() => {
+            world.level.enemies[world.level.enemies.length - 1].x -=50;
+            world.level.enemies[world.level.enemies.length - 1].playAnimation(world.level.enemies[world.level.enemies.length - 1].IMAGES_WALK);
+        },100)
+        setTimeout(() => {
+            clearInterval(endbossRunInterval);
+        }, 1000)
+    }
+
+    // endbossRunsToCharacter() {
+    //     world.level.enemies[world.level.enemies.length - 1].x -=50;
+    //     world.level.enemies[world.level.enemies.length - 1].playAnimation(world.level.enemies[world.level.enemies.length - 1].IMAGES_WALK);
+    // }
 
     increaseStandingTime() {
         let standingInterval = setInterval(() => {
