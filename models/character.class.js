@@ -194,10 +194,10 @@ class Character extends MovableObject {
 
     backToHomeScreen() {
         document.getElementById('overlay-start').style.display = 'block';
+        document.getElementById('button-home').style.display = 'none';
         setTimeout(() => {
             document.getElementById('level-1-button').classList.remove('level-closed');
         }, 2000)
-        document.getElementById('button-home').style.display = 'none';
     }
 
     firstTimeEndboss() {

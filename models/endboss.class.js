@@ -87,8 +87,6 @@ class Endboss extends MovableObject {
             this.endbossIsDead();  
             world.lockKeyboard();
             setTimeout(() => {
-                // world.level.win = true; 
-                // this.hit = false;
                 world.stopGame();
             },4000)
             setTimeout(() => {
@@ -168,6 +166,7 @@ class Endboss extends MovableObject {
         this.hit = false;
         world.level.win = true;
         world.character.showStanding();
+        this.clearAllIntervals();
         this.showEndbossHurt();
         this.showEndbossDie();
         this.showEndbossShrink();
@@ -177,14 +176,19 @@ class Endboss extends MovableObject {
         setTimeout(() => {
             world.level.win = undefined;
             this.clearAllIntervals();
-            document.getElementById('overlay-start').style.display = 'block';
-            document.getElementById('button-home').style.display = 'none';
         }, 8000)
         setTimeout(() => {
-            document.getElementById('level-1-button').classList.remove('level-closed');
-        }, 9000);
+            this.backToHomeScreen();
+        }, 8500)  
     }
     
+    backToHomeScreen() {
+        document.getElementById('overlay-start').style.display = 'block';
+        document.getElementById('button-home').style.display = 'none';
+        setTimeout(() => {
+            document.getElementById('level-1-button').classList.remove('level-closed');
+        }, 2000);
+    }
          
     animate() {
         setInterval(() => {
