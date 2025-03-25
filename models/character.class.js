@@ -141,12 +141,16 @@ class Character extends MovableObject {
     showDead(checkAnimationInterval, checkMoveInterval) {
         this.animateCharactersDead();
         setTimeout(() => {
-            clearInterval(checkAnimationInterval)
+            clearInterval(checkAnimationInterval);
+            world.level.win = undefined;
+            clearInterval(world.level.enemies[world.level.enemies.length - 1].energyInterval)
+            console.log('energyInt', world.level.enemies[world.level.enemies.length - 1].energyInterval);
         }, 1500);
         setTimeout(() => {
             world.stopGame();
-            clearInterval(checkMoveInterval)
-        }, 5000)
+            clearInterval(checkMoveInterval);
+            this.backToHomeScreen();
+        }, 6000)
     }
 
     showHurt() {
@@ -178,25 +182,30 @@ class Character extends MovableObject {
     animateCharactersDead() {
         this.loadImage('img/2_character_pepe/2_walk/W-21.png');
         world.level.win = false;
+        this.lastHit = 0;
+        this.standing = 0;
         world.lockKeyboard();
         this.playAnimation(this.IMAGES_DEAD);
         setTimeout(()=> {
             this.playAnimation(this.IMAGES_DEAD);
             this.y += 20;
-            this.lastHit = 0;
-            this.standing = 0;
-            world.level.win = undefined;
-            clearInterval(world.level.enemies[world.level.enemies.length - 1].energyInterval)
-            console.log('energyInt', world.level.enemies[world.level.enemies.length - 1].energyInterval);
+            // world.level.win = undefined;
+            // clearInterval(world.level.enemies[world.level.enemies.length - 1].energyInterval)
+            // console.log('energyInt', world.level.enemies[world.level.enemies.length - 1].energyInterval);
         }, 1000);
         setTimeout(() => {
-            clearInterval(world.character.checkAnimationInterval);
-            document.getElementById('overlay-start').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('level-1-button').classList.remove('level-closed');
-            }, 2000)
-            document.getElementById('button-home').style.display = 'none';
+            // clearInterval(world.character.checkAnimationInterval);
+        
+            // this.backToHomeScreen();
         }, 6000)
+    }
+
+    backToHomeScreen() {
+        document.getElementById('overlay-start').style.display = 'block';
+        setTimeout(() => {
+            document.getElementById('level-1-button').classList.remove('level-closed');
+        }, 2000)
+        document.getElementById('button-home').style.display = 'none';
     }
 
     firstTimeEndboss() {
