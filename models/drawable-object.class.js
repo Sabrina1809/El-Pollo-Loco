@@ -114,37 +114,7 @@ class DrawableObject {
         })
     }
     isColliding(mo) {
-        // if (mo instanceof Chicken) {
-        //     //mo.x 
-        //     //mo.width 
-        //     //mo.y 
-        //     //mo.height 
 
-        //     //this.x + 30
-        //     //this.width -70
-        //     //this.y + 130
-        //     //this.height - 150
-
-        //     if (this.y + 130 < mo.y && (
-        //         this.y + 130 + this.height - 150 > mo.y + (mo.height/2) 
-        //         || 
-        //         !this.isAboveGround()
-        //         )
-        //         && this.x + 30 < mo.x && this.x + 30 + this.width - 70 >= mo.x
-        //     ) {
-        //         console.log('character from left to chicken');
-        //         this.hit()
-        //         // return true
-        //     } 
-        //     else if (
-        //         this.y + 130 < mo.y && (this.y + 130 + this.height - 150 > mo.y + (mo.height/2) || !this.isAboveGround())
-        //         && this.x + 30 <= mo.x + mo.width && this.x + 30 + this.width - 70 > mo.x + mo.width
-        //     ) {
-        //         console.log('character from right to chicken');
-        //         this.hit()
-        //         // return true
-        //     }
-        // }
         if (mo instanceof Endboss) {
             return this.x + 30 + this.width - 70 > mo.x + 20 &&
             this.y + 130 + this.height - 150 > mo.y + 60 &&

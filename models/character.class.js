@@ -8,7 +8,7 @@ class Character extends MovableObject {
     sawEndboss = false;
     world;
     currentImage = 0;
-    audioHit = new Audio('audio/cartoon-slap-2-189831.mp3');
+    audioHit = new Audio('audio/retro-hurt-2-236675.mp3');
     audioJump = new Audio('audio/cartoon-jump-6462.mp3');
 
     IMAGES_WALKING = [
@@ -82,6 +82,8 @@ class Character extends MovableObject {
         'img/2_character_pepe/3_jump/J-36.png'
     ]
 
+
+
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -93,19 +95,32 @@ class Character extends MovableObject {
         this.applyGravity();
         this.intervals = [];
         this.clearAllIntervals();
+        
+        this.hitSoundPlayed = false;  // Neue Variable für den Sound-Status
+        // this.jumpSoundPlayed = false;
         let checkMoveInterval = setInterval(()=> {
             this.checkLeft();
             this.checkRight();
             this.checkUp();
             this.world.camera_x = -this.x + 60;
         }, 1000/60);
+    
         this.increaseStandingTime();
         this.firstTimeEndboss();
+    
         let checkAnimationInterval = setInterval(() => {            
             if (this.isDead()) {
                 this.showDead(checkAnimationInterval, checkMoveInterval);
             } else if (this.isHurt()) {
+                if (!this.hitSoundPlayed) {  // Prüfen, ob der Sound schon abgespielt wurde
+                    this.audioHit.play();
+                    this.hitSoundPlayed = true;  // Setze die Variable auf `true`
+                    setTimeout(() => {
+                        this.hitSoundPlayed = false;
+                    }, 850);  // Nach einer Sekunde zurücksetzen
+                }
                 this.showHurt();
+              
             } else if (this.isAboveGround()) {
                 this.showJumping();
             } else {
@@ -117,6 +132,7 @@ class Character extends MovableObject {
             }
         }, 100);   
     }
+    
 
     showStanding() {
         this.loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -154,7 +170,7 @@ class Character extends MovableObject {
     }
 
     showHurt() {
-        this.audioHit.play();
+       
         this.playAnimation(this.IMAGES_HURT);
         this.standing = 0;
     }
@@ -175,7 +191,9 @@ class Character extends MovableObject {
 
     checkUp() {
         if (!this.isAboveGround() && this.world.keyboard.UP) {
+           
             this.jump();
+            this.audioJump.play();
         }
     }
 
