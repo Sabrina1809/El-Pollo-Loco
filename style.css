@@ -192,14 +192,18 @@ canvas {
         bottom: 0px;
         left: 80px;
         right: 80px;
+        top: 0;
+        bottom: 0;
         display: flex;
+        justify-content: end;        
         margin: 0 auto;
         padding: 10px 70px;
         flex-direction: column;
         z-index: 5;
         & .info-block {
             height: fit-content;
-            max-height: calc(100vh - 100px);
+            /* max-height: calc(100vh - 100px); */
+            width: -webkit-fill-available;
             padding-top: 10px;
             overflow-y: scroll;
             overflow-x: hidden;
