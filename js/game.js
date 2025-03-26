@@ -22,7 +22,6 @@ function canMoveRight() {
     if (lastEnemy) {
         return world.character.x < lastEnemy.x + lastEnemy.width;
     }
- 
 }
 
 window.addEventListener('keydown', (event) => {

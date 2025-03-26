@@ -20,6 +20,17 @@ checkOrientation();
 
 window.addEventListener('resize', checkOrientation);
 
+function updateCanvasHeight() {
+    document.documentElement.style.setProperty('--real-vh', `${window.innerHeight}px`);
+}
+
+// Höhe beim Laden setzen
+updateCanvasHeight();
+
+// Höhe bei Änderungen (z. B. Rotation) anpassen
+window.addEventListener('resize', updateCanvasHeight);
+
+
 function getSoundState() {
     if (soundMuted == null ) {
         localStorage.setItem('polloLocoMuted', JSON.stringify(true));
