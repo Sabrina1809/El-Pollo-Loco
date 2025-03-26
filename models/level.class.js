@@ -17,8 +17,6 @@ class Level {
         this.collectableObjects = this.checkCollObj(collectableObjects);
         this.clouds = clouds;
         this.backgroundObjects = backgroundObjects;
-        console.log(world);
-        // this.audioGame = world.allSounds[0];
         this.world = world;
         this.checkWinOrLoose();
     }
@@ -59,8 +57,6 @@ class Level {
     }
 
     checkWinOrLoose() {
-        console.log(world);
-        // this.world.allSounds[0].play();
         this.audioHome.pause();
         this.audioHome.currentTime = 0;
         this.audioGame.play();
