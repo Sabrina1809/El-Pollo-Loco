@@ -5,11 +5,10 @@ let isTouch = false;
 const infoButton = document.getElementById('button-openinfo');
 const soundButton = document.getElementById('button-sound');
 const screenButton = document.getElementById('button-screen');
-let soundMuted = JSON.parse(localStorage.getItem('soundMuted')) || false;
+let soundMuted = JSON.parse(localStorage.getItem('polloLocoMuted'));
 
 function checkOrientation() {
     let overlayRotate = document.getElementById('overlay-rotate');
-    
     if (window.matchMedia("(orientation: portrait)").matches) {
         overlayRotate.style.display = 'flex';
     } else {
@@ -17,44 +16,62 @@ function checkOrientation() {
     }
 }
 
-// Initialer Check beim Laden der Seite
 checkOrientation();
 
-// Event Listener für Änderungen der Orientierung
 window.addEventListener('resize', checkOrientation);
 
-// Event-Listener für den Button
-soundButton.addEventListener('click', () => {
-    if (soundMuted) {
-        soundMuted = false;
-        localStorage.setItem('soundMuted', JSON.stringify(false));
-    } else {
-        soundMuted = true;
-        localStorage.setItem('soundMuted', JSON.stringify(true));
+function updateCanvasHeight() {
+    document.documentElement.style.setProperty('--real-vh', `${window.innerHeight}px`);
+}
+
+// Höhe beim Laden setzen
+updateCanvasHeight();
+
+// Höhe bei Änderungen (z. B. Rotation) anpassen
+window.addEventListener('resize', updateCanvasHeight);
+
+
+function getSoundState() {
+    if (soundMuted == null ) {
+        localStorage.setItem('polloLocoMuted', JSON.stringify(true));
     }
-    
-    updateSoundState();
-});
-
-// Funktion zum Aktualisieren des Sound-Zustands
-function updateSoundState() {
-    console.log('soundMuted', soundMuted);
-    
-    let allSounds = document.querySelectorAll('audio');
-
+    soundMuted = JSON.parse(localStorage.getItem('polloLocoMuted'));
     if (soundMuted) {
-        allSounds.forEach(sound => sound.muted = true);
-        soundButton.classList.add('muted'); // Optional: Button-Styling ändern
-        document.getElementById('button-sound-img').src = 'img/buttons/icons8-kein-ton-50 (1).png';
+        soundOff();
     } else {
-        allSounds.forEach(sound => sound.muted = false);
-        soundButton.classList.remove('muted');
-          document.getElementById('button-sound-img').src = 'img/buttons/icons8-hohe-lautstärke-50 (2).png';
+        soundOn();
     }
 }
 
-// Initialen Zustand aus dem Local Storage setzen
-updateSoundState();
+function soundOff() {
+    soundButton.classList.add('muted'); 
+    document.getElementById('button-sound-img').src = 'img/buttons/icons8-kein-ton-50 (1).png';
+    document.querySelectorAll('audio').forEach(audio => {
+        audio.muted = true;
+    });
+}
+
+function soundOn() {
+    soundButton.classList.remove('muted');
+    document.getElementById('button-sound-img').src = 'img/buttons/icons8-hohe-lautstärke-50 (2).png';
+    document.querySelectorAll('audio').forEach(audio => {
+        audio.muted = false;
+    });
+}
+
+getSoundState();
+
+function soundOnOff() {
+    soundMuted = !soundMuted;
+    localStorage.setItem('polloLocoMuted', JSON.stringify(soundMuted));
+    document.getElementById('button-sound-img').src = soundMuted
+        ? 'img/buttons/icons8-kein-ton-50 (1).png'
+        : 'img/buttons/icons8-hohe-lautstärke-50 (2).png';
+    soundButton.classList.toggle('muted', soundMuted);
+    document.querySelectorAll('audio').forEach(audio => {
+        audio.muted = soundMuted;
+    });
+}
 
 function showStartScreen() {
     document.getElementById('overlay-start').style.display = 'block';
@@ -63,11 +80,11 @@ function showStartScreen() {
         document.getElementById('level-1-button').classList.remove('level-closed');
     }, 2000)
 }
+
 function hideStartScreen() {
     document.getElementById('overlay-start').style.display = 'none';
     document.getElementById('level-1-button').classList.add('level-closed');
     document.getElementById('button-home').style.display = 'flex';
-
 }
 
 function handleTouchStart() {
@@ -85,11 +102,9 @@ function handleClick(event) {
 soundButton.addEventListener('touchstart', handleTouchStart);
 screenButton.addEventListener('touchstart', handleTouchStart);
 
-
 infoButton.addEventListener('click', handleInfoButtonToggle);
 soundButton.addEventListener('click', handleClick);
 screenButton.addEventListener('click', handleClick);
-
 
 soundButton.addEventListener('touchend', () => setTimeout(() => isTouch = false, 300));
 screenButton.addEventListener('touchend', () => setTimeout(() => isTouch = false, 300));
@@ -106,17 +121,6 @@ function handleInfoButtonToggle() {
         isTouch = true;
     }
 }
-
-// function openMenu() {
-//     console.log('openMenu erreicht');
-//     if (document.getElementById('info-block').classList.contains('visible')) {
-//         document.getElementById('info-block').classList.remove('visible');
-//         document.getElementById('info-block').style.display = 'none';
-//     } else {
-//         document.getElementById('info-block').classList.add('visible');
-//         document.getElementById('info-block').style.display = 'block';
-//     }
-// }
 
 function openInfoDescription(descriptionID, arrowID) {
     let descrElement = document.getElementById(descriptionID);
@@ -220,14 +224,13 @@ function init(level) {
         document.getElementById('info-block').classList.remove('visible');
         document.getElementById('info-block').style.display = 'none';
     }
-
     document.getElementById('button-home').style.display = 'flex';
-
     canvas = document.getElementById('canvas');
     level.enemies = checkEnemies(level);
     level.collectableObjects = checkCollObj(level);
     level.win = undefined;
     world = new World(canvas, keyboard, level);
+    level.world = world; 
     world.character.energy = 100;
     world.character.lastHit = 0;
     world.level.win = undefined;

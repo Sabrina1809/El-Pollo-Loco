@@ -18,6 +18,9 @@ class ThrowableObject extends MovableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ]
 
+    audioThrowBottle = document.getElementById('audio-throw-bottle');
+    audioBrokenBottle = document.getElementById('audio-broken-bottle');
+
     constructor(x, y) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
         this.loadImages(this.IMAGES_THROWING);
@@ -32,6 +35,7 @@ class ThrowableObject extends MovableObject {
                 this.speedY -= this.acceleration;
             }
         }, 1000/25)
+        this.audioThrowBottle.play();
         this.throw(gravityInterval);
         setTimeout(() => {
             world.throwableObjects.shift();
@@ -39,7 +43,7 @@ class ThrowableObject extends MovableObject {
     }
 
     throw(gravityInterval) {
-        // this.speedY = 24;
+        
         this.speedY = 20;
         // this.applyGravity();
         let xInterval = setInterval(() => {
@@ -61,6 +65,7 @@ class ThrowableObject extends MovableObject {
             ) {
                 clearInterval(collInterval);
                 clearInterval(throwInterval);
+                this.audioBrokenBottle.play();
                 let splashInterrval = setInterval(() => {
                     this.playAnimation(this.IMAGES_SPLASH);
                 }, 200);
@@ -80,7 +85,6 @@ class ThrowableObject extends MovableObject {
                     world.level.enemies[i].checkEnergy();
                 }
                 if (world.level.enemies[i] instanceof Chicken) {
-                    console.log('chicken dead');
                     world.level.enemies[i].dead = true;
                 }
                 return 

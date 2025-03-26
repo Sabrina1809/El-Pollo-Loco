@@ -15,17 +15,29 @@ class World {
     collectedCoins = 0;
     intervalIds = [];
     keyboardActive = true; // Neue Variable zur Sperrung der Eingaben
-
+    audioChickenDead = document.getElementById('audio-chicken-dead');
+    audioCollectThing = document.getElementById('audio-collect');
+    // audioEndbossHit = document.getElementById('audio-hit-endboss');
 
     constructor(canvas, keyboard, level) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.level = level;
+           this.level = level;
         this.draw();
         this.setWorld();
         this.run();
-        this.level.win = undefined;         
+        this.level.win = undefined;   
+   
+    }
+
+    lockKeyboard() {
+        world.keyboard.UP = false;
+        world.keyboard.DOWN = false;
+        world.keyboard.LEFT = false;
+        world.keyboard.RIGHT = false;
+        world.keyboard.SPACE = false;
+        world.keyboardActive = false;
     }
 
     resetEnemies() {
@@ -119,24 +131,16 @@ class World {
     }
 
     collBottleEndboss(bottle, enemy, throwObjectInterval) {
-        // console.log('Kollision wird geprüft!');
-        // console.log('Endboss in Level:', world.level.enemies.find(e => e instanceof Endboss));
-        // console.log('Enemy in Collision:', enemy);
-        // console.log('Sind sie gleich?', enemy === world.level.enemies.find(e => e instanceof Endboss));
-        
-        
         if (enemy instanceof Endboss) {
             if (bottle.y + bottle.y / 2 > enemy.y && bottle.y + bottle.y / 2 < enemy.y + enemy.width &&
                 bottle.x + bottle.width / 2 > enemy.x && bottle.x + bottle.width / 2 < enemy.x + enemy.width
             ) {
-                // console.log('Endboss getroffen!');
                 this.level.enemies[this.level.enemies.length - 1].hit = true;
                 this.level.enemies[this.level.enemies.length - 1].checkEnergy();
+                // this.audioEndbossHit.play();
                 setTimeout(() => {
                     clearInterval(throwObjectInterval);
-                },1000)
-               
-                // return this.level.enemies[this.level.enemies.length - 1].hit = true;
+                },1000);
             }
         }
     }
@@ -152,6 +156,7 @@ class World {
             }
             enemy.deadInterval = setInterval(() => {
                 if (enemy.dead) {
+                    // this.audioChickenDead.play();
                     enemy.loadImage(enemy.IMAGE_DEAD);
                     clearInterval(enemy.deadInterval);
                     this.intervalIds = this.intervalIds.filter(id => id !== enemy.deadInterval);
@@ -170,6 +175,7 @@ class World {
     checkCollCharObjects() {
         this.level.collectableObjects.forEach((collectableObject) => {
             if(this.character.isColliding(collectableObject)) {
+                this.audioCollectThing.play();
                 if (collectableObject instanceof CollectableBottle) {
                     if (this.collectedBottles <= 10) {
                         this.collectedBottles++;
@@ -215,6 +221,7 @@ class World {
                     this.character.speedY < 0) { 
                         if (char.x + (char.width/2) > mo.x - tolerance/2 && char.x + (char.width/2) < mo.x + mo.width + tolerance/2) {
                             this.character.jump();
+                            this.audioChickenDead.play();
                             mo.loadImage(mo.IMAGE_DEAD);
                             setTimeout(() => {
                                 this.deleteFromCanvas(mo, this.level.enemies);
@@ -253,6 +260,7 @@ class World {
                     this.character.speedY < 0) { 
                         if (char.x + (char.width/2) > mo.x - tolerance*2 && char.x + (char.width/2) < mo.x + mo.width + tolerance*2) {
                             this.character.jump();
+                            this.audioChickenDead.play();
                             mo.loadImage(mo.IMAGE_DEAD);
                             setTimeout(() => {
                                 this.deleteFromCanvas(mo, this.level.enemies);
@@ -269,7 +277,7 @@ class World {
 
     collCharEndboss(char) {
         this.level.enemies.forEach((mo) => {
-            if (mo instanceof Endboss) {
+            if (mo instanceof Endboss && mo.energy > 20) {
                 if (char.y + 130 + char.height - 150 > mo.y + 10 &&
                     char.x + 30 + char.width - 70 > mo.x + 30
                 ) {

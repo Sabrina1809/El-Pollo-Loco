@@ -8,13 +8,17 @@ class Level {
     win;
     copyOfEnemies = [];
     copyOfCollectableObjects = [];
+    audioGame = document.getElementById('audio-game');
+    audioHome = document.getElementById('audio-home');
+    world;
 
     constructor(enemies, clouds, backgroundObjects, collectableObjects) {
         this.enemies = this.checkEnemies(enemies);
         this.collectableObjects = this.checkCollObj(collectableObjects);
         this.clouds = clouds;
         this.backgroundObjects = backgroundObjects;
-        this.checkWinOrLoose()
+        this.world = world;
+        this.checkWinOrLoose();
     }
 
     checkEnemies(enemies) {
@@ -53,14 +57,14 @@ class Level {
     }
 
     checkWinOrLoose() {
+        this.audioHome.pause();
+        this.audioHome.currentTime = 0;
+        this.audioGame.play();
         if (this.checkWinInterval) {
             clearInterval(this.checkWinInterval);
             world.level.win = undefined;
         }
         this.checkWinInterval = setInterval(() => {
-            console.log('EndbossX', world.level.enemies[world.level.enemies.length - 1].x, 'characterX', world.character.x);
-            // console.log('characterX', world.character.x);
-            
             if (world.level.win === true) {
                 this.handleWin();
                 clearInterval(world.level.checkWinInterval);
@@ -69,11 +73,14 @@ class Level {
                     world.character.sawEndboss = false;
                 },2000)
                 setTimeout(() => {
+                
+                }, 6000)
+                setTimeout(() => {
                     world.level.win = undefined;
                     world.keyboardActive = true;
                     world.level.enemies.forEach((enemy) => {
                         world.deleteFromCanvas(enemy, world.level.enemies)
-                    })
+                    });
                 },8000)
                 setTimeout(() => {
                     world.stopGame();
@@ -84,9 +91,10 @@ class Level {
                 setTimeout(() => {
                     world.keyboardActive = false;
                     world.character.sawEndboss = false;
-             
-                    // clearInterval(this.checkWinInterval);
                 },2000)
+                setTimeout(() => {
+                  
+                }, 6000)
                 setTimeout(() => {
                     world.level.win = undefined;
                     world.keyboardActive = true;
@@ -103,7 +111,8 @@ class Level {
     
     handleWin() {
         world.level.win = null;
-       
+        this.audioGame.pause();
+        this.audioGame.currentTime = 0;
         setTimeout(() => {
             world.character.jump();
             document.getElementById('overlay-messages').style.display = 'block';
@@ -112,8 +121,10 @@ class Level {
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-win').style.display = 'none';
-            // world.stopGame(world.intervalIds);
-            // world.level.enemies = [];
+            this.audioHome.volume = 0.5;
+            this.audioHome.play();
+           
+
         }, 8000);
     }
     
@@ -122,21 +133,16 @@ class Level {
         clearInterval(this.checkWinInterval);
         clearInterval(world.character.checkMoveInterval);
         clearInterval(world.character.checkAnimationInterval);
-        // console.log('checkwininterval', this.checkWinInterval);
-        // console.log('checvkmoveinterval', world.character.checkMoveInterval);
-        // console.log('checvkmoveinterval', world.character.checkAnimationInterval);
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'block';
             document.getElementById('img-msg-loose').style.display = 'block';
-         
-         
-            
+            this.audioGame.pause();
+            this.audioGame.currentTime = 0;
         }, 1000);
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-loose').style.display = 'none';
-            // world.stopGame();
-          
+            this.audioHome.play();
         }, 6000);
     }
 }
