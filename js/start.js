@@ -78,6 +78,7 @@ function showStartScreen() {
     document.getElementById('button-home').style.display = 'none';
     setTimeout(() => {
         document.getElementById('level-1-button').classList.remove('level-closed');
+        document.getElementById('level-2-button').classList.remove('level-closed');
     }, 2000)
 }
 
@@ -145,6 +146,14 @@ document.getElementById('level-1-button').addEventListener('click', function () 
     });
 });
 
+document.getElementById('level-2-button').addEventListener('click', function () {
+    document.getElementById('overlay-start').style.display = 'none';
+    document.getElementById('level-2-button').classList.add('level-closed');
+    loadGameScripts().then(() => {
+        init(level2);
+    });
+});
+
 document.getElementById("button-screen").addEventListener("click", toggleFullscreen);
 document.getElementById("button-screen").addEventListener("touchstart", toggleFullscreen);
 
@@ -198,6 +207,7 @@ async function loadGameScripts() {
             "./models/endboss.class.js",
             "./models/level.class.js",
             "./levels/level1.js",
+            "./levels/level2.js",
             "./models/world.class.js",
             "./models/keyboard.class.js",
             "./js/game.js"
