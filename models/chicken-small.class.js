@@ -31,7 +31,7 @@ class ChickenSmall extends Chicken {
         //     this.checkHit('img/3_enemies_chicken/chicken_small/2_dead/dead.png')
         // }, 100)
         // this.checkHit('img/3_enemies_chicken/chicken_small/2_dead/dead.png', 'chicken small')
-    console.log(this.currentLevel);
+    // console.log(this.currentLevel);
     
     }
 

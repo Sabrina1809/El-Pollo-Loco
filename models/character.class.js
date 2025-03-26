@@ -131,7 +131,10 @@ class Character extends MovableObject {
                     this.showWalking();
                 } else {
                     let active = JSON.parse(localStorage.getItem('polloLevelActive'));
-                    if (active == true) {
+                    // console.log(active);
+                    // console.log(this);
+                    
+                    if (active != null) {
                         this.showStanding();
                     }
                  

@@ -235,6 +235,7 @@ async function loadGameScripts() {
             "./models/level.class.js",
             "./levels/level1.js",
             "./levels/level2.js",
+            "./levels/level3.js",
             "./models/world.class.js",
             "./models/keyboard.class.js",
             "./js/game.js"

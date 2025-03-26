@@ -158,6 +158,7 @@ class Level {
     
     handleLose() {
         world.level.win = null;
+        localStorage.setItem('polloLevelActive', JSON.stringify(null));
         clearInterval(this.checkWinInterval);
         clearInterval(world.character.checkMoveInterval);
         clearInterval(world.character.checkAnimationInterval);
