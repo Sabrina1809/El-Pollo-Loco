@@ -5,7 +5,7 @@ class ChickenSmall extends Chicken {
     y = 370;
     speed = (Math.random()/2);
     speedY = 1.5;
-    
+    currentLevel;
 
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
@@ -24,13 +24,15 @@ class ChickenSmall extends Chicken {
             this.playAnimation(this.IMAGES_WALKING);
         this.acceleration = 0.8;
         let interval = this.fallingChicken();
+        this.currentLevel = JSON.parse(localStorage.getItem('polloLocoLevelActive'));
         // let hitInterval = setInterval(() => {
         //     console.log('hitInterval cheicken small', hitInterval);
             
         //     this.checkHit('img/3_enemies_chicken/chicken_small/2_dead/dead.png')
         // }, 100)
         // this.checkHit('img/3_enemies_chicken/chicken_small/2_dead/dead.png', 'chicken small')
-
+    console.log(this.currentLevel);
+    
     }
 
     fallingChicken() {

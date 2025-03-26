@@ -130,7 +130,11 @@ class Character extends MovableObject {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                     this.showWalking();
                 } else {
-                    this.showStanding();
+                    let active = JSON.parse(localStorage.getItem('polloLevelActive'));
+                    if (active == true) {
+                        this.showStanding();
+                    }
+                 
                 }
             }
         }, 100);   
@@ -243,16 +247,21 @@ class Character extends MovableObject {
     }
 
     increaseStandingTime() {
-        let standingInterval = setInterval(() => {
-            this.standing++
-        },1000)
-        let checkEndInterval = setInterval(() => {
-            if (world.level.win == true || this.world.level.win == false) {
-                this.standing = 0;
-                clearInterval(standingInterval)
-                clearInterval(checkEndInterval)
-            }
-        },200) 
+        let activeGame = JSON.parse(localStorage.getItem('polloLevelActive'));
+
+        if (activeGame !== null) {
+            let standingInterval = setInterval(() => {
+                this.standing++
+            },1000)
+            let checkEndInterval = setInterval(() => {
+                if (world.level.win == true || this.world.level.win == false) {
+                    this.standing = 0;
+                    clearInterval(standingInterval)
+                    clearInterval(checkEndInterval)
+                }
+            },200) 
+        }
+      
     }
 
     clearAllIntervals() {

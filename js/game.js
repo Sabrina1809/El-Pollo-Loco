@@ -14,7 +14,8 @@ homeButton.addEventListener('touchend', () => setTimeout(() => isTouch = false, 
 homeButton.addEventListener('click', () => {
     world.character.energy = 0;
     world.level.win = false;
-    document.getElementById('level-1-button').classList.add('level-closed');
+    localStorage.setItem('polloLevelActive', JSON.stringify(null));
+    // document.getElementById('level-1-button').classList.add('level-closed');
 })
 
 function canMoveRight() {

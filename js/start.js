@@ -6,6 +6,8 @@ const infoButton = document.getElementById('button-openinfo');
 const soundButton = document.getElementById('button-sound');
 const screenButton = document.getElementById('button-screen');
 let soundMuted = JSON.parse(localStorage.getItem('polloLocoMuted'));
+localStorage.setItem('polloLevel1Open', JSON.stringify(true));
+localStorage.setItem('polloLevelActive', JSON.stringify(null));
 
 function checkOrientation() {
     let overlayRotate = document.getElementById('overlay-rotate');
@@ -77,10 +79,24 @@ function showStartScreen() {
     document.getElementById('overlay-start').style.display = 'block';
     document.getElementById('button-home').style.display = 'none';
     setTimeout(() => {
-        document.getElementById('level-1-button').classList.remove('level-closed');
-        document.getElementById('level-2-button').classList.remove('level-closed');
-    }, 2000)
+        checkOpenLevel();
+    }, 1000)
 }
+
+function checkOpenLevel() {
+    let level1Open = JSON.parse(localStorage.getItem('polloLevel1Open'));
+    let level2Open = JSON.parse(localStorage.getItem('polloLevel2Open'));
+    let level3Open = JSON.parse(localStorage.getItem('polloLevel3Open'));
+    if (level1Open == true) {
+        document.getElementById('level-1-button').classList.remove('level-closed');
+    }
+    if (level2Open == true) {
+        document.getElementById('level-2-button').classList.remove('level-closed');
+    }
+    if (level3Open == true) {
+        document.getElementById('level-3-button').classList.remove('level-closed');
+    }
+} 
 
 function hideStartScreen() {
     document.getElementById('overlay-start').style.display = 'none';
@@ -139,6 +155,7 @@ function openInfoDescription(descriptionID, arrowID) {
 }
 
 document.getElementById('level-1-button').addEventListener('click', function () {
+    localStorage.setItem('polloLevelActive', JSON.stringify(1));
     document.getElementById('overlay-start').style.display = 'none';
     document.getElementById('level-1-button').classList.add('level-closed');
     loadGameScripts().then(() => {
@@ -147,10 +164,20 @@ document.getElementById('level-1-button').addEventListener('click', function () 
 });
 
 document.getElementById('level-2-button').addEventListener('click', function () {
+    localStorage.setItem('polloLevelActive', JSON.stringify(2));
     document.getElementById('overlay-start').style.display = 'none';
     document.getElementById('level-2-button').classList.add('level-closed');
     loadGameScripts().then(() => {
         init(level2);
+    });
+});
+
+document.getElementById('level-3-button').addEventListener('click', function () {
+    localStorage.setItem('polloLevelActive', JSON.stringify(3));
+    document.getElementById('overlay-start').style.display = 'none';
+    document.getElementById('level-3-button').classList.add('level-closed');
+    loadGameScripts().then(() => {
+        init(level3);
     });
 });
 
@@ -245,6 +272,7 @@ function init(level) {
     world.character.lastHit = 0;
     world.level.win = undefined;
     level.checkWinOrLoose();
+
 }
 
 function checkEnemies(level) {

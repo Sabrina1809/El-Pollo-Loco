@@ -63,6 +63,7 @@ class Level {
         if (this.checkWinInterval) {
             clearInterval(this.checkWinInterval);
             world.level.win = undefined;
+          
         }
         this.checkWinInterval = setInterval(() => {
             if (world.level.win === true) {
@@ -108,8 +109,36 @@ class Level {
             }
         }, 200);
     }
+
+    saveWonLevel() {
+        let currentLevel = JSON.parse(localStorage.getItem('polloLevelActive'));
+        console.log(currentLevel);
+        if (currentLevel == 1) {
+            localStorage.setItem('polloLevel2Open', JSON.stringify(true));
+        }
+        if (currentLevel == 2) {
+            localStorage.setItem('polloLevel3Open', JSON.stringify(true));
+        }
+        localStorage.setItem('polloLevelActive', JSON.stringify(null));
+    }
+
+    checkOpenLevel() {
+        let level1Open = JSON.parse(localStorage.getItem('polloLevel1Open'));
+        let level2Open = JSON.parse(localStorage.getItem('polloLevel2Open'));
+        let level3Open = JSON.parse(localStorage.getItem('polloLevel3Open'));
+        if (level1Open == true) {
+            document.getElementById('level-1-button').classList.remove('level-closed');
+        }
+        if (level2Open == true) {
+            document.getElementById('level-2-button').classList.remove('level-closed');
+        }
+        if (level3Open == true) {
+            document.getElementById('level-3-button').classList.remove('level-closed');
+        }
+    } 
     
     handleWin() {
+        this.saveWonLevel()
         world.level.win = null;
         this.audioGame.pause();
         this.audioGame.currentTime = 0;
@@ -123,8 +152,7 @@ class Level {
             document.getElementById('img-msg-win').style.display = 'none';
             this.audioHome.volume = 0.5;
             this.audioHome.play();
-           
-
+            this.checkOpenLevel();
         }, 8000);
     }
     
@@ -143,6 +171,7 @@ class Level {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-loose').style.display = 'none';
             this.audioHome.play();
+            this.checkOpenLevel();
         }, 6000);
     }
 }
