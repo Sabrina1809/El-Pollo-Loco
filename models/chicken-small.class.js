@@ -18,21 +18,12 @@ class ChickenSmall extends Chicken {
     currentImage = 0;
 
     constructor() {
-        super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png')
-        // this.x = 800 + Math.random() * 1200;
+        super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
             this.playAnimation(this.IMAGES_WALKING);
         this.acceleration = 0.8;
         let interval = this.fallingChicken();
         this.currentLevel = JSON.parse(localStorage.getItem('polloLocoLevelActive'));
-        // let hitInterval = setInterval(() => {
-        //     console.log('hitInterval cheicken small', hitInterval);
-            
-        //     this.checkHit('img/3_enemies_chicken/chicken_small/2_dead/dead.png')
-        // }, 100)
-        // this.checkHit('img/3_enemies_chicken/chicken_small/2_dead/dead.png', 'chicken small')
-    // console.log(this.currentLevel);
-    
     }
 
     fallingChicken() {
