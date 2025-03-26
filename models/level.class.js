@@ -8,17 +8,19 @@ class Level {
     win;
     copyOfEnemies = [];
     copyOfCollectableObjects = [];
-    audioGame = new Audio ('audio/bgm-blues-guitar-loop-192099.mp3');
-    audioHome = new Audio ('audio/desert-sun-164212.mp3');
-    
+    audioGame = document.getElementById('audio-game');
+    audioHome = document.getElementById('audio-home');
+    world;
 
     constructor(enemies, clouds, backgroundObjects, collectableObjects) {
         this.enemies = this.checkEnemies(enemies);
         this.collectableObjects = this.checkCollObj(collectableObjects);
         this.clouds = clouds;
         this.backgroundObjects = backgroundObjects;
+        console.log(world);
+        // this.audioGame = world.allSounds[0];
+        this.world = world;
         this.checkWinOrLoose();
-        this.audioGame.volume = 0.5;
     }
 
     checkEnemies(enemies) {
@@ -57,6 +59,8 @@ class Level {
     }
 
     checkWinOrLoose() {
+        console.log(world);
+        // this.world.allSounds[0].play();
         this.audioHome.pause();
         this.audioHome.currentTime = 0;
         this.audioGame.play();

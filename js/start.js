@@ -5,7 +5,7 @@ let isTouch = false;
 const infoButton = document.getElementById('button-openinfo');
 const soundButton = document.getElementById('button-sound');
 const screenButton = document.getElementById('button-screen');
-let soundMuted = JSON.parse(localStorage.getItem('soundMuted')) || false;
+let soundMuted = JSON.parse(localStorage.getItem('soundMuted')) || true;
 
 function checkOrientation() {
     let overlayRotate = document.getElementById('overlay-rotate');
@@ -20,44 +20,68 @@ checkOrientation();
 
 window.addEventListener('resize', checkOrientation);
 
-soundButton.addEventListener('click', () => {
-    if (soundMuted) {
-        soundMuted = false;
-        localStorage.setItem('soundMuted', JSON.stringify(false));
-    } else {
-        soundMuted = true;
-        localStorage.setItem('soundMuted', JSON.stringify(true));
-    }
-    
-    updateSoundState();
-});
-
-// Funktion zum Aktualisieren des Sound-Zustands
-function updateSoundState() {
+function getSoundState() {
     console.log('soundMuted', soundMuted);
+        if (soundMuted) {
+            // world.allSounds.forEach(sound => sound.muted = true);
+            soundButton.classList.add('muted'); // Optional: Button-Styling ändern
+            document.getElementById('button-sound-img').src = 'img/buttons/icons8-kein-ton-50 (1).png';
+          
+        } else {
+            // world.allSounds.forEach(sound => sound.muted = false);
+            soundButton.classList.remove('muted');
+            document.getElementById('button-sound-img').src = 'img/buttons/icons8-hohe-lautstärke-50 (2).png';
+        }
     
-    let allSounds = document.querySelectorAll('audio');
-    console.log(allSounds);
-    
-    if (soundMuted) {
-        allSounds.forEach(sound => sound.muted = true);
-        soundButton.classList.add('muted'); // Optional: Button-Styling ändern
-        document.getElementById('button-sound-img').src = 'img/buttons/icons8-kein-ton-50 (1).png';
-    } else {
-        allSounds.forEach(sound => sound.muted = false);
-        soundButton.classList.remove('muted');
-          document.getElementById('button-sound-img').src = 'img/buttons/icons8-hohe-lautstärke-50 (2).png';
-    }
 }
 
-// Initialen Zustand aus dem Local Storage setzen
-updateSoundState();
+getSoundState();
+function soundOnOff() {
+    soundMuted = !soundMuted;
+    localStorage.setItem('soundMuted', JSON.stringify(soundMuted));
+    console.log('soundMuted', soundMuted);
+
+    document.getElementById('button-sound-img').src = soundMuted
+        ? 'img/buttons/icons8-kein-ton-50 (1).png'
+        : 'img/buttons/icons8-hohe-lautstärke-50 (2).png';
+
+    soundButton.classList.toggle('muted', soundMuted);
+
+    // Alle <audio> Elemente im Dokument finden und stumm/laut schalten
+    document.querySelectorAll('audio').forEach(audio => {
+        console.log(audio);
+        
+        audio.muted = soundMuted;
+    });
+
+    // Falls `world.allSounds` existiert, zusätzlich diese Sounds umschalten
+    if (world && world.allSounds) {
+        world.allSounds.forEach(sound => sound.muted = soundMuted);
+    }
+}
+// function soundOnOff() {
+//     if (soundMuted) {
+//         soundMuted = false;
+//         localStorage.setItem('soundMuted', JSON.stringify(false));
+//         console.log('soundMuted', soundMuted);
+//         console.log(world);
+//         document.getElementById('button-sound-img').src = 'img/buttons/icons8-hohe-lautstärke-50 (2).png';
+   
+//         soundButton.classList.add('muted');
+//     } else {
+//         soundMuted = true;
+//         localStorage.setItem('soundMuted', JSON.stringify(true));
+//         console.log('soundMuted', soundMuted);
+//         console.log(world);
+//         document.getElementById('button-sound-img').src = 'img/buttons/icons8-kein-ton-50 (1).png';
+//         soundButton.classList.remove('muted');
+       
+//     }
+// }
 
 function showStartScreen() {
     document.getElementById('overlay-start').style.display = 'block';
     document.getElementById('button-home').style.display = 'none';
-    // audioHomeScreen.play();
-    // audioHomeScreen.play();
     setTimeout(() => {
         document.getElementById('level-1-button').classList.remove('level-closed');
     }, 2000)
@@ -66,8 +90,6 @@ function hideStartScreen() {
     document.getElementById('overlay-start').style.display = 'none';
     document.getElementById('level-1-button').classList.add('level-closed');
     document.getElementById('button-home').style.display = 'flex';
-    // audioHomeScreen.pause();
-    // audioHomeScreen.currentTime = 0;
 }
 
 function handleTouchStart() {
@@ -85,11 +107,9 @@ function handleClick(event) {
 soundButton.addEventListener('touchstart', handleTouchStart);
 screenButton.addEventListener('touchstart', handleTouchStart);
 
-
 infoButton.addEventListener('click', handleInfoButtonToggle);
 soundButton.addEventListener('click', handleClick);
 screenButton.addEventListener('click', handleClick);
-
 
 soundButton.addEventListener('touchend', () => setTimeout(() => isTouch = false, 300));
 screenButton.addEventListener('touchend', () => setTimeout(() => isTouch = false, 300));
@@ -127,7 +147,8 @@ document.getElementById('level-1-button').addEventListener('click', function () 
     document.getElementById('level-1-button').classList.add('level-closed');
     loadGameScripts().then(() => {
         init(level1);
-       
+        console.log(world.allSounds);
+
     });
 });
 
@@ -210,19 +231,22 @@ function init(level) {
         document.getElementById('info-block').classList.remove('visible');
         document.getElementById('info-block').style.display = 'none';
     }
-    // audioHomeScreen.pause();
-    // audioHomeScreen.currentTime = 0;
-    // audioGame.play();
     document.getElementById('button-home').style.display = 'flex';
-
     canvas = document.getElementById('canvas');
     level.enemies = checkEnemies(level);
     level.collectableObjects = checkCollObj(level);
     level.win = undefined;
     world = new World(canvas, keyboard, level);
+    world.allSounds = [
+        new Audio ('audio/bgm-blues-guitar-loop-192099.mp3'),
+        new Audio ('audio/desert-sun-164212.mp3'),
+        new Audio('audio/retro-hurt-2-236675.mp3')
+    ]
+    level.world = world; 
     world.character.energy = 100;
     world.character.lastHit = 0;
     world.level.win = undefined;
+   
     level.checkWinOrLoose();
 }
 

@@ -8,9 +8,9 @@ class Character extends MovableObject {
     sawEndboss = false;
     world;
     currentImage = 0;
-    audioHit = new Audio('audio/retro-hurt-2-236675.mp3');
-    audioJump = new Audio('audio/cartoon-jump-6462.mp3');
-    audioDie = new Audio('audio/videogame-death-sound-43894.mp3');
+    audioHit = document.getElementById('audio-pepe-hit');
+    audioJump = document.getElementById('audio-pepe-jump');
+    audioDie = document.getElementById('audio-pepe-die');
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',

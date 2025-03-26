@@ -80,7 +80,7 @@
                         <img id="img-fullscreen" class="img-screen" src="img/buttons/icons8-design-65.png" alt="Fullscreen">
                         <img id="img-smallscreen" class="img-screen" src="img/buttons/icons8-steuern-65.png" alt="small screen">
                     </div>
-                    <div id="button-sound" class="button button-sound">
+                    <div onclick="soundOnOff()" id="button-sound" class="button button-sound">
                         <img id="button-sound-img" src="img/buttons/icons8-kein-ton-50 (1).png" alt="Sound off">
                     </div>
                     <div id="button-openinfo" class="button button-openinfo closed">
@@ -103,7 +103,11 @@
         </div>
     </div>
   
-
+    <audio id="audio-game" src="audio/bgm-blues-guitar-loop-192099.mp3" loop muted></audio>
+    <audio id="audio-home" src="audio/desert-sun-164212.mp3" loop muted></audio>
+    <audio id="audio-pepe-hit" src="audio/retro-hurt-2-236675.mp3" muted></audio>
+    <audio id="audio-pepe-jump" src="audio/cartoon-jump-6462.mp3" muted></audio>
+    <audio id="audio-pepe-die" src="audio/videogame-death-sound-43894.mp3" muted></audio>
     </body>
     <script src="./js/start.js"></script>
     <!-- <script src="./models/drawable-object.class.js"></script>

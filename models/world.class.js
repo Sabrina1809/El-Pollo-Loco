@@ -15,17 +15,21 @@ class World {
     collectedCoins = 0;
     intervalIds = [];
     keyboardActive = true; // Neue Variable zur Sperrung der Eingaben
-  
+    allSounds = [
+      
+    ];
 
     constructor(canvas, keyboard, level) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.level = level;
+           this.level = level;
         this.draw();
         this.setWorld();
         this.run();
-        this.level.win = undefined;         
+        this.level.win = undefined;    
+        console.log(this.allSounds);
+   
     }
 
     lockKeyboard() {
