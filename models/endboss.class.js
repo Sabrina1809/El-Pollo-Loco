@@ -8,7 +8,9 @@ class Endboss extends MovableObject {
     hit = false;
     energy = 100;     
     intervals = [];
-    audioDie = new Audio('audio/you-win-sequence-1-183948.mp3');
+    audioDie = document.getElementById('audio-dead-endboss');
+    audioEndbossHit = document.getElementById('audio-hit-endboss');
+    audioBrokenBottle = document.getElementById('audio-broken-bottle');
 
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -101,6 +103,10 @@ class Endboss extends MovableObject {
         this.energy -= 20;
         this.hit = false;
         this.showEndbossHurt();
+        // this.audioBrokenBottle.play();
+        setTimeout(() => {
+            this.audioEndbossHit.play();
+        },300)
         this.showEndbossWalk();
         this.showEndbossAttack();
     }

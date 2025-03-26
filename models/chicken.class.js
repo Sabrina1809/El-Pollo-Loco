@@ -5,6 +5,7 @@ class Chicken extends MovableObject {
     width = 80;
     speed = (Math.random() + 0.25);
     dead = false;
+    audioChickenDead = document.getElementById('audio-chicken-dead');
     
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
@@ -45,7 +46,9 @@ class Chicken extends MovableObject {
             }
         }, 100)
         let clearHitInterval = setInterval(() => {
+            
             if (this.dead == true) {
+                this.audioChickenDead.play();
                 clearInterval(hitInterval)
                 clearInterval(clearHitInterval)
                 return

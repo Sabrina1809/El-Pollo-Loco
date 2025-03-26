@@ -11,6 +11,8 @@ class Character extends MovableObject {
     audioHit = document.getElementById('audio-pepe-hit');
     audioJump = document.getElementById('audio-pepe-jump');
     audioDie = document.getElementById('audio-pepe-die');
+    audioSeeEndboss = document.getElementById('audio-see-endboss');
+    audioCharSleeping = document.getElementById('audio-snore');
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -142,6 +144,7 @@ class Character extends MovableObject {
         }
         if (this.standing > 10) {
             this.playAnimation(this.IMAGES_SLEEPING);
+            this.audioCharSleeping.play();
         }
     }
 
@@ -161,7 +164,7 @@ class Character extends MovableObject {
             clearInterval(checkAnimationInterval);
             world.level.win = undefined;
             clearInterval(world.level.enemies[world.level.enemies.length - 1].energyInterval)
-            console.log('energyInt', world.level.enemies[world.level.enemies.length - 1].energyInterval);
+            // console.log('energyInt', world.level.enemies[world.level.enemies.length - 1].energyInterval);
         }, 1500);
         setTimeout(() => {
             world.stopGame();
@@ -171,7 +174,6 @@ class Character extends MovableObject {
     }
 
     showHurt() {
-       
         this.playAnimation(this.IMAGES_HURT);
         this.standing = 0;
     }
@@ -192,7 +194,6 @@ class Character extends MovableObject {
 
     checkUp() {
         if (!this.isAboveGround() && this.world.keyboard.UP) {
-           
             this.jump();
             this.audioJump.play();
         }
@@ -224,6 +225,7 @@ class Character extends MovableObject {
         let findEndbossInterval = setInterval(() => {
             if (this.sawEndboss == false && this.x >= 1750) {
                 this.endbossRunsToCharacter();
+                this.audioSeeEndboss.play();
                 clearInterval(findEndbossInterval);
             }
         },100)

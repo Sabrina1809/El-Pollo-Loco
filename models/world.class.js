@@ -15,6 +15,9 @@ class World {
     collectedCoins = 0;
     intervalIds = [];
     keyboardActive = true; // Neue Variable zur Sperrung der Eingaben
+    audioChickenDead = document.getElementById('audio-chicken-dead');
+    audioCollectThing = document.getElementById('audio-collect');
+    // audioEndbossHit = document.getElementById('audio-hit-endboss');
 
     constructor(canvas, keyboard, level) {
         this.ctx = canvas.getContext('2d');
@@ -134,6 +137,7 @@ class World {
             ) {
                 this.level.enemies[this.level.enemies.length - 1].hit = true;
                 this.level.enemies[this.level.enemies.length - 1].checkEnergy();
+                // this.audioEndbossHit.play();
                 setTimeout(() => {
                     clearInterval(throwObjectInterval);
                 },1000);
@@ -152,6 +156,7 @@ class World {
             }
             enemy.deadInterval = setInterval(() => {
                 if (enemy.dead) {
+                    // this.audioChickenDead.play();
                     enemy.loadImage(enemy.IMAGE_DEAD);
                     clearInterval(enemy.deadInterval);
                     this.intervalIds = this.intervalIds.filter(id => id !== enemy.deadInterval);
@@ -170,6 +175,7 @@ class World {
     checkCollCharObjects() {
         this.level.collectableObjects.forEach((collectableObject) => {
             if(this.character.isColliding(collectableObject)) {
+                this.audioCollectThing.play();
                 if (collectableObject instanceof CollectableBottle) {
                     if (this.collectedBottles <= 10) {
                         this.collectedBottles++;
@@ -215,6 +221,7 @@ class World {
                     this.character.speedY < 0) { 
                         if (char.x + (char.width/2) > mo.x - tolerance/2 && char.x + (char.width/2) < mo.x + mo.width + tolerance/2) {
                             this.character.jump();
+                            this.audioChickenDead.play();
                             mo.loadImage(mo.IMAGE_DEAD);
                             setTimeout(() => {
                                 this.deleteFromCanvas(mo, this.level.enemies);
@@ -253,6 +260,7 @@ class World {
                     this.character.speedY < 0) { 
                         if (char.x + (char.width/2) > mo.x - tolerance*2 && char.x + (char.width/2) < mo.x + mo.width + tolerance*2) {
                             this.character.jump();
+                            this.audioChickenDead.play();
                             mo.loadImage(mo.IMAGE_DEAD);
                             setTimeout(() => {
                                 this.deleteFromCanvas(mo, this.level.enemies);
