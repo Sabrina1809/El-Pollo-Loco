@@ -66,7 +66,9 @@ class Level {
           
         }
         this.checkWinInterval = setInterval(() => {
+   
             if (world.level.win === true) {
+                // debugger;
                 this.handleWin();
                 clearInterval(world.level.checkWinInterval);
                 setTimeout(() => {
@@ -112,7 +114,7 @@ class Level {
 
     saveWonLevel() {
         let currentLevel = JSON.parse(localStorage.getItem('polloLevelActive'));
-        console.log(currentLevel);
+        // console.log(currentLevel);
         if (currentLevel == 1) {
             localStorage.setItem('polloLevel2Open', JSON.stringify(true));
         }
@@ -129,12 +131,16 @@ class Level {
         if (level1Open == true) {
             document.getElementById('level-1-button').classList.remove('level-closed');
         }
-        if (level2Open == true) {
-            document.getElementById('level-2-button').classList.remove('level-closed');
-        }
-        if (level3Open == true) {
-            document.getElementById('level-3-button').classList.remove('level-closed');
-        }
+        setTimeout(() => {
+            if (level2Open == true) {
+                document.getElementById('level-2-button').classList.remove('level-closed');
+            }
+        },300)
+        setTimeout(() => {
+            if (level3Open == true) {
+                document.getElementById('level-3-button').classList.remove('level-closed');
+            }
+        },600)
     } 
     
     handleWin() {
@@ -150,10 +156,16 @@ class Level {
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-win').style.display = 'none';
+            document.getElementById('level-1-button').classList.add('level-closed');
+            document.getElementById('level-2-button').classList.add('level-closed');
+            document.getElementById('level-3-button').classList.add('level-closed');
             this.audioHome.volume = 0.5;
             this.audioHome.play();
-            this.checkOpenLevel();
+            // this.checkOpenLevel();
         }, 8000);
+        setTimeout(() => {
+            this.checkOpenLevel();
+        }, 10000)
     }
     
     handleLose() {
@@ -171,8 +183,14 @@ class Level {
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-loose').style.display = 'none';
+            document.getElementById('level-1-button').classList.add('level-closed');
+            document.getElementById('level-2-button').classList.add('level-closed');
+            document.getElementById('level-3-button').classList.add('level-closed');
             this.audioHome.play();
-            this.checkOpenLevel();
+            // this.checkOpenLevel();
         }, 6000);
+        setTimeout(() => {
+            this.checkOpenLevel();
+        }, 8000)
     }
 }

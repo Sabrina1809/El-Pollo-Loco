@@ -62,6 +62,7 @@ class World {
         this.character.y = -200;
         this.character.clearAllIntervals();
         this.character.sawEndboss = false;
+        this.character.standing = 0;
     }
 
     resetEndboss() {
@@ -150,7 +151,7 @@ class World {
             if (enemy.deadInterval) {
                 clearInterval(enemy.deadInterval);
                 this.intervalIds = this.intervalIds.filter(id => id !== enemy.deadInterval);
-                console.log(this.intervalIds);
+                // console.log(this.intervalIds);
                 enemy.deadInterval = null;
                 enemy.dead = false;
             }

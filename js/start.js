@@ -80,7 +80,7 @@ function showStartScreen() {
     document.getElementById('button-home').style.display = 'none';
     setTimeout(() => {
         checkOpenLevel();
-    }, 1000)
+    }, 2000)
 }
 
 function checkOpenLevel() {
@@ -90,12 +90,16 @@ function checkOpenLevel() {
     if (level1Open == true) {
         document.getElementById('level-1-button').classList.remove('level-closed');
     }
-    if (level2Open == true) {
-        document.getElementById('level-2-button').classList.remove('level-closed');
-    }
-    if (level3Open == true) {
-        document.getElementById('level-3-button').classList.remove('level-closed');
-    }
+    setTimeout(() => {
+        if (level2Open == true) {
+            document.getElementById('level-2-button').classList.remove('level-closed');
+        }
+    },300)
+    setTimeout(() => {
+        if (level3Open == true) {
+            document.getElementById('level-3-button').classList.remove('level-closed');
+        }
+    },600)
 } 
 
 function hideStartScreen() {
@@ -258,6 +262,8 @@ function loadScript(src) {
 }
 
 function init(level) {
+    // console.log(level);
+    
     if (document.getElementById('info-block').classList.contains('visible')) {
         document.getElementById('info-block').classList.remove('visible');
         document.getElementById('info-block').style.display = 'none';
@@ -273,7 +279,8 @@ function init(level) {
     world.character.lastHit = 0;
     world.level.win = undefined;
     level.checkWinOrLoose();
-
+    console.log(level);
+    
 }
 
 function checkEnemies(level) {
@@ -285,6 +292,10 @@ function checkEnemies(level) {
     level.enemies = [];
     level.copyOfEnemies.forEach(enemy => {
         level.enemies.push(enemy)
+        if (enemy instanceof ChickenSmall) {
+           
+            enemy.fallingChicken()
+        }
     })
     return level.enemies
 } 

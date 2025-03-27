@@ -192,11 +192,27 @@ class Character extends MovableObject {
         }
     }
 
+    // checkRight() {
+    //     // console.log(this.world);
+        
+    //     if (this.world.keyboard.RIGHT && this.x < this.world.level.enemies[this.world.level.enemies.length - 1].x) {
+    //         console.log('this.x' ,this.x);
+    //         console.log('endboss.x' ,this.world.level.enemies[this.world.level.enemies.length - 1].x);
+            
+    //         this.otherDirection = false;
+    //         this.moveRight();
+    //     } 
+    // }
+
     checkRight() {
-        if (this.world.keyboard.RIGHT && this.x < this.world.level.enemies[this.world.level.enemies.length - 1].x) {
+        if (
+            this.world.keyboard.RIGHT && 
+            this.world.level.enemies.length > 0 && 
+            this.world.level.enemies[this.world.level.enemies.length - 1] // Sicherstellen, dass das Element existiert
+        ) {
             this.otherDirection = false;
             this.moveRight();
-        } 
+        }
     }
 
     checkUp() {
