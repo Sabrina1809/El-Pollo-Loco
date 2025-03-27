@@ -266,11 +266,16 @@ class Character extends MovableObject {
     }
 
     increaseStandingTime() {
-        let activeGame = JSON.parse(localStorage.getItem('polloLevelActive'));
+      
 
-        if (activeGame !== null) {
+      
             let standingInterval = setInterval(() => {
-                this.standing++
+                let activeGame = JSON.parse(localStorage.getItem('polloLevelActive'));
+                if (activeGame != null) {
+                    // console.log('standingTime', this.standing);
+                    // console.log('activeGame', activeGame);
+                    this.standing++
+                }
             },1000)
             let checkEndInterval = setInterval(() => {
                 if (world.level.win == true || this.world.level.win == false) {
@@ -281,7 +286,7 @@ class Character extends MovableObject {
             },200) 
         }
       
-    }
+   
 
     clearAllIntervals() {
         this.intervals.forEach((interval) => {
