@@ -85,8 +85,8 @@ body {
 h1 {
     font-size: 48px;
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    /* margin: 0 0 10px 0; */
-    margin-top: -50%;
+    position: absolute;
+    top: calc(50% - 310px);
 }
 
 #agu {
@@ -240,7 +240,7 @@ canvas {
                     display: none;
                     flex-direction: column;
                     padding: 5px 10px;
-
+                    font-size: 18px;
                     & a {
                         color: whitesmoke;
                     }
@@ -306,7 +306,10 @@ canvas {
         justify-content: center;
         align-items: center;
         gap: 10px;
-        font-size: 284x;
+        /* font-size: 284x; */
+        & p {
+            font-size: 20px;
+        }
 
         & .img-ctn {
             /* background-color: rgba(0, 0, 0, 0.75); */
