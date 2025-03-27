@@ -1,5 +1,4 @@
 class ThrowableObject extends MovableObject {
-
     currentImage = 0;
 
     IMAGES_THROWING = [
@@ -43,9 +42,7 @@ class ThrowableObject extends MovableObject {
     }
 
     throw(gravityInterval) {
-        
         this.speedY = 20;
-        // this.applyGravity();
         let xInterval = setInterval(() => {
             this.x += 8
         }, 1000/60)
@@ -74,21 +71,33 @@ class ThrowableObject extends MovableObject {
                 setTimeout(() => {
                     clearInterval(splashInterrval)
                 },1000)
-                this.speedY = 0;
-                this.speedX = 0;
-                this.x += 0;
-                this.y += 0;
-                if (world.level.enemies[i] instanceof Endboss) {
-                    this.width = this.width*1.075;
-                    this.height = this.height*1.075;
-                    world.level.enemies[i].hit = true;
-                    world.level.enemies[i].checkEnergy();
-                }
-                if (world.level.enemies[i] instanceof Chicken) {
-                    world.level.enemies[i].dead = true;
-                }
+                this.stopFlying();
+                this.hitEndboss(i)
+                this.hitChicken(i);
                 return 
             }
+        }
+    }
+
+    stopFlying() {
+        this.speedY = 0;
+        this.speedX = 0;
+        this.x += 0;
+        this.y += 0;
+    }
+
+    hitEndboss(i) {
+        if (world.level.enemies[i] instanceof Endboss) {
+            this.width = this.width*1.075;
+            this.height = this.height*1.075;
+            world.level.enemies[i].hit = true;
+            world.level.enemies[i].checkEnergy();
+        }
+    }
+
+    hitChicken(i) {
+        if (world.level.enemies[i] instanceof Chicken) {
+            world.level.enemies[i].dead = true;
         }
     }
 

@@ -26,12 +26,9 @@ function updateCanvasHeight() {
     document.documentElement.style.setProperty('--real-vh', `${window.innerHeight}px`);
 }
 
-// Höhe beim Laden setzen
 updateCanvasHeight();
 
-// Höhe bei Änderungen (z. B. Rotation) anpassen
 window.addEventListener('resize', updateCanvasHeight);
-
 
 function getSoundState() {
     if (soundMuted == null ) {
@@ -84,19 +81,16 @@ function showStartScreen() {
 }
 
 function checkOpenLevel() {
-    let level1Open = JSON.parse(localStorage.getItem('polloLevel1Open'));
-    let level2Open = JSON.parse(localStorage.getItem('polloLevel2Open'));
-    let level3Open = JSON.parse(localStorage.getItem('polloLevel3Open'));
-    if (level1Open == true) {
+    if (JSON.parse(localStorage.getItem('polloLevel1Open')) == true) {
         document.getElementById('level-1-button').classList.remove('level-closed');
     }
     setTimeout(() => {
-        if (level2Open == true) {
+        if (JSON.parse(localStorage.getItem('polloLevel2Open')) == true) {
             document.getElementById('level-2-button').classList.remove('level-closed');
         }
     },300)
     setTimeout(() => {
-        if (level3Open == true) {
+        if (JSON.parse(localStorage.getItem('polloLevel3Open')) == true) {
             document.getElementById('level-3-button').classList.remove('level-closed');
         }
     },600)
@@ -146,7 +140,6 @@ function handleInfoButtonToggle() {
 function openInfoDescription(descriptionID, arrowID) {
     let descrElement = document.getElementById(descriptionID);
     let arrowElement = document.getElementById(arrowID);
-
     if (descrElement.classList.contains('descr-visible')) {
         descrElement.classList.remove('descr-visible');
         descrElement.style.display = 'none';
@@ -190,7 +183,6 @@ document.getElementById("button-screen").addEventListener("touchstart", toggleFu
 
 function toggleFullscreen() {
     let fullscreenElement = document.getElementById("fullscreen");
-
     if (!document.fullscreenElement) {
         document.getElementById('img-fullscreen').style.display = 'none';
         document.getElementById('img-smallscreen').style.display = 'block';
@@ -262,8 +254,6 @@ function loadScript(src) {
 }
 
 function init(level) {
-    // console.log(level);
-    
     if (document.getElementById('info-block').classList.contains('visible')) {
         document.getElementById('info-block').classList.remove('visible');
         document.getElementById('info-block').style.display = 'none';
@@ -279,8 +269,6 @@ function init(level) {
     world.character.lastHit = 0;
     world.level.win = undefined;
     level.checkWinOrLoose();
-    // console.log(level);
-    
 }
 
 function checkEnemies(level) {
@@ -293,7 +281,6 @@ function checkEnemies(level) {
     level.copyOfEnemies.forEach(enemy => {
         level.enemies.push(enemy)
         if (enemy instanceof ChickenSmall) {
-           
             enemy.fallingChicken()
         }
     })

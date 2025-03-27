@@ -85,8 +85,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/3_jump/J-36.png'
     ]
 
-
-
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -98,32 +96,31 @@ class Character extends MovableObject {
         this.applyGravity();
         this.intervals = [];
         this.clearAllIntervals();
-        
-        this.hitSoundPlayed = false;  // Neue Variable für den Sound-Status
-        // this.jumpSoundPlayed = false;
+        this.hitSoundPlayed = false;
         let checkMoveInterval = setInterval(()=> {
             this.checkLeft();
             this.checkRight();
             this.checkUp();
             this.world.camera_x = -this.x + 60;
         }, 1000/60);
-    
         this.increaseStandingTime();
         this.firstTimeEndboss();
+        this.startAnimationInterval(checkMoveInterval);
+    }
     
+    startAnimationInterval(checkMoveInterval) {
         let checkAnimationInterval = setInterval(() => {            
             if (this.isDead()) {
                 this.showDead(checkAnimationInterval, checkMoveInterval);
             } else if (this.isHurt()) {
-                if (!this.hitSoundPlayed) {  // Prüfen, ob der Sound schon abgespielt wurde
+                if (!this.hitSoundPlayed) {
                     this.audioHit.play();
-                    this.hitSoundPlayed = true;  // Setze die Variable auf `true`
+                    this.hitSoundPlayed = true;
                     setTimeout(() => {
                         this.hitSoundPlayed = false;
-                    }, 850);  // Nach einer Sekunde zurücksetzen
+                    }, 850);
                 }
                 this.showHurt();
-              
             } else if (this.isAboveGround()) {
                 this.showJumping();
             } else {
@@ -131,18 +128,13 @@ class Character extends MovableObject {
                     this.showWalking();
                 } else {
                     let active = JSON.parse(localStorage.getItem('polloLevelActive'));
-                    // console.log(active);
-                    // console.log(this);
-                    
                     if (active != null) {
                         this.showStanding();
                     }
-                 
                 }
             }
         }, 100);   
     }
-    
 
     showStanding() {
         this.loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -170,8 +162,7 @@ class Character extends MovableObject {
         setTimeout(() => {
             clearInterval(checkAnimationInterval);
             world.level.win = undefined;
-            clearInterval(world.level.enemies[world.level.enemies.length - 1].energyInterval)
-            // console.log('energyInt', world.level.enemies[world.level.enemies.length - 1].energyInterval);
+            clearInterval(world.level.enemies[world.level.enemies.length - 1].energyInterval);
         }, 1500);
         setTimeout(() => {
             world.stopGame();
@@ -191,18 +182,6 @@ class Character extends MovableObject {
             this.moveLeft(this.speed);
         }
     }
-
-    // checkRight() {
-    //     // console.log(this.world);
-        
-    //     if (this.world.keyboard.RIGHT && this.x < this.world.level.enemies[this.world.level.enemies.length - 1].x) {
-    //         console.log('this.x' ,this.x);
-    //         console.log('endboss.x' ,this.world.level.enemies[this.world.level.enemies.length - 1].x);
-            
-    //         this.otherDirection = false;
-    //         this.moveRight();
-    //     } 
-    // }
 
     checkRight() {
         if (
@@ -266,14 +245,9 @@ class Character extends MovableObject {
     }
 
     increaseStandingTime() {
-      
-
-      
             let standingInterval = setInterval(() => {
                 let activeGame = JSON.parse(localStorage.getItem('polloLevelActive'));
                 if (activeGame != null) {
-                    // console.log('standingTime', this.standing);
-                    // console.log('activeGame', activeGame);
                     this.standing++
                 }
             },1000)
@@ -286,8 +260,6 @@ class Character extends MovableObject {
             },200) 
         }
       
-   
-
     clearAllIntervals() {
         this.intervals.forEach((interval) => {
             clearInterval(interval)

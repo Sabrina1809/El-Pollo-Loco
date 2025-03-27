@@ -17,8 +17,6 @@ class StatusBarEndboss extends DrawableObject {
         this.width = 200;
         this.height = 60;
         this.updateEndbossBar(this.IMAGES_STATUS_ENDBOSS[5]);
-       
-      
     }
 
     updateEndbossBar() {

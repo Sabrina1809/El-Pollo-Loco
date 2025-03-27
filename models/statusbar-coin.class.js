@@ -16,13 +16,11 @@ class StatusBarCoin extends DrawableObject {
         this.y = 60;
         this.width = 200;
         this.height = 60;
-        // this.setPercentage('0', this.IMAGES_STATUS_COINS);
         let intervalCoinBar = setInterval(() => {
             this.updateCoinBar()
         },200)
     }
     updateCoinBar() {
-        // console.log('collectedCoins:', world.collectedCoins);
         let coinBarIndex = this.checkCollectedImgIndex(world.collectedCoins);
         this.loadImage(this.IMAGES_STATUS_COINS[coinBarIndex]);
     }

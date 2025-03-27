@@ -4,7 +4,6 @@ class CollectableBottle extends DrawableObject {
     width = 80;
     height = 80;
     
-
     IMAGES_BOTTLES_GROUND = [
         'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',
         'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'        

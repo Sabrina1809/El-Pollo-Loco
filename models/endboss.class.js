@@ -103,7 +103,6 @@ class Endboss extends MovableObject {
         this.energy -= 20;
         this.hit = false;
         this.showEndbossHurt();
-        // this.audioBrokenBottle.play();
         setTimeout(() => {
             this.audioEndbossHit.play();
         },300)
@@ -179,6 +178,10 @@ class Endboss extends MovableObject {
         this.showEndbossHurt();
         this.showEndbossDie();
         this.showEndbossShrink();
+        this.startTimeouts();
+    }
+
+    startTimeouts() {
         setTimeout(() => {
             world.level.enemies.pop();
         },5000)

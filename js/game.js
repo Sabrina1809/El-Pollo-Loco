@@ -6,16 +6,15 @@ const keyMap = {
     40: 'DOWN',
     32: 'SPACE'
 };
+
 const homeButton = document.getElementById('button-home');
 homeButton.addEventListener('touchstart', handleTouchStart);
 homeButton.addEventListener('click', handleClick);
 homeButton.addEventListener('touchend', () => setTimeout(() => isTouch = false, 300));
-
 homeButton.addEventListener('click', () => {
     world.character.energy = 0;
     world.level.win = false;
     localStorage.setItem('polloLevelActive', JSON.stringify(null));
-    // document.getElementById('level-1-button').classList.add('level-closed');
 })
 
 function canMoveRight() {
@@ -47,12 +46,10 @@ function addTouchEvent(id, key) {
         if (key === 'RIGHT' && !canMoveRight()) return; 
         keyboard[key] = true;
     });
-
     button.addEventListener('touchend', (event) => {
         event.preventDefault();
         keyboard[key] = false;
     });
-
     button.addEventListener('touchcancel', (event) => {
         event.preventDefault();
         keyboard[key] = false;

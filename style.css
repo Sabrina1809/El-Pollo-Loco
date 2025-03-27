@@ -54,7 +54,6 @@
     border-radius: 10px;
 }
 
-
 * {
     margin: 0;
     padding: 0;
@@ -72,11 +71,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* background-image: url('img/5_background/backgroundGame.webp') ;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    backdrop-filter: grayscale(0.5); */
     font-family: 'Kelly Slab', Arial, Helvetica, sans-serif;
     position: relative;
     overflow: hidden;
@@ -115,8 +109,6 @@ h1 {
     background-size: cover;
     position: relative;
 }
-
-
 
 canvas {
     background-color: black;
@@ -169,11 +161,8 @@ canvas {
     height: 480px;
     border-radius: 20px;
     overflow: hidden;
-    /* top: 50%;
-    transform: translateY(calc(-50% + 29.5px)); */
     aspect-ratio: auto 720 / 480;
     & #overlay-game {
-        /* border: 2px solid white; */
         position: absolute;
         bottom: 0px;
         left: 20px;
@@ -194,7 +183,6 @@ canvas {
         }
     }
     & #overlay-settings {
-        /* border: 2px solid white; */
         position: absolute;
         bottom: 0px;
         left: 80px;
@@ -209,7 +197,6 @@ canvas {
         z-index: 95;
         & .info-block {
             height: fit-content;
-            /* max-height: calc(100vh - 100px); */
             width: -webkit-fill-available;
             padding-top: 10px;
             overflow-y: scroll;
@@ -251,7 +238,6 @@ canvas {
             display: flex;
             flex-direction: row;
             justify-content: center;
-            /* background-color: lightcoral; */
             & .button {
                 margin: 5px 10px;
                 aspect-ratio: 1/1;
@@ -306,13 +292,11 @@ canvas {
         justify-content: center;
         align-items: center;
         gap: 10px;
-        /* font-size: 284x; */
         & p {
             font-size: 20px;
         }
 
         & .img-ctn {
-            /* background-color: rgba(0, 0, 0, 0.75); */
             width: 180px;
             height: 180px;
             position: relative;
@@ -358,7 +342,6 @@ canvas {
         right: 0;
         bottom: 0;
         border-radius: 20px;
-        /* z-index: 10; */
         & .level-buttons {
             margin-top: 30px;
             position: absolute;
@@ -370,13 +353,11 @@ canvas {
             z-index: 100;
             & .level-button {
                 background-color: rgba(255, 255, 255, 0.75);
-                /* box-shadow: 0 0 5px black; */
                 border: 0.5px solid rgba(0, 0, 0, 0.5);
                 border-radius: 10px;
                 width: 100px;
                 max-width: 22%;
                 height: 60px;
-                /* overflow: hidden; */
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -396,7 +377,6 @@ canvas {
                     filter: drop-shadow(0 0 5px black);
                 }
             }
-          
         }
         & img {
             width: 100%;
@@ -480,11 +460,7 @@ canvas {
  
 }
 
-
 @media only screen and (max-height: 480px) {
-    /* h1 {
-        display: none;
-    }  */
     canvas {
         height: 100vh;
     }

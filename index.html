@@ -1,162 +1,139 @@
 <!DOCTYPE html>
 <html lang="de" translate="no">
-
     <head>
         <meta charset="utf-8">
         <title>El Pollo Loco</title>
         <link rel="stylesheet" type="text/css" href="style.css">
         <link rel="shortcut icon" href="/img/6_salsa_bottle/salsa_bottle.png" type="image/x-icon">
     </head>
-
     <body onload="showStartScreen()">
-    <div id="fullscreen">
-        <h1>El Pollo Loco</h1>
-        <canvas id="canvas" width="720" height="480"></canvas>
-        <div class="overlay-ctn">
-            <div id="overlay-game" class="overlay-game">
-                <div class="buttons-row-top">
-                    <div id="button-throw" class="button button-throw">
-                        <img src="img/buttons/icons8-wasserflasche-50 (1).png" alt="Flasche">
+        <div id="fullscreen">
+            <h1>El Pollo Loco</h1>
+            <canvas id="canvas" width="720" height="480"></canvas>
+            <div class="overlay-ctn">
+                <div id="overlay-game" class="overlay-game">
+                    <div class="buttons-row-top">
+                        <div id="button-throw" class="button button-throw">
+                            <img src="img/buttons/icons8-wasserflasche-50 (1).png" alt="Flasche">
+                        </div>
+                        <div id="button-left" class="button button-left">
+                            <img id="button-left-img" src="img/buttons/icons8-right-arrow-52.png" alt="Pfeil hoch">
+                        </div>
                     </div>
-                    <div id="button-left" class="button button-left">
-                        <img id="button-left-img" src="img/buttons/icons8-right-arrow-52.png" alt="Pfeil hoch">
+                    <div class="buttons-row-bottom">
+                        <div id="button-jump" class="button button-jump">
+                            <img id="button-jump-img" src="img/buttons/icons8-right-arrow-52.png" alt="Pfeil hoch">
+                        </div>
+                        <div id="button-right" class="button button-right">
+                            <img src="img/buttons/icons8-right-arrow-52.png" alt="Pfeil hoch">
+                        </div>
                     </div>
                 </div>
-                <div class="buttons-row-bottom">
-                    <div id="button-jump" class="button button-jump">
-                        <img id="button-jump-img" src="img/buttons/icons8-right-arrow-52.png" alt="Pfeil hoch">
+                <div id="overlay-start" class="overlay-start">
+                    <div class="level-buttons">
+                        <div class="level-button level-closed" id="level-1-button">
+                            <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
+                        </div>
+                        <div class="level-button level-closed" id="level-2-button">
+                            <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
+                            <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
+                        </div>
+                        <div class="level-button level-closed" id="level-3-button">
+                            <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
+                            <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
+                            <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
+                        </div>
                     </div>
-                    <div id="button-right" class="button button-right">
-                        <img src="img/buttons/icons8-right-arrow-52.png" alt="Pfeil hoch">
-                    </div>
+                    <img src="img/9_intro_outro_screens/start/startscreen_1.png" alt="El Pollo Loco Startscreen">               
                 </div>
-            </div>
-            <div id="overlay-start" class="overlay-start">
-                <div class="level-buttons">
-                    <div class="level-button level-closed" id="level-1-button">
-                        <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
-                    </div>
-                    <div class="level-button level-closed" id="level-2-button">
-                        <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
-                        <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
-                    </div>
-                    <div class="level-button level-closed" id="level-3-button">
-                        <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
-                        <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
-                        <img src="img/6_salsa_bottle/salsa_bottle.png" alt="Salsa Bottle">
-                    </div>
-                </div>
-                <img src="img/9_intro_outro_screens/start/startscreen_1.png" alt="El Pollo Loco Startscreen">               
-            </div>
-            <div id="overlay-settings" class="overlay-settings">
-                <div id="info-block" class="info-block">
-                    <div class="info-ctn info-keys-ctn">
-                        <div id="keys-headline" onclick="openInfoDescription('info-keys-description', 'img-arrow-keys')" class="info-headline">
-                            <h2 id="info-keys-title">Tastatur</h2>
-                            <img id="img-arrow-keys" src="img/buttons/icons8-pfeil-runter-24.png" alt=" Pfeil nach unten zum ausklappen">
-                        </div>
-                        <div id="info-keys-description" class="info-line">
-                            <div><b>li/re:</b> Preil li/re</div>
-                            <div><b>Sprung:</b> Pfeil hoch</div>
-                            <div><b>Wurf:</b> Leertaste</div>
-                        </div>
-                    </div>
-                    <div class="info-ctn info-story-ctn">
-                        <div id="story-headline" onclick="openInfoDescription('info-story-description', 'img-arrow-story')" class="info-headline">
-                            <h2 id="info-story-title">Story</h2>
-                            <img id="img-arrow-story" src="img/buttons/icons8-pfeil-runter-24.png" alt=" Pfeil nach unten zum ausklappen">
-                        </div>
-                        <div id="info-story-description" class="info-line">Unser Freund Pepe benötigt deine Hilfe. Erlegt zusammen die verrückt gewordenen und gefährlichen Hühnchen. Sammle Salsa Flaschen und werfe sie zum Angriff, sammle Münzen um dein Energielevel aufzufrischen. Auf geht's! Viel Erfolg.</div>
-                    </div>
-                    <div class="info-ctn info-impressum-ctn">
-                        <div id="impressum-headline" onclick="openInfoDescription('info-impressum-description', 'img-arrow-impressum')" class="info-headline">
-                            <h2 onclick="" id="info-impressum-title">Impressum</h2>
-                            <img id="img-arrow-impressum" src="img/buttons/icons8-pfeil-runter-24.png" alt=" Pfeil nach unten zum ausklappen">
-                        </div>
-                        <div id="info-impressum-description" class="info-line">Sabrina Fritz <br>Mühlmatt 54 <br>77723 Gengenbach <br>01741495568 <br> <a href="mailto:sabrina_Fritz@gmx.net">Sabrina_Fritz@gmx.net</a> <br>© 2025 Sabrina Fritz</div>
-                    </div>
-                    <div class="info-ctn info-other-ctn">
-                        <div id="other-headline" onclick="openInfoDescription('info-other-description', 'img-arrow-other')" class="info-headline">
-                            <h2 onclick="" id="info-other-title">Sonstiges</h2>
-                            <img id="img-arrow-other" src="img/buttons/icons8-pfeil-runter-24.png" alt=" Pfeil nach unten zum ausklappen">
-                        </div>
-                        <div id="info-other-description" class="info-line">
-                            <div>
-                                <b>Bilder</b> by DA, <a href="https://icons8.de/">Icons8</a> & ChatGPT
+                <div id="overlay-settings" class="overlay-settings">
+                    <div id="info-block" class="info-block">
+                        <div class="info-ctn info-keys-ctn">
+                            <div id="keys-headline" onclick="openInfoDescription('info-keys-description', 'img-arrow-keys')" class="info-headline">
+                                <h2 id="info-keys-title">Tastatur</h2>
+                                <img id="img-arrow-keys" src="img/buttons/icons8-pfeil-runter-24.png" alt=" Pfeil nach unten zum ausklappen">
                             </div>
-                            <div>
-                                <b>Sounds</b> by <a href="https://pixabay.com/">Pixabay</a>
-                            </div>
-                            <div>
-                                <b>Datenschutz: </b> Der Level-Fortschritt sowie die Sound Einstellung werden im local Storage auf deinem Gerät gespeichert - das ist alles.
+                            <div id="info-keys-description" class="info-line">
+                                <div><b>li/re:</b> Preil li/re</div>
+                                <div><b>Sprung:</b> Pfeil hoch</div>
+                                <div><b>Wurf:</b> Leertaste</div>
                             </div>
                         </div>
+                        <div class="info-ctn info-story-ctn">
+                            <div id="story-headline" onclick="openInfoDescription('info-story-description', 'img-arrow-story')" class="info-headline">
+                                <h2 id="info-story-title">Story</h2>
+                                <img id="img-arrow-story" src="img/buttons/icons8-pfeil-runter-24.png" alt=" Pfeil nach unten zum ausklappen">
+                            </div>
+                            <div id="info-story-description" class="info-line">Unser Freund Pepe benötigt deine Hilfe. Erlegt zusammen die verrückt gewordenen und gefährlichen Hühnchen. Sammle Salsa Flaschen und werfe sie zum Angriff, sammle Münzen um dein Energielevel aufzufrischen. Auf geht's! Viel Erfolg.</div>
+                        </div>
+                        <div class="info-ctn info-impressum-ctn">
+                            <div id="impressum-headline" onclick="openInfoDescription('info-impressum-description', 'img-arrow-impressum')" class="info-headline">
+                                <h2 onclick="" id="info-impressum-title">Impressum</h2>
+                                <img id="img-arrow-impressum" src="img/buttons/icons8-pfeil-runter-24.png" alt=" Pfeil nach unten zum ausklappen">
+                            </div>
+                            <div id="info-impressum-description" class="info-line">Sabrina Fritz <br>Mühlmatt 54 <br>77723 Gengenbach <br>01741495568 <br> <a href="mailto:sabrina_Fritz@gmx.net">Sabrina_Fritz@gmx.net</a> <br>© 2025 Sabrina Fritz</div>
+                        </div>
+                        <div class="info-ctn info-other-ctn">
+                            <div id="other-headline" onclick="openInfoDescription('info-other-description', 'img-arrow-other')" class="info-headline">
+                                <h2 onclick="" id="info-other-title">Sonstiges</h2>
+                                <img id="img-arrow-other" src="img/buttons/icons8-pfeil-runter-24.png" alt=" Pfeil nach unten zum ausklappen">
+                            </div>
+                            <div id="info-other-description" class="info-line">
+                                <div>
+                                    <b>Bilder</b> by DA, <a href="https://icons8.de/">Icons8</a> & ChatGPT
+                                </div>
+                                <div>
+                                    <b>Sounds</b> by <a href="https://pixabay.com/">Pixabay</a>
+                                </div>
+                                <div>
+                                    <b>Datenschutz: </b> Der Level-Fortschritt sowie die Sound Einstellung werden im local Storage auf deinem Gerät gespeichert - das ist alles.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-buttons">
+                        <div id="button-home" class="button button-home">
+                            <img src="img/buttons/icons8-zuhause-30.png" alt="Haus">
+                        </div>
+                        <div id="button-screen" class="button button-screen">
+                            <img id="img-fullscreen" class="img-screen" src="img/buttons/icons8-design-65.png" alt="Fullscreen">
+                            <img id="img-smallscreen" class="img-screen" src="img/buttons/icons8-steuern-65.png" alt="small screen">
+                        </div>
+                        <div onclick="soundOnOff()" id="button-sound" class="button button-sound">
+                            <img id="button-sound-img" src="img/buttons/icons8-kein-ton-50 (1).png" alt="Sound off">
+                        </div>
+                        <div id="button-openinfo" class="button button-openinfo closed">
+                            <img src="img/buttons/icons8-information-50 (1).png" alt="drei Punkte / mehr">
+                        </div>
                     </div>
                 </div>
-                <div class="settings-buttons">
-                    <div id="button-home" class="button button-home">
-                        <img src="img/buttons/icons8-zuhause-30.png" alt="Haus">
-                    </div>
-                    <div id="button-screen" class="button button-screen">
-                        <img id="img-fullscreen" class="img-screen" src="img/buttons/icons8-design-65.png" alt="Fullscreen">
-                        <img id="img-smallscreen" class="img-screen" src="img/buttons/icons8-steuern-65.png" alt="small screen">
-                    </div>
-                    <div onclick="soundOnOff()" id="button-sound" class="button button-sound">
-                        <img id="button-sound-img" src="img/buttons/icons8-kein-ton-50 (1).png" alt="Sound off">
-                    </div>
-                    <div id="button-openinfo" class="button button-openinfo closed">
-                        <img src="img/buttons/icons8-information-50 (1).png" alt="drei Punkte / mehr">
-                    </div>
+                <div id="overlay-messages" class="overlay-messages">
+                    <img id="img-msg-win" src="img/9_intro_outro_screens/win/win_2.png" alt="you win">
+                    <img id="img-msg-loose" src="img/9_intro_outro_screens/game_over/game over.png" alt="game over">
                 </div>
-            </div>
-            <div id="overlay-messages" class="overlay-messages">
-                <img id="img-msg-win" src="img/9_intro_outro_screens/win/win_2.png" alt="you win">
-                <img id="img-msg-loose" src="img/9_intro_outro_screens/game_over/game over.png" alt="game over">
-            </div>
-            <div id="overlay-rotate">
-                <div class="img-ctn">
-                    <img src="./img/buttons/icons8-up-right-64.png" alt="Pfeil Drehung">
-                    <div class="mobile-portrait"></div>
-                    <div class="mobile-landscape"></div>
+                <div id="overlay-rotate">
+                    <div class="img-ctn">
+                        <img src="./img/buttons/icons8-up-right-64.png" alt="Pfeil Drehung">
+                        <div class="mobile-portrait"></div>
+                        <div class="mobile-landscape"></div>
+                    </div>
+                    <p>Bitte halte dein Gerät in Querformat.</p>
                 </div>
-                <p>Bitte halte dein Gerät in Querformat.</p>
             </div>
         </div>
-    </div>
-  
-    <audio id="audio-game" src="audio/bgm-blues-guitar-loop-192099.mp3" loop muted></audio>
-    <audio id="audio-home" src="audio/desert-sun-164212.mp3" loop muted></audio>
-    <audio id="audio-pepe-hit" src="audio/retro-hurt-2-236675.mp3" muted></audio>
-    <audio id="audio-pepe-jump" src="audio/cartoon-jump-6462.mp3" muted></audio>
-    <audio id="audio-pepe-die" src="audio/videogame-death-sound-43894.mp3" muted></audio>
-    <audio id="audio-chicken-dead" src="audio/funny-sound-effect-for-quotjack-in-the-boxquot-sound-ver1-110923.mp3" muted></audio>
-    <audio id="audio-see-endboss" src="audio/horror-warning-230511.mp3" muted></audio>
-    <audio id="audio-hit-endboss" src="audio/chicken-single-alarm-call-6056.mp3" muted></audio>
-    <audio id="audio-dead-endboss" src="audio/you-win-sequence-1-183948.mp3" muted></audio>
-    <audio id="audio-broken-bottle" src="audio/broken-bottle-191998.mp3" muted></audio>
-    <audio id="audio-throw-bottle" src="audio/fireball-whoosh-1-179125.mp3" muted></audio>
-    <audio id="audio-collect" src="audio/notify-9-310747.mp3" muted></audio>
-    <audio id="audio-snore" src="audio/human-snore-type-3-265474.mp3" muted></audio>
+        <audio id="audio-game" src="audio/bgm-blues-guitar-loop-192099.mp3" loop muted></audio>
+        <audio id="audio-home" src="audio/desert-sun-164212.mp3" loop muted></audio>
+        <audio id="audio-pepe-hit" src="audio/retro-hurt-2-236675.mp3" muted></audio>
+        <audio id="audio-pepe-jump" src="audio/cartoon-jump-6462.mp3" muted></audio>
+        <audio id="audio-pepe-die" src="audio/videogame-death-sound-43894.mp3" muted></audio>
+        <audio id="audio-chicken-dead" src="audio/funny-sound-effect-for-quotjack-in-the-boxquot-sound-ver1-110923.mp3" muted></audio>
+        <audio id="audio-see-endboss" src="audio/horror-warning-230511.mp3" muted></audio>
+        <audio id="audio-hit-endboss" src="audio/chicken-single-alarm-call-6056.mp3" muted></audio>
+        <audio id="audio-dead-endboss" src="audio/you-win-sequence-1-183948.mp3" muted></audio>
+        <audio id="audio-broken-bottle" src="audio/broken-bottle-191998.mp3" muted></audio>
+        <audio id="audio-throw-bottle" src="audio/fireball-whoosh-1-179125.mp3" muted></audio>
+        <audio id="audio-collect" src="audio/notify-9-310747.mp3" muted></audio>
+        <audio id="audio-snore" src="audio/human-snore-type-3-265474.mp3" muted></audio>
     </body>
     <script src="./js/start.js"></script>
-    <!-- <script src="./models/drawable-object.class.js"></script>
-    <script src="./models/statusbar-health.class.js"></script>
-    <script src="./models/statusbar-bottle.class.js"></script>
-    <script src="./models/statusbar-coin.class.js"></script>
-    <script src="./models/statusbar-endboss.class.js"></script>
-    <script src="./models/movable-object.class.js"></script>
-    <script src="./models/throwable-object.class.js"></script>
-    <script src="./models/collectable-bottle.class.js"></script>
-    <script src="./models/collectable-coin.class.js"></script>
-    <script src="./models/character.class.js"></script>
-    <script src="./models/chicken.class.js"></script>
-    <script src="./models/chicken-small.class.js"></script>
-    <script src="./models/cloud.class.js"></script>
-    <script src="./models/background-object.class.js"></script>
-    <script src="./models/endboss.class.js"></script>
-    <script src="./models/level.class.js"></script>
-    <script src="./levels/level1.js"></script>
-    <script src="./models/world.class.js"></script>
-    <script src="./models/keyboard.class.js"></script>
-    <script src="./js/game.js"></script> -->
 </html>

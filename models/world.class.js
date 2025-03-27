@@ -14,21 +14,19 @@ class World {
     collectedBottles = 0;
     collectedCoins = 0;
     intervalIds = [];
-    keyboardActive = true; // Neue Variable zur Sperrung der Eingaben
+    keyboardActive = true;
     audioChickenDead = document.getElementById('audio-chicken-dead');
     audioCollectThing = document.getElementById('audio-collect');
-    // audioEndbossHit = document.getElementById('audio-hit-endboss');
 
     constructor(canvas, keyboard, level) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-           this.level = level;
+        this.level = level;
         this.draw();
         this.setWorld();
         this.run();
         this.level.win = undefined;   
-   
     }
 
     lockKeyboard() {
@@ -90,10 +88,8 @@ class World {
         world.character.intervals.forEach(id => clearInterval(id));
         world.character.intervals = [];
         if (world.level.enemies.length > 0 && world.level.enemies[world.level.enemies.length - 1] instanceof Endboss) {
-            // console.log( world.level.enemies[world.level.enemies.length - 1].intervals);
             world.level.enemies[world.level.enemies.length - 1].intervals.forEach(clearInterval);
             world.level.enemies[world.level.enemies.length - 1].intervals = [];
-            // console.log( world.level.enemies[world.level.enemies.length - 1].intervals);
         }        
     }
 
@@ -125,9 +121,7 @@ class World {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
             this.collectedBottles--;
-            // let hitEndbossIntervall = setInterval(() => {
-                this.collBottleEndboss(bottle, this.level.enemies[this.level.enemies.length - 1], throwObjectInterval);
-            // },300)
+            this.collBottleEndboss(bottle, this.level.enemies[this.level.enemies.length - 1], throwObjectInterval);
         }
     }
 
@@ -138,7 +132,6 @@ class World {
             ) {
                 this.level.enemies[this.level.enemies.length - 1].hit = true;
                 this.level.enemies[this.level.enemies.length - 1].checkEnergy();
-                // this.audioEndbossHit.play();
                 setTimeout(() => {
                     clearInterval(throwObjectInterval);
                 },1000);
@@ -148,29 +141,35 @@ class World {
     
     enemyDead() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy.deadInterval) {
-                clearInterval(enemy.deadInterval);
-                this.intervalIds = this.intervalIds.filter(id => id !== enemy.deadInterval);
-                // console.log(this.intervalIds);
-                enemy.deadInterval = null;
-                enemy.dead = false;
-            }
+            this.checkExistingInterval(enemy)
             enemy.deadInterval = setInterval(() => {
-                if (enemy.dead) {
-                    // this.audioChickenDead.play();
-                    enemy.loadImage(enemy.IMAGE_DEAD);
-                    clearInterval(enemy.deadInterval);
-                    this.intervalIds = this.intervalIds.filter(id => id !== enemy.deadInterval);
-                    enemy.deadInterval = null;
-                    setTimeout(() => {
-                        this.deleteFromCanvas(enemy, this.level.enemies);
-                    }, 600);
-                    return this.intervalIds
-                }
+                this.newInterval(enemy);
             }, 100);
             this.intervalIds.push(enemy.deadInterval);
             return this.intervalIds
         });
+    }
+
+    checkExistingInterval(enemy) {
+        if (enemy.deadInterval) {
+            clearInterval(enemy.deadInterval);
+            this.intervalIds = this.intervalIds.filter(id => id !== enemy.deadInterval);
+            enemy.deadInterval = null;
+            enemy.dead = false;
+        }
+    }
+
+    newInterval(enemy) {
+        if (enemy.dead) {
+            enemy.loadImage(enemy.IMAGE_DEAD);
+            clearInterval(enemy.deadInterval);
+            this.intervalIds = this.intervalIds.filter(id => id !== enemy.deadInterval);
+            enemy.deadInterval = null;
+            setTimeout(() => {
+                this.deleteFromCanvas(enemy, this.level.enemies);
+            }, 600);
+            return this.intervalIds
+        }
     }
 
     checkCollCharObjects() {
@@ -178,23 +177,31 @@ class World {
             if(this.character.isColliding(collectableObject)) {
                 this.audioCollectThing.play();
                 if (collectableObject instanceof CollectableBottle) {
-                    if (this.collectedBottles <= 10) {
-                        this.collectedBottles++;
-                        this.deleteFromCanvas(collectableObject, this.level.collectableObjects)
-                    } 
+                    this.isBottle(collectableObject);
                 } 
                 if (collectableObject instanceof CollectableCoin) {
-                    if (this.collectedCoins < 9) {
-                        this.collectedCoins++;
-                        this.deleteFromCanvas(collectableObject, this.level.collectableObjects)
-                    } else if (this.collectedCoins >= 9) {
-                        this.collectedCoins = 0;
-                        this.deleteFromCanvas(collectableObject, this.level.collectableObjects)
-                        this.character.energy = 100;
-                    }
+                    this.isCoin(collectableObject);
                 }
             }
         })
+    }
+
+    isBottle(collectableObject) {
+        if (this.collectedBottles <= 10) {
+            this.collectedBottles++;
+            this.deleteFromCanvas(collectableObject, this.level.collectableObjects)
+        } 
+    }
+
+    isCoin(collectableObject) {
+        if (this.collectedCoins < 9) {
+            this.collectedCoins++;
+            this.deleteFromCanvas(collectableObject, this.level.collectableObjects)
+        } else if (this.collectedCoins >= 9) {
+            this.collectedCoins = 0;
+            this.deleteFromCanvas(collectableObject, this.level.collectableObjects)
+            this.character.energy = 100;
+        }
     }
 
     collCharChickenX(char) {
@@ -221,18 +228,22 @@ class World {
                     char.y + 130 + char.height - 150 < halfYOfMo && 
                     this.character.speedY < 0) { 
                         if (char.x + (char.width/2) > mo.x - tolerance/2 && char.x + (char.width/2) < mo.x + mo.width + tolerance/2) {
-                            this.character.jump();
-                            this.audioChickenDead.play();
-                            mo.loadImage(mo.IMAGE_DEAD);
-                            setTimeout(() => {
-                                this.deleteFromCanvas(mo, this.level.enemies);
-                                mo.dead = true;
-                                clearInterval(mo.hitInterval);
-                            }, 150)
+                            this.jumpOnChicken(mo);
                         }
                 } 
             }
         })
+    }
+
+    jumpOnChicken(mo) {
+        this.character.jump();
+        this.audioChickenDead.play();
+        mo.loadImage(mo.IMAGE_DEAD);
+        setTimeout(() => {
+            this.deleteFromCanvas(mo, this.level.enemies);
+            mo.dead = true;
+            clearInterval(mo.hitInterval);
+        }, 150)
     }
 
     collCharChickenSmallX(char) {
@@ -260,20 +271,23 @@ class World {
                     char.y + 130 + char.height - 150 < halfYOfMo && 
                     this.character.speedY < 0) { 
                         if (char.x + (char.width/2) > mo.x - tolerance*2 && char.x + (char.width/2) < mo.x + mo.width + tolerance*2) {
-                            this.character.jump();
-                            this.audioChickenDead.play();
-                            mo.loadImage(mo.IMAGE_DEAD);
-                            setTimeout(() => {
-                                this.deleteFromCanvas(mo, this.level.enemies);
-                                mo.dead = true;
-                                clearInterval(mo.hitInterval);
-                            }, 150)
+                            this.jumpOnChickenSmall(mo);
                         }
                       
                 }
             }
         })
-      
+    }
+
+    jumpOnChickenSmall(mo) {
+        this.character.jump();
+        this.audioChickenDead.play();
+        mo.loadImage(mo.IMAGE_DEAD);
+        setTimeout(() => {
+            this.deleteFromCanvas(mo, this.level.enemies);
+            mo.dead = true;
+            clearInterval(mo.hitInterval);
+        }, 150)
     }
 
     collCharEndboss(char) {
@@ -329,7 +343,6 @@ class World {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);   
-        // mo.drawFrame(this.ctx);
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }

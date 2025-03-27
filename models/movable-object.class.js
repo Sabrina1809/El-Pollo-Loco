@@ -1,5 +1,4 @@
 class MovableObject extends DrawableObject {
-    
     speed;
     otherDirection = false;
     speedY = 0.4;
@@ -16,14 +15,6 @@ class MovableObject extends DrawableObject {
         }, 1000/25)
     }
 
-    // isAboveGround() {
-    //     if (this instanceof ThrowableObject) {
-    //         return true
-    //     } else {
-    //         return this.y < 70;
-    //     }
-    // }
-
     isAboveGround() {
         if (this instanceof ThrowableObject) {
             return true;
@@ -31,7 +22,6 @@ class MovableObject extends DrawableObject {
             return this.y < 70;
         }
     }
-
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;

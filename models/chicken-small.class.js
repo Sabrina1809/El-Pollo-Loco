@@ -1,5 +1,4 @@
 class ChickenSmall extends Chicken {
-
     height = 60;
     width = 60;
     y = 370;
@@ -36,23 +35,20 @@ class ChickenSmall extends Chicken {
             }
             if (jumpingHeight == 3) {
                 this.y = 270;                
-                this.fallingInterval = setInterval(() => {
-                    if (this.y < 370) {
-                        this.y -= this.speedY;
-                        this.speedY -= this.acceleration; 
-                    } else {
-                        clearInterval(this.fallingInterval);
-                    }
-                }, 1000 / 25);
+                this.startFallingIntervall();
             }
-            this.fallingInterval = setInterval(() => {
-                if (this.y < 370) {
-                    this.y -= this.speedY;
-                    this.speedY -= this.acceleration; 
-                } else {
-                    clearInterval(this.fallingInterval);  
-                }
-            }, 1000 / 25);
+            this.startFallingIntervall();
         }, Math.random() * 10000);
+    }
+
+    startFallingIntervall() {
+        this.fallingInterval = setInterval(() => {
+            if (this.y < 370) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration; 
+            } else {
+                clearInterval(this.fallingInterval);  
+            }
+        }, 1000 / 25);
     }
 }

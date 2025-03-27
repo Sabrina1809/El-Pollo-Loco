@@ -7,11 +7,11 @@ class DrawableObject {
     height;
     id;
 
-
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
+
     draw(ctx) {
         try {
             ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
@@ -106,6 +106,7 @@ class DrawableObject {
             ctx.stroke();
         }
     }
+
     loadImages(array) {
         array.forEach((path) => {
             let img = new Image();
@@ -113,53 +114,36 @@ class DrawableObject {
             this.imageCache[path] = img;
         })
     }
-    isColliding(mo) {
 
+    checkCollEndboss(mo) {
         if (mo instanceof Endboss) {
             return this.x + 30 + this.width - 70 > mo.x + 20 &&
             this.y + 130 + this.height - 150 > mo.y + 60 &&
             this.x + 30 < mo.x + 20 &&
             this.y + 130 < mo.y + 100 + mo.height - 140;
         }
+    }
+
+    checkCollBottle(mo) {
         if (mo instanceof CollectableBottle) {
-            //mo.x + 35
-            //mo.width - 60
-            //mo.y + 10
-            //mo.height -20
-
-            //this.x + 30
-            //this.width -70
-            //this.y + 130
-            //this.height - 150
-
             if (this.x + 30 < mo.x + 35 && this.x + 30 + this.width - 70> mo.x + 30 &&
                 this.y + 130 < mo.y + 130 && this.y + 130 + this.height - 150 > mo.y + 10
             ) {
-                // console.log('character from left to bottle');
                 return true
             } else if (this.x + 30 > mo.x + 35 && this.x + 30 < mo.x + 35 + mo.width - 70 &&
                 this.y + 130 < mo.y + 10 && this.y + 130 + this.height -150 > mo.y + 10
             ) {
-                // console.log('character from right to bottle');
                 return true
             } else if (this.x + 30 < mo.x + 35 && this.x + 30 + this.width - 70 > mo.x + 35 + mo.width -60 &&
                 this.y + 130 < mo.y + 10 && this.y + 130 + this.height -150 > mo.y + 10
             ) {
-                // console.log('character from top to bottle');
                 return true
             }
         }
+    }
+
+    checkCollCoin(mo) {
         if (mo instanceof CollectableCoin) {
-            //mo.x + 35
-            //mo.width - 70
-            //mo.y + 35
-            //mo.height -70
-
-            //this.x + 30
-            //this.width -70
-            //this.y + 130
-            //this.height - 150
-
             if (this.x + 30 < mo.x + 35 && this.x + 30 + this.width - 70 > mo.x + 35 &&
                 this.y + 130 < mo.y + 35 + mo.height - 70 && this.y + 130 + this.height - 150 > mo.y + 35+ mo.height - 70
             ) {
@@ -175,6 +159,9 @@ class DrawableObject {
                 return true
             }
         }
-       return
     }
-}
+
+    isColliding(mo) {
+        return this.checkCollEndboss(mo) || this.checkCollBottle(mo) || this.checkCollCoin(mo);    
+    }
+}  

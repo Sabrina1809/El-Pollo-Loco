@@ -21,7 +21,6 @@ class Level {
         setTimeout(() => {
             this.checkWinOrLoose();
         },1000)
-       
     }
 
     checkEnemies(enemies) {
@@ -66,58 +65,57 @@ class Level {
         if (this.checkWinInterval) {
             clearInterval(this.checkWinInterval);
             world.level.win = undefined;
-          
         }
         this.checkWinInterval = setInterval(() => {
-   
-            if (world.level.win === true) {
-                // debugger;
-                this.handleWin();
-                clearInterval(world.level.checkWinInterval);
-                setTimeout(() => {
-                    world.keyboardActive = false;
-                    world.character.sawEndboss = false;
-                },2000)
-                setTimeout(() => {
-                
-                }, 6000)
-                setTimeout(() => {
-                    world.level.win = undefined;
-                    world.keyboardActive = true;
-                    world.level.enemies.forEach((enemy) => {
-                        world.deleteFromCanvas(enemy, world.level.enemies)
-                    });
-                },8000)
-                setTimeout(() => {
-                    world.stopGame();
-                   }, 9000)
-            } else if (world.level.win === false) {
-                this.handleLose();
-                clearInterval(world.level.checkWinInterval);
-                setTimeout(() => {
-                    world.keyboardActive = false;
-                    world.character.sawEndboss = false;
-                },2000)
-                setTimeout(() => {
-                  
-                }, 6000)
-                setTimeout(() => {
-                    world.level.win = undefined;
-                    world.keyboardActive = true;
-                    world.level.enemies.forEach((enemy) => {
-                        world.deleteFromCanvas(enemy, world.level.enemies)
-                    })
-                },8000)
-               setTimeout(() => {
-                world.stopGame();
-               }, 9000)
-            }
+            this.isLevelWin();
+            this.isLevelLost();
         }, 200);
+    }
+
+    isLevelWin() {
+        if (world.level.win === true) {
+            this.handleWin();
+            clearInterval(world.level.checkWinInterval);
+            setTimeout(() => {
+                world.keyboardActive = false;
+                world.character.sawEndboss = false;
+            },2000);
+            setTimeout(() => {
+                world.level.win = undefined;
+                world.keyboardActive = true;
+                world.level.enemies.forEach((enemy) => {
+                    world.deleteFromCanvas(enemy, world.level.enemies)
+                });
+            },8000)
+            setTimeout(() => {
+                world.stopGame();
+            }, 9000)
+        }
+    }
+
+    isLevelLost() {
+        if (world.level.win === false) {
+            this.handleLose();
+            clearInterval(world.level.checkWinInterval);
+            setTimeout(() => {
+                world.keyboardActive = false;
+                world.character.sawEndboss = false;
+            },2000);
+            setTimeout(() => {
+                world.level.win = undefined;
+                world.keyboardActive = true;
+                world.level.enemies.forEach((enemy) => {
+                    world.deleteFromCanvas(enemy, world.level.enemies)
+                })
+            },8000);
+           setTimeout(() => {
+            world.stopGame();
+           }, 9000)
+        }
     }
 
     saveWonLevel() {
         let currentLevel = JSON.parse(localStorage.getItem('polloLevelActive'));
-        // console.log(currentLevel);
         if (currentLevel == 1) {
             localStorage.setItem('polloLevel2Open', JSON.stringify(true));
         }
@@ -128,19 +126,16 @@ class Level {
     }
 
     checkOpenLevel() {
-        let level1Open = JSON.parse(localStorage.getItem('polloLevel1Open'));
-        let level2Open = JSON.parse(localStorage.getItem('polloLevel2Open'));
-        let level3Open = JSON.parse(localStorage.getItem('polloLevel3Open'));
-        if (level1Open == true) {
+        if (JSON.parse(localStorage.getItem('polloLevel1Open')) == true) {
             document.getElementById('level-1-button').classList.remove('level-closed');
         }
         setTimeout(() => {
-            if (level2Open == true) {
+            if (JSON.parse(localStorage.getItem('polloLevel2Open')) == true) {
                 document.getElementById('level-2-button').classList.remove('level-closed');
             }
         },300)
         setTimeout(() => {
-            if (level3Open == true) {
+            if (JSON.parse(localStorage.getItem('polloLevel3Open')) == true) {
                 document.getElementById('level-3-button').classList.remove('level-closed');
             }
         },600)
@@ -157,18 +152,20 @@ class Level {
             document.getElementById('img-msg-win').style.display = 'block';
         }, 3500);
         setTimeout(() => {
-            document.getElementById('overlay-messages').style.display = 'none';
-            document.getElementById('img-msg-win').style.display = 'none';
-            document.getElementById('level-1-button').classList.add('level-closed');
-            document.getElementById('level-2-button').classList.add('level-closed');
-            document.getElementById('level-3-button').classList.add('level-closed');
-            this.audioHome.volume = 0.5;
-            this.audioHome.play();
-            // this.checkOpenLevel();
+            this.prepareHomeScreen();
         }, 8000);
         setTimeout(() => {
             this.checkOpenLevel();
         }, 10000)
+    }
+
+    prepareHomeScreen() {
+        document.getElementById('overlay-messages').style.display = 'none';
+        document.getElementById('img-msg-win').style.display = 'none';
+        document.getElementById('level-1-button').classList.add('level-closed');
+        document.getElementById('level-2-button').classList.add('level-closed');
+        document.getElementById('level-3-button').classList.add('level-closed');
+        this.audioHome.play();
     }
     
     handleLose() {
@@ -184,13 +181,7 @@ class Level {
             this.audioGame.currentTime = 0;
         }, 1000);
         setTimeout(() => {
-            document.getElementById('overlay-messages').style.display = 'none';
-            document.getElementById('img-msg-loose').style.display = 'none';
-            document.getElementById('level-1-button').classList.add('level-closed');
-            document.getElementById('level-2-button').classList.add('level-closed');
-            document.getElementById('level-3-button').classList.add('level-closed');
-            this.audioHome.play();
-            // this.checkOpenLevel();
+            this.prepareHomeScreen();
         }, 6000);
         setTimeout(() => {
             this.checkOpenLevel();
