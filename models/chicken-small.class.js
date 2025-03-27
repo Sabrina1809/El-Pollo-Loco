@@ -28,7 +28,6 @@ class ChickenSmall extends Chicken {
     fallingChicken() {
         setTimeout(() => {
             let jumpingHeight = JSON.parse(localStorage.getItem('polloLevelActive'));
-            console.log(jumpingHeight);
             if (jumpingHeight == 1) {
                 this.y = 355;
             }

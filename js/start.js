@@ -279,7 +279,7 @@ function init(level) {
     world.character.lastHit = 0;
     world.level.win = undefined;
     level.checkWinOrLoose();
-    console.log(level);
+    // console.log(level);
     
 }
 

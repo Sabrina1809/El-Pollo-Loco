@@ -18,7 +18,10 @@ class Level {
         this.clouds = clouds;
         this.backgroundObjects = backgroundObjects;
         this.world = world;
-        this.checkWinOrLoose();
+        setTimeout(() => {
+            this.checkWinOrLoose();
+        },1000)
+       
     }
 
     checkEnemies(enemies) {
