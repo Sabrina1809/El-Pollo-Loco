@@ -1,3 +1,8 @@
+/**
+ * Represents the health status bar for the character in the game, showing the character's health progress.
+ * @class
+ * @extends DrawableObject
+ */
 class StatusBarHealth extends DrawableObject {
     IMAGES_HEALTH_CHARACTER = [
         'img/7_statusbars/1_statusbar/2_statusbar_health/orange/0.png',
@@ -8,6 +13,10 @@ class StatusBarHealth extends DrawableObject {
         'img/7_statusbars/1_statusbar/2_statusbar_health/orange/100.png',
     ];
 
+    /**
+     * Initializes the health status bar, sets its position, and starts an interval to update it.
+     * @constructor
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES_HEALTH_CHARACTER);
@@ -21,6 +30,10 @@ class StatusBarHealth extends DrawableObject {
         },200)
     }
 
+    /**
+     * Updates the health status bar image based on the character's current health.
+     * @returns {void}
+     */
     updateHealthBar() {
         let healthBarIndex = this.checkHealtImgIndex(world.character.energy);
         this.loadImage(this.IMAGES_HEALTH_CHARACTER[healthBarIndex]);

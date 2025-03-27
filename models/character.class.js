@@ -1,3 +1,9 @@
+/**
+ * Represents a character in the game.
+ * 
+ * The character can move, jump, get hurt, die, and interact with the environment and enemies.
+ * It also handles animations and sound effects based on the character's actions.
+ */
 class Character extends MovableObject {
     x = 60;
     y = -200;
@@ -85,6 +91,11 @@ class Character extends MovableObject {
         'img/2_character_pepe/3_jump/J-36.png'
     ]
 
+     /**
+     * Creates an instance of the character and initializes its properties.
+     * Loads the images for different actions (walking, jumping, etc.) and applies gravity.
+     * Starts the character's movement and animation logic.
+     */
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -108,6 +119,11 @@ class Character extends MovableObject {
         this.startAnimationInterval(checkMoveInterval);
     }
     
+    /**
+     * Starts an interval to check and update the character's animation based on its current state.
+     * Handles different states like dead, hurt, jumping, walking, and standing.
+     * @param {number} checkMoveInterval - The interval for checking the character's movement.
+     */
     startAnimationInterval(checkMoveInterval) {
         let checkAnimationInterval = setInterval(() => {            
             if (this.isDead()) {
@@ -136,6 +152,10 @@ class Character extends MovableObject {
         }, 100);   
     }
 
+    /**
+     * Displays the standing animation for the character.
+     * Changes the animation to tired or sleeping based on the standing time.
+     */
     showStanding() {
         this.loadImage('img/2_character_pepe/2_walk/W-21.png');
         if (this.standing > 1) {
@@ -147,16 +167,31 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Displays the walking animation for the character.
+     * Resets the standing time.
+     */
     showWalking() {
         this.playAnimation(this.IMAGES_WALKING);
         this.standing = 0;
     }
 
+    /**
+     * Displays the jumping animation for the character.
+     * Resets the standing time.
+     */
     showJumping() {
         this.playAnimation(this.IMAGES_JUMPING);
         this.standing = 0;
     }
 
+    /**
+     * Displays the dead animation for the character and handles cleanup.
+     * Stops relevant intervals and transitions to the home screen after a delay.
+     * 
+     * @param {number} checkAnimationInterval - The interval for checking the character's animation.
+     * @param {number} checkMoveInterval - The interval for checking the character's movement.
+     */
     showDead(checkAnimationInterval, checkMoveInterval) {
         this.animateCharactersDead();
         setTimeout(() => {
@@ -171,11 +206,19 @@ class Character extends MovableObject {
         }, 6000)
     }
 
+    /**
+     * Displays the hurt animation for the character.
+     * Resets the standing time to 0.
+     */
     showHurt() {
         this.playAnimation(this.IMAGES_HURT);
         this.standing = 0;
     }
 
+    /**
+     * Checks if the left arrow key is pressed and if the character is not too far left.
+     * Moves the character to the left if conditions are met.
+     */
     checkLeft() {
         if (this.world.keyboard.LEFT && this.x >= -500) {
             this.otherDirection = true;
@@ -183,6 +226,10 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Checks if the right arrow key is pressed, and if there are enemies in the level.
+     * Moves the character to the right if conditions are met.
+     */
     checkRight() {
         if (
             this.world.keyboard.RIGHT && 
@@ -194,6 +241,10 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Checks if the character is not above ground and the up arrow key is pressed.
+     * Triggers the jump action and plays the jump sound.
+     */
     checkUp() {
         if (!this.isAboveGround() && this.world.keyboard.UP) {
             this.jump();
@@ -201,6 +252,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Animates the character's death and plays the death sound.
+     */
     animateCharactersDead() {
         this.loadImage('img/2_character_pepe/2_walk/W-21.png');
         world.level.win = false;
@@ -215,6 +269,9 @@ class Character extends MovableObject {
         }, 1000);
     }
 
+    /**
+     * Displays the start overlay and resets the home button for the next level.
+     */    
     backToHomeScreen() {
         document.getElementById('overlay-start').style.display = 'block';
         document.getElementById('button-home').style.display = 'none';
@@ -223,6 +280,9 @@ class Character extends MovableObject {
         }, 2000)
     }
 
+    /**
+     * Triggers the endboss animation when the character reaches a specific position.
+     */
     firstTimeEndboss() {
         let findEndbossInterval = setInterval(() => {
             if (this.sawEndboss == false && this.x >= 1750) {
@@ -233,6 +293,9 @@ class Character extends MovableObject {
         },100)
     }
 
+    /**
+     * Moves the endboss towards the character and triggers its walking animation.
+     */
     endbossRunsToCharacter() {
         let endbossRunInterval = setInterval(() => {
             world.level.enemies[world.level.enemies.length - 1].x -=50;
@@ -244,22 +307,28 @@ class Character extends MovableObject {
         }, 1000)
     }
 
+    /**
+     * Increases standing time every second until the game ends.
+     */
     increaseStandingTime() {
-            let standingInterval = setInterval(() => {
-                let activeGame = JSON.parse(localStorage.getItem('polloLevelActive'));
-                if (activeGame != null) {
-                    this.standing++
-                }
-            },1000)
-            let checkEndInterval = setInterval(() => {
-                if (world.level.win == true || this.world.level.win == false) {
-                    this.standing = 0;
-                    clearInterval(standingInterval)
-                    clearInterval(checkEndInterval)
-                }
-            },200) 
-        }
+        let standingInterval = setInterval(() => {
+            let activeGame = JSON.parse(localStorage.getItem('polloLevelActive'));
+            if (activeGame != null) {
+                this.standing++
+            }
+        },1000)
+        let checkEndInterval = setInterval(() => {
+            if (world.level.win == true || this.world.level.win == false) {
+                this.standing = 0;
+                clearInterval(standingInterval)
+                clearInterval(checkEndInterval)
+            }
+        },200) 
+    }
       
+    /**
+     * Clears all intervals stored in `this.intervals`.
+     */
     clearAllIntervals() {
         this.intervals.forEach((interval) => {
             clearInterval(interval)

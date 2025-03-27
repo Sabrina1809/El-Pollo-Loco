@@ -1,3 +1,7 @@
+/**
+ * Represents the Endboss character in the game.
+ * Extends the MovableObject class and handles the behavior of the Endboss, including movement, animations, damage, and death.
+ */
 class Endboss extends MovableObject {
 
     x = 2000;
@@ -53,6 +57,9 @@ class Endboss extends MovableObject {
         'img/4_enemie_boss_chicken/1_walk/G4.png'
     ]
 
+    /**
+     * Initializes the Endboss with default properties and loads images.
+     */
     constructor() {
         super().loadImage('img/4_enemie_boss_chicken/2_alert/G5.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -67,16 +74,25 @@ class Endboss extends MovableObject {
         this.intervals.push(this.energyInterval)
     }
 
+    /**
+     * Clears all active intervals set for the Endboss.
+     */
     clearAllIntervals() {
         this.intervals.forEach(clearInterval);
         this.intervals = [];
     }
 
+    /**
+     * Checks the Endboss' current energy and triggers hurt or dead behavior accordingly.
+     */
     checkEnergy() {
         this.isEndbossHurt();
         this.isEndbossDead();
     }
 
+    /**
+     * Handles the hurt state of the Endboss when hit and reduces energy.
+     */
     isEndbossHurt() {
         if (this.hit == true && this.energy > 20) {
             this.endbossIsHurt();
@@ -86,6 +102,10 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Handles the death state of the Endboss when its energy is below or equal to 20.
+     * Stops the game and locks the keyboard.
+     */
     isEndbossDead() {
         if (this.hit == true && this.energy <= 20) {
             this.endbossIsDead();  
@@ -99,6 +119,9 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Applies the hurt animation and reduces the Endboss' energy.
+     */
     endbossIsHurt() {
         this.energy -= 20;
         this.hit = false;
@@ -110,6 +133,9 @@ class Endboss extends MovableObject {
         this.showEndbossAttack();
     }
 
+    /**
+     * Plays the hurt animation for the Endboss.
+     */
     showEndbossHurt() {
         let hurtInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_HURT);
@@ -119,6 +145,9 @@ class Endboss extends MovableObject {
         }, 1000);
     }
 
+    /**
+     * Handles the walking animation and movement of the Endboss.
+     */
     showEndbossWalk() {
         setTimeout(() => {
             let walkInterval = setInterval(() => {
@@ -133,6 +162,9 @@ class Endboss extends MovableObject {
         }, 1000)
     }
 
+    /**
+     * Handles the attack animation of the Endboss.
+     */
     showEndbossAttack() {
         setTimeout(() => {
             let attackInterval = setInterval(() => {
@@ -144,6 +176,9 @@ class Endboss extends MovableObject {
         }, 2000)
     }
 
+    /**
+     * Plays the death animation for the Endboss.
+     */
     showEndbossDie() {
         setTimeout(() => {
             let dieInterval = setInterval(() => {
@@ -155,6 +190,10 @@ class Endboss extends MovableObject {
         }, 1000);
     }
 
+    
+    /**
+     * Shrinks the Endboss and plays the death sound when it dies.
+     */
     showEndbossShrink() {
         setTimeout(() => {
             this.audioDie.play();
@@ -169,6 +208,9 @@ class Endboss extends MovableObject {
         }, 2500);
     }
 
+    /**
+     * Executes the death process for the Endboss, clearing intervals and playing animations.
+     */
     endbossIsDead() {
         this.energy -= 20;
         this.hit = false;
@@ -181,6 +223,9 @@ class Endboss extends MovableObject {
         this.startTimeouts();
     }
 
+    /**
+     * Starts the timeouts to handle post-death actions such as removing the Endboss and returning to the home screen.
+     */
     startTimeouts() {
         setTimeout(() => {
             world.level.enemies.pop();
@@ -194,6 +239,9 @@ class Endboss extends MovableObject {
         }, 8500)  
     }
     
+    /**
+     * Returns the player to the home screen after the Endboss is defeated.
+     */
     backToHomeScreen() {
         document.getElementById('overlay-start').style.display = 'block';
         document.getElementById('button-home').style.display = 'none';
@@ -201,7 +249,10 @@ class Endboss extends MovableObject {
             document.getElementById('level-1-button').classList.remove('level-closed');
         }, 2000);
     }
-         
+      
+    /**
+     * Starts the walking animation for the Endboss.
+     */
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);

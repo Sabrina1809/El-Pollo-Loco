@@ -1,3 +1,8 @@
+/**
+ * Represents the status bar for the endboss health in the game, showing the progress of the endboss' energy.
+ * @class
+ * @extends DrawableObject
+ */
 class StatusBarEndboss extends DrawableObject {
     IMAGES_STATUS_ENDBOSS = [
         'img/7_statusbars/2_statusbar_endboss/orange/orange0.png',
@@ -8,6 +13,10 @@ class StatusBarEndboss extends DrawableObject {
         'img/7_statusbars/2_statusbar_endboss/orange/orange100.png'
     ]
 
+    /**
+     * Initializes the endboss health status bar, sets its position, and starts an interval to update it.
+     * @constructor
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES_STATUS_ENDBOSS);
@@ -19,6 +28,10 @@ class StatusBarEndboss extends DrawableObject {
         this.updateEndbossBar(this.IMAGES_STATUS_ENDBOSS[5]);
     }
 
+    /**
+     * Updates the endboss status bar image based on the endboss' current health.
+     * @returns {void}
+     */
     updateEndbossBar() {
         setInterval(() => {      
             if (world.level.enemies[world.level.enemies.length - 1] instanceof Endboss) {

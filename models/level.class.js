@@ -1,3 +1,7 @@
+/**
+ * Represents the game level, including enemies, clouds, background objects, and collectable items.
+ * Handles level progression, win/lose conditions, and updates related to level status and saving progress.
+ */
 class Level {
     enemies;
     clouds;
@@ -12,6 +16,13 @@ class Level {
     audioHome = document.getElementById('audio-home');
     world;
 
+    /**
+     * Creates an instance of the Level class.
+     * @param {Array<Enemy>} enemies - Initial list of enemies in the level.
+     * @param {Array<Cloud>} clouds - List of clouds in the level.
+     * @param {Array<BackgroundObject>} backgroundObjects - List of background objects in the level.
+     * @param {Array<Collectable>} collectableObjects - List of collectable objects in the level.
+     */
     constructor(enemies, clouds, backgroundObjects, collectableObjects) {
         this.enemies = this.checkEnemies(enemies);
         this.collectableObjects = this.checkCollObj(collectableObjects);
@@ -23,6 +34,11 @@ class Level {
         },1000)
     }
 
+    /**
+     * Checks and returns the list of enemies, ensuring the copy is updated.
+     * @param {Array<Enemy>} enemies - List of enemies.
+     * @returns {Array<Enemy>} Updated list of enemies.
+     */
     checkEnemies(enemies) {
         if(this.copyOfEnemies.length == 0) {
             enemies.forEach(enemy => {
@@ -36,6 +52,11 @@ class Level {
         return this.enemies
     }
 
+    /**
+     * Checks and returns the list of collectable objects, ensuring the copy is updated.
+     * @param {Array<Collectable>} collectableObjects - List of collectable objects.
+     * @returns {Array<Collectable>} Updated list of collectable objects.
+     */
     checkCollObj(collectableObjects) {
         if (this.copyOfCollectableObjects.length == 0) {
             collectableObjects.forEach(collObj => {
@@ -49,6 +70,12 @@ class Level {
         return collectableObjects
     }
 
+    /**
+     * Saves the collectable objects if they are not already saved and returns the provided enemies and collectable objects.
+     * @param {Array} enemies - Array of enemy objects.
+     * @param {Array} collectableObjects - Array of collectable objects.
+     * @returns {Object} The enemies and collectableObjects arrays.
+     */
     checkSavedObjects(enemies, collectableObjects) {
         if(this.copyOfCollectableObjects.length == 0) {
             collectableObjects.forEach(object => {
@@ -58,6 +85,10 @@ class Level {
         return enemies, collectableObjects
     }
 
+    /**
+     * Checks if the player has won or lost the level.
+     * Plays appropriate sound and starts win/lose checking intervals.
+     */
     checkWinOrLoose() {
         this.audioHome.pause();
         this.audioHome.currentTime = 0;
@@ -72,6 +103,10 @@ class Level {
         }, 200);
     }
 
+    /**
+     * Checks if the level is won. If so, handles the win, stops the game, and resets certain game states.
+     * @returns {void}
+     */
     isLevelWin() {
         if (world.level.win === true) {
             this.handleWin();
@@ -93,6 +128,10 @@ class Level {
         }
     }
 
+    /**
+     * Checks if the level is lost. If so, handles the loss, stops the game, and resets certain game states.
+     * @returns {void}
+     */
     isLevelLost() {
         if (world.level.win === false) {
             this.handleLose();
@@ -114,6 +153,9 @@ class Level {
         }
     }
 
+    /**
+     * Saves the current level status in local storage when the level is won.
+     */
     saveWonLevel() {
         let currentLevel = JSON.parse(localStorage.getItem('polloLevelActive'));
         if (currentLevel == 1) {
@@ -125,6 +167,9 @@ class Level {
         localStorage.setItem('polloLevelActive', JSON.stringify(null));
     }
 
+    /**
+     * Checks which levels are open and updates the UI accordingly.
+     */
     checkOpenLevel() {
         if (JSON.parse(localStorage.getItem('polloLevel1Open')) == true) {
             document.getElementById('level-1-button').classList.remove('level-closed');
@@ -141,6 +186,9 @@ class Level {
         },600)
     } 
     
+    /**
+     * Handles actions when the level is won, including displaying win messages and saving level progress.
+     */
     handleWin() {
         this.saveWonLevel()
         world.level.win = null;
@@ -159,6 +207,9 @@ class Level {
         }, 10000)
     }
 
+    /**
+     * Prepares the home screen after a level is won, including resetting UI and playing home screen music.
+     */
     prepareHomeScreen() {
         document.getElementById('overlay-messages').style.display = 'none';
         document.getElementById('img-msg-win').style.display = 'none';
@@ -168,6 +219,9 @@ class Level {
         this.audioHome.play();
     }
     
+    /**
+     * Handles actions when the level is lost, including displaying lose messages and stopping the game.
+     */
     handleLose() {
         world.level.win = null;
         localStorage.setItem('polloLevelActive', JSON.stringify(null));

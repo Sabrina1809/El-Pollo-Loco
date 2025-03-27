@@ -17,6 +17,10 @@ homeButton.addEventListener('click', () => {
     localStorage.setItem('polloLevelActive', JSON.stringify(null));
 })
 
+/**
+ * Checks if the character can move to the right.
+ * @returns {boolean} True if the character can move right, otherwise false.
+ */
 function canMoveRight() {
     let lastEnemy = world.level.enemies[world.level.enemies.length - 1];
     if (lastEnemy) {
@@ -37,6 +41,11 @@ window.addEventListener('keyup', (event) => {
     if (key) keyboard[key] = false;
 });
 
+/**
+ * Adds touch event listeners to a button to simulate keyboard input.
+ * @param {string} id - The ID of the button element.
+ * @param {string} key - The corresponding keyboard key.
+ */
 function addTouchEvent(id, key) {
     let button = document.getElementById(id);
     if (!button) return;
