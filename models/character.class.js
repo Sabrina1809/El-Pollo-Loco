@@ -86,8 +86,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/3_jump/J-36.png'
     ]
 
-
-
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -99,13 +97,10 @@ class Character extends MovableObject {
         this.applyGravity();
         this.intervals = [];
         this.intervalCollection = [];
-        // this.clearAllIntervals();
         this.clearIntervalsWhenNotActive();
-        this.hitSoundPlayed = false;  // Neue Variable für den Sound-Status
-        // this.jumpSoundPlayed = false;
+        this.hitSoundPlayed = false;
         let checkMoveInterval = setInterval(()=> {
             console.log(checkMoveInterval, 'checkMoveInterval');
-            
             this.checkLeft();
             this.checkRight();
             this.checkUp();
@@ -118,23 +113,19 @@ class Character extends MovableObject {
         this.intervalCollection.push(this.checkMoveInterval);
         this.increaseStandingTime();
         this.firstTimeEndboss();
-    
         let checkAnimationInterval = setInterval(() => {  
             console.log(checkAnimationInterval, 'checkAnimationInterval');
-                      
             if (this.isDead()) {
                 this.showDead(checkAnimationInterval);
-                // this.clearAllIntervals()
             } else if (this.isHurt()) {
-                if (!this.hitSoundPlayed) {  // Prüfen, ob der Sound schon abgespielt wurde
+                if (!this.hitSoundPlayed) {
                     this.audioHit.play();
-                    this.hitSoundPlayed = true;  // Setze die Variable auf `true`
+                    this.hitSoundPlayed = true;
                     setTimeout(() => {
                         this.hitSoundPlayed = false;
-                    }, 850);  // Nach einer Sekunde zurücksetzen
+                    }, 850);
                 }
                 this.showHurt();
-              
             } else if (this.isAboveGround()) {
                 this.showJumping();
             } else {
@@ -142,13 +133,9 @@ class Character extends MovableObject {
                     this.showWalking();
                 } else {
                     let active = JSON.parse(localStorage.getItem('polloLevelActive'));
-                    // console.log(active);
-                    // console.log(this);
-                    
                     if (active != null) {
                         this.showStanding();
                     }
-                 
                 }
             }
             let active = JSON.parse(localStorage.getItem('polloLevelActive'));
@@ -156,7 +143,6 @@ class Character extends MovableObject {
                 setTimeout(() => {
                     clearInterval(checkAnimationInterval)
                 },2000)
-             
             }
         }, 100);
         this.intervalCollection.push(this.checkAnimationInterval)   
@@ -189,16 +175,10 @@ class Character extends MovableObject {
         setTimeout(() => {
             clearInterval(checkAnimationInterval);
             world.level.win = undefined;
-            clearInterval(world.level.enemies[world.level.enemies.length - 1].energyInterval)
-            // console.log('energyInt', world.level.enemies[world.level.enemies.length - 1].energyInterval);
+            clearInterval(world.level.enemies[world.level.enemies.length - 1].energyInterval);
         }, 1500);
         setTimeout(() => {
             world.stopGame();
-            // console.log('ckeckMove in showDead gelöscht', checkMoveInterval);
-
-            // clearInterval(checkMoveInterval);
-            // console.log('ckeckMove in showDead gelöscht', checkMoveInterval);
-            
             this.backToHomeScreen();
         }, 6000)
     }
@@ -246,9 +226,6 @@ class Character extends MovableObject {
     backToHomeScreen() {
         document.getElementById('overlay-start').style.display = 'block';
         document.getElementById('button-home').style.display = 'none';
-        setTimeout(() => {
-            document.getElementById('level-1-button').classList.remove('level-closed');
-        }, 2000)
     }
 
     firstTimeEndboss() {
@@ -267,7 +244,6 @@ class Character extends MovableObject {
                 clearInterval(findEndbossInterval)
             }
         },1000)
-        // this.intervalCollection.push(findEndbossInterval)
     }
 
     endbossRunsToCharacter() {

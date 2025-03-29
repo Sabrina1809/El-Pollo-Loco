@@ -18,7 +18,10 @@ class Level {
         this.clouds = clouds;
         this.backgroundObjects = backgroundObjects;
         this.world = world;
-        this.checkWinOrLoose();
+        setTimeout(() => {
+            this.checkWinOrLoose();
+        },1500)
+       
     }
 
     checkEnemies(enemies) {
@@ -63,7 +66,6 @@ class Level {
         if (this.checkWinInterval) {
             clearInterval(this.checkWinInterval);
             world.level.win = undefined;
-          
         }
         this.checkWinInterval = setInterval(() => {
             if (world.level.win === true) {
@@ -72,17 +74,14 @@ class Level {
                 setTimeout(() => {
                     world.keyboardActive = false;
                     world.character.sawEndboss = false;
-                },2000)
-                setTimeout(() => {
-                
-                }, 6000)
+                },2000);
                 setTimeout(() => {
                     world.level.win = undefined;
                     world.keyboardActive = true;
                     world.level.enemies.forEach((enemy) => {
                         world.deleteFromCanvas(enemy, world.level.enemies)
                     });
-                },8000)
+                },8000);
                 setTimeout(() => {
                     world.stopGame();
                    }, 9000)
@@ -92,10 +91,7 @@ class Level {
                 setTimeout(() => {
                     world.keyboardActive = false;
                     world.character.sawEndboss = false;
-                },2000)
-                setTimeout(() => {
-                  
-                }, 6000)
+                },2000);
                 setTimeout(() => {
                     world.level.win = undefined;
                     world.keyboardActive = true;
@@ -104,7 +100,7 @@ class Level {
                     })
                 },8000)
                setTimeout(() => {
-                world.stopGame();
+                    world.stopGame();
                }, 9000)
             }
         }, 200);
@@ -126,15 +122,17 @@ class Level {
         let level1Open = JSON.parse(localStorage.getItem('polloLevel1Open'));
         let level2Open = JSON.parse(localStorage.getItem('polloLevel2Open'));
         let level3Open = JSON.parse(localStorage.getItem('polloLevel3Open'));
-        if (level1Open == true) {
+        setTimeout(() => {
+            if (level1Open == true) {
             document.getElementById('level-1-button').classList.remove('level-closed');
-        }
-        if (level2Open == true) {
-            document.getElementById('level-2-button').classList.remove('level-closed');
-        }
-        if (level3Open == true) {
-            document.getElementById('level-3-button').classList.remove('level-closed');
-        }
+            }
+            if (level2Open == true) {
+                document.getElementById('level-2-button').classList.remove('level-closed');
+            }
+            if (level3Open == true) {
+                document.getElementById('level-3-button').classList.remove('level-closed');
+            }
+        },1000)    
     } 
     
     handleWin() {
@@ -150,10 +148,16 @@ class Level {
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-win').style.display = 'none';
+            document.getElementById('level-1-button').classList.add('level-closed');
+            document.getElementById('level-2-button').classList.add('level-closed');
+            document.getElementById('level-3-button').classList.add('level-closed');
             this.audioHome.volume = 0.5;
             this.audioHome.play();
-            this.checkOpenLevel();
+           
         }, 8000);
+        setTimeout(() => {
+            this.checkOpenLevel();
+        },10000)
     }
     
     handleLose() {
@@ -171,8 +175,14 @@ class Level {
         setTimeout(() => {
             document.getElementById('overlay-messages').style.display = 'none';
             document.getElementById('img-msg-loose').style.display = 'none';
+            document.getElementById('level-1-button').classList.add('level-closed');
+            document.getElementById('level-2-button').classList.add('level-closed');
+            document.getElementById('level-3-button').classList.add('level-closed');
             this.audioHome.play();
-            this.checkOpenLevel();
+           
         }, 6000);
+        setTimeout(() => {
+            this.checkOpenLevel();
+        },8000)
     }
 }

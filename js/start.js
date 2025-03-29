@@ -80,27 +80,31 @@ function showStartScreen() {
     document.getElementById('button-home').style.display = 'none';
     setTimeout(() => {
         checkOpenLevel();
-    }, 1000)
+    }, 2000)
 }
 
 function checkOpenLevel() {
     let level1Open = JSON.parse(localStorage.getItem('polloLevel1Open'));
     let level2Open = JSON.parse(localStorage.getItem('polloLevel2Open'));
     let level3Open = JSON.parse(localStorage.getItem('polloLevel3Open'));
-    if (level1Open == true) {
+    setTimeout(() => {
+        if (level1Open == true) {
         document.getElementById('level-1-button').classList.remove('level-closed');
-    }
-    if (level2Open == true) {
-        document.getElementById('level-2-button').classList.remove('level-closed');
-    }
-    if (level3Open == true) {
-        document.getElementById('level-3-button').classList.remove('level-closed');
-    }
+        }
+        if (level2Open == true) {
+            document.getElementById('level-2-button').classList.remove('level-closed');
+        }
+        if (level3Open == true) {
+            document.getElementById('level-3-button').classList.remove('level-closed');
+        }
+    },1000)    
 } 
 
 function hideStartScreen() {
     document.getElementById('overlay-start').style.display = 'none';
     document.getElementById('level-1-button').classList.add('level-closed');
+    document.getElementById('level-2-button').classList.add('level-closed');
+    document.getElementById('level-3-button').classList.add('level-closed');
     document.getElementById('button-home').style.display = 'flex';
 }
 
