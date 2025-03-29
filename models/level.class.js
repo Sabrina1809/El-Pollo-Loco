@@ -31,7 +31,7 @@ class Level {
         this.world = world;
         setTimeout(() => {
             this.checkWinOrLoose();
-        },1000)
+        },2000)
     }
 
     /**
