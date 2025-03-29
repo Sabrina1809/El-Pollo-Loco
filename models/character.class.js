@@ -231,14 +231,10 @@ class Character extends MovableObject {
      * Moves the character to the right if conditions are met.
      */
     checkRight() {
-        if (
-            this.world.keyboard.RIGHT && 
-            this.world.level.enemies.length > 0 && 
-            this.world.level.enemies[this.world.level.enemies.length - 1] // Sicherstellen, dass das Element existiert
-        ) {
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.enemies[this.world.level.enemies.length - 1].x) {
             this.otherDirection = false;
             this.moveRight();
-        }
+        } 
     }
 
     /**
