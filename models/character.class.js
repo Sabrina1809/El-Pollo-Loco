@@ -13,6 +13,7 @@ class Character extends MovableObject {
     audioDie = document.getElementById('audio-pepe-die');
     audioSeeEndboss = document.getElementById('audio-see-endboss');
     audioCharSleeping = document.getElementById('audio-snore');
+    intervalCollection = [];
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-21.png',
@@ -97,23 +98,33 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_SLEEPING);
         this.applyGravity();
         this.intervals = [];
-        this.clearAllIntervals();
-        
+        this.intervalCollection = [];
+        // this.clearAllIntervals();
+        this.clearIntervalsWhenNotActive();
         this.hitSoundPlayed = false;  // Neue Variable für den Sound-Status
         // this.jumpSoundPlayed = false;
         let checkMoveInterval = setInterval(()=> {
+            console.log(checkMoveInterval, 'checkMoveInterval');
+            
             this.checkLeft();
             this.checkRight();
             this.checkUp();
             this.world.camera_x = -this.x + 60;
+            let active = JSON.parse(localStorage.getItem('polloLevelActive'));
+            if (active == null) {
+                clearInterval(checkMoveInterval)
+            }
         }, 1000/60);
-    
+        this.intervalCollection.push(this.checkMoveInterval);
         this.increaseStandingTime();
         this.firstTimeEndboss();
     
-        let checkAnimationInterval = setInterval(() => {            
+        let checkAnimationInterval = setInterval(() => {  
+            console.log(checkAnimationInterval, 'checkAnimationInterval');
+                      
             if (this.isDead()) {
-                this.showDead(checkAnimationInterval, checkMoveInterval);
+                this.showDead(checkAnimationInterval);
+                // this.clearAllIntervals()
             } else if (this.isHurt()) {
                 if (!this.hitSoundPlayed) {  // Prüfen, ob der Sound schon abgespielt wurde
                     this.audioHit.play();
@@ -140,7 +151,15 @@ class Character extends MovableObject {
                  
                 }
             }
-        }, 100);   
+            let active = JSON.parse(localStorage.getItem('polloLevelActive'));
+            if (active == null) {
+                setTimeout(() => {
+                    clearInterval(checkAnimationInterval)
+                },2000)
+             
+            }
+        }, 100);
+        this.intervalCollection.push(this.checkAnimationInterval)   
     }
     
 
@@ -165,7 +184,7 @@ class Character extends MovableObject {
         this.standing = 0;
     }
 
-    showDead(checkAnimationInterval, checkMoveInterval) {
+    showDead(checkAnimationInterval) {
         this.animateCharactersDead();
         setTimeout(() => {
             clearInterval(checkAnimationInterval);
@@ -175,7 +194,11 @@ class Character extends MovableObject {
         }, 1500);
         setTimeout(() => {
             world.stopGame();
-            clearInterval(checkMoveInterval);
+            // console.log('ckeckMove in showDead gelöscht', checkMoveInterval);
+
+            // clearInterval(checkMoveInterval);
+            // console.log('ckeckMove in showDead gelöscht', checkMoveInterval);
+            
             this.backToHomeScreen();
         }, 6000)
     }
@@ -230,16 +253,27 @@ class Character extends MovableObject {
 
     firstTimeEndboss() {
         let findEndbossInterval = setInterval(() => {
+            console.log(findEndbossInterval, 'findEndbossInterval');
+            
             if (this.sawEndboss == false && this.x >= 1750) {
                 this.endbossRunsToCharacter();
                 this.audioSeeEndboss.play();
                 clearInterval(findEndbossInterval);
             }
         },100)
+        setInterval(() => {
+            let active = JSON.parse(localStorage.getItem('polloLevelActive'));
+            if (active == null) {
+                clearInterval(findEndbossInterval)
+            }
+        },1000)
+        // this.intervalCollection.push(findEndbossInterval)
     }
 
     endbossRunsToCharacter() {
         let endbossRunInterval = setInterval(() => {
+            console.log(endbossRunInterval, 'endbossRunInterval');
+            
             world.level.enemies[world.level.enemies.length - 1].x -=50;
             world.level.enemies[world.level.enemies.length - 1].playAnimation(world.level.enemies[world.level.enemies.length - 1].IMAGES_WALK);
         },100)
@@ -251,24 +285,49 @@ class Character extends MovableObject {
 
     increaseStandingTime() {
         let standingInterval = setInterval(() => {
+            console.log(standingInterval, 'standingInterval');
+            
             let activeGame = JSON.parse(localStorage.getItem('polloLevelActive'));
             if (activeGame !== null) {
             this.standing++
             }
         },1000)
+        this.intervalCollection.push(standingInterval);
         let checkEndInterval = setInterval(() => {
+            console.log(checkEndInterval, 'checkEndInterval');
+            
             if (world.level.win == true || this.world.level.win == false) {
                 this.standing = 0;
                 clearInterval(standingInterval)
                 clearInterval(checkEndInterval)
             }
         },200) 
+        this.intervalCollection.push(checkEndInterval);
+
     }
       
     clearAllIntervals() {
+        console.log('clearIntervalsWhenNotActive() -> clearAllIntervals läuft');
         this.intervals.forEach((interval) => {
             clearInterval(interval)
         });
         this.intervals = [];
+        this.intervalCollection.forEach((interval) => {
+            console.log(interval);
+            clearInterval(interval)
+            console.log(interval);
+        });
+        this.intervalCollection = [];
+        clearInterval(this.checkMoveInterval)
+    }
+
+    clearIntervalsWhenNotActive() {
+        let clearingInterval = setInterval(() => {
+            let active = JSON.parse(localStorage.getItem('polloLevelActive'));
+            if (active == null) {
+                this.clearAllIntervals()
+                clearInterval(clearingInterval)
+            }
+        },2000)
     }
 }
