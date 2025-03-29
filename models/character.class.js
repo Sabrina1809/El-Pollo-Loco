@@ -266,9 +266,10 @@ class Character extends MovableObject {
             let activeGame = JSON.parse(localStorage.getItem('polloLevelActive'));
             if (activeGame !== null) {
             this.standing++
+            } else {
+                clearInterval(standingInterval)
             }
         },1000)
-        this.intervalCollection.push(standingInterval);
         let checkEndInterval = setInterval(() => {
             console.log(checkEndInterval, 'checkEndInterval');
             

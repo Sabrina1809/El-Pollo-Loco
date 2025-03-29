@@ -3,6 +3,7 @@ let canvas;
 let world;
 let isTouch = false;
 const infoButton = document.getElementById('button-openinfo');
+const impressumButton = document.getElementById('button-openimpressum');
 const soundButton = document.getElementById('button-sound');
 const screenButton = document.getElementById('button-screen');
 let soundMuted = JSON.parse(localStorage.getItem('polloLocoMuted'));
@@ -124,6 +125,7 @@ soundButton.addEventListener('touchstart', handleTouchStart);
 screenButton.addEventListener('touchstart', handleTouchStart);
 
 infoButton.addEventListener('click', handleInfoButtonToggle);
+impressumButton.addEventListener('click', handleImpressumButtonToggle);
 soundButton.addEventListener('click', handleClick);
 screenButton.addEventListener('click', handleClick);
 
@@ -132,6 +134,9 @@ screenButton.addEventListener('touchend', () => setTimeout(() => isTouch = false
 
 
 function handleInfoButtonToggle() {
+    const impressumBlock = document.getElementById('info-impressum');
+    impressumBlock.classList.remove('visible');
+    impressumBlock.style.display = 'none';
     const infoBlock = document.getElementById('info-block');
     if (infoBlock.classList.contains('visible')) {
         infoBlock.classList.remove('visible');
@@ -139,6 +144,21 @@ function handleInfoButtonToggle() {
     } else {
         infoBlock.classList.add('visible');
         infoBlock.style.display = 'block';
+        isTouch = true;
+    }
+}
+
+function handleImpressumButtonToggle() {
+    const infoBlock = document.getElementById('info-block');
+    infoBlock.classList.remove('visible');
+    infoBlock.style.display = 'none';
+    const impressumBlock = document.getElementById('info-impressum');
+    if (impressumBlock.classList.contains('visible')) {
+        impressumBlock.classList.remove('visible');
+        impressumBlock.style.display = 'none';
+    } else {
+        impressumBlock.classList.add('visible');
+        impressumBlock.style.display = 'block';
         isTouch = true;
     }
 }
@@ -265,6 +285,10 @@ function init(level) {
     if (document.getElementById('info-block').classList.contains('visible')) {
         document.getElementById('info-block').classList.remove('visible');
         document.getElementById('info-block').style.display = 'none';
+    }
+    if (document.getElementById('info-impressum').classList.contains('visible')) {
+        document.getElementById('info-impressum').classList.remove('visible');
+        document.getElementById('info-impressum').style.display = 'none';
     }
     document.getElementById('button-home').style.display = 'flex';
     canvas = document.getElementById('canvas');
